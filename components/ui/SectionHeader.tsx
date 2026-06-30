@@ -12,10 +12,10 @@ interface SectionHeaderProps {
 export default function SectionHeader({ label, headline, subline, className = '' }: SectionHeaderProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.4 }}
       className={`mb-14 text-center ${className}`}
     >
       <p className="inline-block text-[10px] font-medium tracking-[0.2em] text-accent uppercase">

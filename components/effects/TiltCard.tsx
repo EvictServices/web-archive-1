@@ -22,11 +22,11 @@ export default function TiltCard({
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
-  const springX = useSpring(x, { stiffness: 150, damping: 15 })
-  const springY = useSpring(y, { stiffness: 150, damping: 15 })
+  const springX = useSpring(x, { stiffness: 120, damping: 20 })
+  const springY = useSpring(y, { stiffness: 120, damping: 20 })
 
-  const rotateX = useTransform(springY, [-0.5, 0.5], ['8deg', '-8deg'])
-  const rotateY = useTransform(springX, [-0.5, 0.5], ['-8deg', '8deg'])
+  const rotateX = useTransform(springY, [-0.5, 0.5], ['3deg', '-3deg'])
+  const rotateY = useTransform(springX, [-0.5, 0.5], ['-3deg', '3deg'])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return
@@ -45,12 +45,12 @@ export default function TiltCard({
   const content = (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: initialX, y: initialY, scale: 0.9 }}
-      animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      transition={{ delay, duration: 0.7, ease: 'easeOut' }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 1000 }}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       className={`${className} will-change-transform`}
     >
       {children}
@@ -61,8 +61,8 @@ export default function TiltCard({
 
   return (
     <motion.div
-      animate={{ y: [0, -6, 0] }}
-      transition={{ repeat: Infinity, duration: 4 + delay, ease: 'easeInOut' }}
+      animate={{ y: [0, -3, 0] }}
+      transition={{ repeat: Infinity, duration: 5 + delay, ease: 'easeInOut' }}
       style={{ transformStyle: 'preserve-3d' }}
     >
       {content}

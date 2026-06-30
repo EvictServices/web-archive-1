@@ -1,8 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import SectionHeader from '@/components/ui/SectionHeader'
 import GlassCard from '@/components/ui/GlassCard'
+import { useUsers } from '@/hooks/useUsers'
 
 const tags = [
   { label: 'Anti-Nuke', icon: <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
@@ -42,22 +44,7 @@ const cards = [
     title: 'Vanities that mean something',
     desc: 'Tag rewards, custom roles, and perks for your most active members. Make standing out worth it.',
     span: '',
-    mock: (
-      <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-        <div className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-full bg-accent/15" />
-          <div>
-            <p className="text-[9px] font-medium text-white/60">@vip_member</p>
-            <p className="text-[8px] text-white/20">Legendary tag unlocked</p>
-          </div>
-        </div>
-        <div className="mt-2 flex gap-1">
-          {['VIP', 'OG', 'ELITE'].map((t) => (
-            <span key={t} className="rounded border border-accent/10 px-1.5 py-0.5 text-[7px] text-accent/50">{t}</span>
-          ))}
-        </div>
-      </div>
-    ),
+    mock: 'rewards_user',
   },
   {
     num: '03',
@@ -142,7 +129,60 @@ const cards = [
   },
 ]
 
+function TagStrip({ tags }: { tags: { label: string; icon: React.ReactNode }[] }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-20px' })
+
+  const mid = Math.ceil(tags.length / 2)
+
+  return (
+    <div ref={ref} className="mb-10 flex flex-wrap justify-center gap-2 overflow-hidden">
+      {tags.map((tag, i) => {
+        const fromLeft = i < mid
+        return (
+          <motion.span
+            key={tag.label}
+            initial={{ opacity: 0, x: fromLeft ? -20 : 20 }}
+            animate={inView ? { opacity: 1, x: 0 } : undefined}
+            transition={{ delay: 0.05 * i, duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            className="group inline-flex items-center gap-1.5 rounded-full border border-white/[0.05] bg-white/[0.02] px-3 py-1.5 text-[9px] font-medium text-white/25 transition-all hover:border-accent/20 hover:bg-accent/[0.04] hover:text-accent/70"
+          >
+            <span className="text-[10px] opacity-50 transition-opacity group-hover:opacity-100">{tag.icon}</span>
+            {tag.label}
+          </motion.span>
+        )
+      })}
+    </div>
+  )
+}
+
+function RewardsUserMock({ avatar, name }: { avatar?: string; name?: string }) {
+  return (
+    <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+      <div className="flex items-center gap-2">
+        {avatar ? (
+          <img src={avatar} alt="" className="h-6 w-6 rounded-full object-cover" />
+        ) : (
+          <div className="h-6 w-6 rounded-full bg-accent/15" />
+        )}
+        <div>
+          <p className="text-[9px] font-medium text-white/60">@{name || 'vip_member'}</p>
+          <p className="text-[8px] text-white/20">Legendary tag unlocked</p>
+        </div>
+      </div>
+      <div className="mt-2 flex gap-1">
+        {['VIP', 'OG', 'ELITE'].map((t) => (
+          <span key={t} className="rounded border border-accent/10 px-1.5 py-0.5 text-[7px] text-accent/50">{t}</span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function FeaturesSection() {
+  const users = useUsers(['604463848526708757'])
+  const rewardsUser = users['604463848526708757']
+
   return (
     <section className="relative overflow-hidden px-6 py-24">
       <div className="line-grid absolute inset-0 opacity-20" />
@@ -157,31 +197,16 @@ export default function FeaturesSection() {
           </>}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-10 flex flex-wrap justify-center gap-2"
-        >
-          {tags.map((tag, i) => (
-            <motion.span
-              key={tag.label}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.3 }}
-              className="group inline-flex items-center gap-1.5 rounded-full border border-white/[0.05] bg-white/[0.02] px-3 py-1.5 text-[9px] font-medium text-white/25 transition-all hover:border-accent/20 hover:bg-accent/[0.04] hover:text-accent/70"
-            >
-              <span className="text-[10px] opacity-50 transition-opacity group-hover:opacity-100">{tag.icon}</span>
-              {tag.label}
-            </motion.span>
-          ))}
-        </motion.div>
+        <TagStrip tags={tags} />
 
         <div className="grid gap-4 sm:grid-cols-2">
           {cards.map((card, i) => (
             <GlassCard key={card.num} span={card.span} delay={i}>
-              <div className="mb-4">{card.mock}</div>
+              <div className="mb-4">
+                {card.mock === 'rewards_user'
+                  ? <RewardsUserMock avatar={rewardsUser?.avatar} name={rewardsUser?.display_name} />
+                  : card.mock}
+              </div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-medium text-white/40">{card.num}</span>
                 <span className="text-[10px] font-medium tracking-wider text-white/50">{card.label}</span>
