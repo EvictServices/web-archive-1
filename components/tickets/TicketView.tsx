@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { TicketTranscriptResponse as TicketData, TicketUser } from '@/lib/tickets'
 import { formatTimestamp, getFallbackAvatar, getAvatarUrl, getInvolvedLabel } from '@/components/tickets/helpers'
 import TranscriptMessages from '@/components/tickets/TranscriptMessages'
+import ImpersonatorWarning from '@/components/tickets/ImpersonatorWarning'
 
 interface Props {
   ticketData: TicketData
@@ -75,6 +76,7 @@ export default function TicketView({ ticketData, ticketId }: Props) {
 
   return (
     <main className="relative flex-1">
+      <ImpersonatorWarning users={users} />
       <div className="mx-auto max-w-6xl px-4 pt-24 pb-16 sm:px-6 sm:pb-24">
         <header className="mb-6 text-center sm:mb-8">
           <div className="flex items-center gap-3">
