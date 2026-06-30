@@ -38,21 +38,24 @@ export interface EmbedData {
   timestamp: boolean
 }
 
-export function defaultEmbed(): EmbedData {
-  return {
-    content: '',
-    color: '#2b2d31',
-    title: '',
-    url: '',
-    description: '',
-    thumbnail: '',
-    image: '',
-    author: { name: '', icon_url: '', url: '' },
-    footer: { text: '', icon_url: '' },
-    fields: [],
-    buttons: [],
-    timestamp: false,
-  }
+export const defaultEmbed: EmbedData = {
+  content: '',
+  color: '#5f828d',
+  title: '',
+  url: '',
+  description: '',
+  thumbnail: '',
+  image: '',
+  author: { name: '', icon_url: '', url: '' },
+  footer: { text: '', icon_url: '' },
+  fields: [],
+  buttons: [],
+  timestamp: false,
+}
+
+/** @deprecated use defaultEmbed constant */
+export function createDefaultEmbed(): EmbedData {
+  return { ...defaultEmbed, author: { ...defaultEmbed.author }, footer: { ...defaultEmbed.footer }, fields: [], buttons: [] }
 }
 
 export function generateScript(data: EmbedData): string {
@@ -60,13 +63,13 @@ export function generateScript(data: EmbedData): string {
 
   if (data.content) lines.push(`{content: ${data.content}}`)
 
-  const hasEmbed = data.title || data.description || data.color !== '#2b2d31' ||
+  const hasEmbed = data.title || data.description || data.color !== '#5f828d' ||
     data.thumbnail || data.image || data.author.name || data.footer.text ||
     data.fields.length > 0 || data.url || data.timestamp
 
   if (hasEmbed) {
     lines.push('{embed}')
-    if (data.color && data.color !== '#2b2d31') lines.push(`{color: ${data.color}}`)
+    if (data.color && data.color !== '#5f828d') lines.push(`{color: ${data.color}}`)
     if (data.url) lines.push(`{url: ${data.url}}`)
     if (data.title) lines.push(`{title: ${data.title}}`)
     if (data.description) lines.push(`{description: ${data.description}}`)

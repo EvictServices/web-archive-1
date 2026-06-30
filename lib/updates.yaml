@@ -1,3 +1,17 @@
+- date: 2026-06-25
+  version: v5.0.5
+  title: Patch Notes - v5.0.5
+  description: This wasn't meant to be published, nor was it meant to be short but Discord's AI decided to term the last support server, so I've gone ahead and published what I remember from that changelog. In the near future version bumps will be more important than this.
+  changes:
+    - improved: More backend cluster improvements, improving shard/cluster recovery, preventing random downtimes
+    - improved: Improved resource usage, including garbage collection and strict cache clearing
+    - improved: Improved shard stats, making it easier to tell when a complete shard is down rather than a user issue
+    - changed: Removed typing for most commands to deal with ratelimits from typing
+    - changed: Added antinuke to most emoji commands since actions done through the bot, emoji wise were not taken into consideration with the antinuke
+    - changed: Combined customize style and customize buttons into the base customize command as some people did not know customize for styles exists
+    - new: Ability to disable purge logs was added due to a lot of people not liking it
+    - new: Added back sticky, nuke, confessions and added more features for confessions, like replying
+    
 - date: 2026-04-16
   version: v5.0.3
   title: Patch Notes - v5.0.3

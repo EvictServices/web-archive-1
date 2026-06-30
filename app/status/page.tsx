@@ -5,10 +5,25 @@ import { motion } from 'framer-motion'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import ClusterModal from '@/components/status/ClusterModal'
-import StatusCard from '@/components/status/StatusCard'
+import StatusHero, { StatusHeroSkeleton } from '@/components/status/StatusHero'
 import { useLightMotion } from '@/hooks/useLightMotion'
 
-const iconClass = 'h-4 w-4 text-white/35 transition-colors group-hover:text-accent/80'
+const ease = [0.23, 1, 0.32, 1] as const
+
+const clusterGridVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.035, delayChildren: 0.04 },
+  },
+}
+
+const clusterCardVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 0.28, ease },
+  },
+}
 
 interface Shard {
   id: number
@@ -107,41 +122,44 @@ export default function StatusPage() {
     [clusters]
   )
 
+  const onlineShards = useMemo(
+    () => clusters.reduce((sum, c) => sum + (c.alive ? c.shards?.length || 0 : 0), 0),
+    [clusters]
+  )
+
+  const operational = useMemo(
+    () => clusters.length > 0 && clusters.every((c) => c.alive),
+    [clusters]
+  )
+
   return (
     <div className="relative flex min-h-screen flex-col">
       <div className="line-grid absolute inset-0 opacity-20" />
       <Navbar />
 
-      <div className="relative flex-1 mx-auto max-w-6xl w-full px-6 pt-20 pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
+      <div className="relative mx-auto w-full max-w-6xl flex-1 px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-24">
+        <motion.header
+          className="mb-8 text-center sm:mb-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: lightMotion ? 0.2 : 0.35, ease }}
         >
-          <div className="flex items-center gap-2">
-            <StatusDot alive={!error && !!data} />
-            <h1 className="text-2xl font-bold tracking-tight text-white">Status</h1>
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
+            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Infrastructure</span>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
           </div>
-          <p className="mt-1 text-[11px] text-white/60">
+          <div className="mt-6 flex items-center justify-center gap-2.5">
+            <StatusDot alive={!error && !!data} />
+            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Status</h1>
+          </div>
+          <p className="mx-auto mt-3 max-w-sm text-[11px] leading-relaxed text-white/50">
             Real-time system and cluster health. Auto-refreshes every 30s.
-            {lastUpdate && (
-              <span className="ml-1 text-white/40">
-                Last updated {lastUpdate.toLocaleTimeString()}
-              </span>
-            )}
           </p>
-        </motion.div>
+        </motion.header>
 
         {loading ? (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-5">
-                <div className="h-2.5 w-16 animate-pulse rounded bg-white/[0.06]" />
-                <div className="mt-3 h-7 w-24 animate-pulse rounded bg-white/[0.06]" />
-              </div>
-            ))}
-          </div>
+          <StatusHeroSkeleton />
         ) : error || !data ? (
           <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-8 text-center">
             <p className="text-sm text-white/30">Unable to reach health endpoint.</p>
@@ -154,78 +172,39 @@ export default function StatusPage() {
           </div>
         ) : (
           <>
-            {/* Status Banner */}
-            <div className="rounded-2xl border border-white/[0.05] bg-white/[0.02] p-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="inline-block h-2 w-2 rounded-full bg-green-400/80 animate-pulse" />
-                    <span className="text-sm font-bold text-white">All Systems Operational</span>
-                  </div>
-                  <p className="mt-1 text-[11px] text-white/60">
-                    Powering {formatNumber(data.users)} users across {formatNumber(data.guilds)} communities
-                  </p>
-                  <p className="mt-0.5 text-[10px] text-white/40">
-                    {lastUpdate?.toLocaleTimeString()}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[9px] font-medium tracking-wider text-white/60 uppercase">Shards Online</p>
-                  <p className="text-xl font-bold tracking-tight text-white">{totalShards}<span className="text-white/30">/{totalShards}</span></p>
-                </div>
-              </div>
-            </div>
-
-            {/* Metric Cards */}
-            <div className="mt-3 grid gap-3 sm:grid-cols-3">
-              <StatusCard
-                label="Avg Latency"
-                value={`${(data.system?.latency * 1000).toFixed(0)}ms`}
-                icon={
-                  <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-                    <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-                    <line x1="12" y1="20" x2="12.01" y2="20" />
-                  </svg>
-                }
-              />
-              <StatusCard
-                label="Total Servers"
-                value={formatNumber(data.guilds)}
-                icon={
-                  <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                }
-              />
-              <StatusCard
-                label="Total Users"
-                value={formatNumber(data.users)}
-                icon={
-                  <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
-                }
-              />
-            </div>
+            <StatusHero
+              users={data.users}
+              guilds={data.guilds}
+              latencyMs={Math.round((data.system?.latency ?? 0) * 1000)}
+              shardsOnline={onlineShards}
+              shardsTotal={totalShards}
+              lastUpdate={lastUpdate}
+              operational={operational}
+            />
 
             {/* Clusters */}
             <div className="mt-8">
-              <div className="mb-4 flex items-center justify-between">
+              <motion.div
+                className="mb-4 flex items-center justify-between"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: lightMotion ? 0.2 : 0.3, delay: lightMotion ? 0 : 0.08, ease }}
+              >
                 <h2 className="text-xs font-semibold tracking-wider text-white/30 uppercase">
                   Clusters
                 </h2>
                 <span className="text-[10px] text-white/20">{clusters.length} total</span>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              </motion.div>
+              <motion.div
+                className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+                variants={lightMotion ? undefined : clusterGridVariants}
+                initial={lightMotion ? { opacity: 0 } : 'hidden'}
+                animate={lightMotion ? { opacity: 1 } : 'show'}
+                transition={lightMotion ? { duration: 0.2 } : undefined}
+              >
                 {clusters.map((cluster, i) => {
                   const cardClass =
-                    'group relative cursor-pointer overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-all duration-300 hover:border-accent/15 hover:bg-white/[0.03]'
+                    'group relative cursor-pointer overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 transition-[border-color,background-color] duration-200 hover:border-accent/15 hover:bg-white/[0.03]'
                   const cardBody = (
                     <div className="relative">
                       <div className="flex items-center gap-2">
@@ -283,13 +262,7 @@ export default function StatusPage() {
                   return (
                     <motion.div
                       key={cluster.id}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: 0.2 + Math.min(i * 0.04, 0.4),
-                        duration: 0.3,
-                        ease: [0.23, 1, 0.32, 1],
-                      }}
+                      variants={clusterCardVariants}
                       className={cardClass}
                       onClick={() => setSelectedCluster(cluster)}
                     >
@@ -297,7 +270,7 @@ export default function StatusPage() {
                     </motion.div>
                   )
                 })}
-              </div>
+              </motion.div>
             </div>
 
             <ClusterModal

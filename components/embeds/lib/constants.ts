@@ -35,4 +35,15 @@ export const VARIABLE_CATEGORIES = [
     { name: '{channel.mention}', desc: 'Channel mention' },
     { name: '{channel.topic}', desc: 'Channel topic' },
   ]},
+  { category: 'Role', vars: [
+    { name: '{role}', desc: 'Role mention' },
+    { name: '{role.mention}', desc: 'Role mention' },
+    { name: '{role.name}', desc: 'Role name' },
+    { name: '{role.id}', desc: 'Role ID' },
+    { name: '{role.color}', desc: 'Role color' },
+    { name: '{role.position}', desc: 'Role position' },
+    { name: '{role.member_count}', desc: 'Members with role' },
+  ]},
 ]
+
+export const ALL_VARIABLES = VARIABLE_CATEGORIES.flatMap((c) => c.vars)

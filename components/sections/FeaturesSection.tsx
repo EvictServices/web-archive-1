@@ -156,7 +156,7 @@ function TagStrip({ tags }: { tags: { label: string; icon: React.ReactNode }[] }
   )
 }
 
-function RewardsUserMock({ avatar, name }: { avatar?: string; name?: string }) {
+function RewardsUserMock({ avatar, name }: { avatar?: string | null; name?: string }) {
   return (
     <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
       <div className="flex items-center gap-2">

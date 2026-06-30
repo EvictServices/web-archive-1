@@ -15,7 +15,6 @@ export async function POST(req: Request) {
     }
 
     const raw = await res.text()
-    // Parse with user_id as string to avoid precision loss
     const data: Record<string, unknown>[] = JSON.parse(
       raw.replace(/"user_id"\s*:\s*(\d+)/g, '"user_id":"$1"')
     )
