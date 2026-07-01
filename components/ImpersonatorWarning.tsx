@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import type { TicketUser } from '@/lib/tickets'
+import { useEffect, useState } from 'react'
 import {
   CLIENT_ID,
+  FAKE_BOT_ID,
   FAKE_BOT_TAG,
   REAL_BOT_TAG,
   SUPPORT_SERVER_URL,
@@ -11,23 +11,8 @@ import {
 
 const STORAGE_KEY = 'evict-impersonator-warning-dismissed'
 
-function isFakeEvictBot(user: TicketUser): boolean {
-  if (!user.bot || user.id === CLIENT_ID) return false
-  const name = user.username.toLowerCase()
-  return name === FAKE_BOT_TAG || name.startsWith('evict') && user.discriminator === '6801'
-}
-
-interface Props {
-  users: TicketUser[]
-}
-
-export default function ImpersonatorWarning({ users }: Props) {
+export default function ImpersonatorWarning() {
   const [visible, setVisible] = useState(false)
-
-  const fakeBotId = useMemo(() => {
-    const match = users.find(isFakeEvictBot)
-    return match?.id ?? null
-  }, [users])
 
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_KEY)) return
@@ -45,7 +30,7 @@ export default function ImpersonatorWarning({ users }: Props) {
   return (
     <div
       role="status"
-      className="impersonator-warning fixed inset-x-4 bottom-4 z-50 mx-auto max-w-lg sm:inset-x-6 sm:bottom-6"
+      className="impersonator-warning fixed inset-x-4 bottom-4 z-40 mx-auto max-w-lg sm:inset-x-6 sm:bottom-6"
     >
       <div className="rounded-2xl border border-amber-500/20 bg-[#0c0b09]/95 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-5">
         <div className="flex gap-3">
@@ -56,14 +41,9 @@ export default function ImpersonatorWarning({ users }: Props) {
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="text-[13px] font-medium text-amber-100/95 sm:text-[14px]">
-              Impersonator bot detected
-            </p>
             <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 sm:text-[13px]">
               <span className="font-medium text-white/70">{FAKE_BOT_TAG}</span>
-              {fakeBotId && (
-                <span className="font-mono text-[11px] text-white/35"> ({fakeBotId})</span>
-              )}
+              <span className="font-mono text-[11px] text-white/35"> ({FAKE_BOT_ID})</span>
               {' '}is impersonating the real{' '}
               <span className="font-medium text-white/70">{REAL_BOT_TAG}</span>
               <span className="font-mono text-[11px] text-white/35"> ({CLIENT_ID})</span>.
