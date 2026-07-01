@@ -133,10 +133,6 @@ function FloatingCards() {
                 <p className="text-[10px] text-white/40">dashboard</p>
               </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-green-400/80" />
-              <span className="text-[10px] font-medium text-green-400/70">online</span>
-            </div>
           </div>
 
           <div className="mt-4 grid grid-cols-3 gap-2">

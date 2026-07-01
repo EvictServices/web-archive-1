@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { TbMenu2, TbX } from 'react-icons/tb'
 import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL } from '@/lib/constants'
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 
 const NAV_LINKS = [
   { href: '/commands', label: 'Commands' },
@@ -22,12 +23,10 @@ function NavLink({
   href,
   label,
   onClick,
-  className = '',
 }: {
   href: string
   label: string
   onClick?: () => void
-  className?: string
 }) {
   const pathname = usePathname()
   const active = isActivePath(pathname, href)
@@ -37,7 +36,7 @@ function NavLink({
       href={href}
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
-      className={`relative rounded-full px-3.5 py-1.5 text-[10px] font-medium tracking-wide transition-colors ${className} ${
+      className={`relative rounded-full px-3.5 py-1.5 text-[10px] font-medium tracking-wide transition-colors ${
         active ? 'text-white/85' : 'text-white/35 hover:text-white/65'
       }`}
     >
@@ -86,6 +85,8 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  useBodyScrollLock(menuOpen)
+
   useEffect(() => {
     let lastY = window.scrollY
 
@@ -100,13 +101,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuOpen])
 
   useEffect(() => {
     setMenuOpen(false)
@@ -124,6 +118,11 @@ export default function Navbar() {
   }, [menuOpen])
 
   const closeMenu = () => setMenuOpen(false)
+
+  const barClass =
+    scrolled || menuOpen
+      ? 'border-white/[0.08] bg-black/70 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
+      : 'border-white/[0.05] bg-black/30 backdrop-blur-md'
 
   return (
     <>
@@ -143,72 +142,72 @@ export default function Navbar() {
       </AnimatePresence>
 
       <header
+        data-fixed-chrome
         className={`fixed top-0 left-0 right-0 z-50 px-4 pt-4 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] sm:px-6 sm:pt-5 ${
           hidden && !menuOpen ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
         <div className="relative mx-auto max-w-6xl">
-          <div
-            className={`relative overflow-hidden rounded-2xl border transition-all duration-300 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-4 ${
-              scrolled || menuOpen
-                ? 'border-white/[0.08] bg-black/70 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl'
-                : 'border-white/[0.05] bg-black/30 backdrop-blur-md'
-            }`}
-          >
-            <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 sm:px-4 sm:py-2">
-              <Link
-                href="/"
-                className="group flex items-center gap-2.5 sm:justify-self-start"
-                onClick={closeMenu}
-              >
-                <span className="relative">
-                  <img
-                    src="/evict.png"
-                    alt=""
-                    className="h-7 w-7 rounded-full object-cover ring-1 ring-white/[0.08] transition-transform group-hover:scale-105"
-                  />
-                  <span className="absolute -right-0.5 -bottom-0.5 h-2 w-2 rounded-full bg-accent ring-2 ring-black/80" />
-                </span>
-                <span className="text-xs font-semibold tracking-tight text-white">evict</span>
-              </Link>
-
-              <nav className="hidden items-center gap-0.5 sm:flex sm:justify-self-center" aria-label="Main">
-                {NAV_LINKS.map(({ href, label }) => (
-                  <NavLink key={href} href={href} label={label} />
-                ))}
-              </nav>
-
-              <div className="flex items-center justify-end gap-2 sm:justify-self-end">
-                <a
-                  href={SUPPORT_SERVER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden rounded-full border border-white/[0.06] px-3.5 py-1.5 text-[10px] font-medium text-white/40 transition-all hover:border-white/[0.12] hover:text-white/65 lg:inline-flex"
+          <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${barClass}`}>
+            <div className="sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+              <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 sm:contents">
+                <Link
+                  href="/"
+                  className="group flex items-center gap-2.5 sm:justify-self-start sm:px-4 sm:py-2"
+                  onClick={closeMenu}
                 >
-                  Support
-                </a>
-                <a
-                  href={DISCORD_INVITE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold text-black transition-all hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(95,130,141,0.3)] sm:inline-flex"
-                >
-                  Invite
-                </a>
+                  <span className="relative">
+                    <img
+                      src="/evict.png"
+                      alt=""
+                      className="h-7 w-7 rounded-full object-cover ring-1 ring-white/[0.08] transition-transform group-hover:scale-105"
+                    />
+                    <span className="absolute -right-0.5 -bottom-0.5 h-2 w-2 rounded-full bg-accent ring-2 ring-black/80" />
+                  </span>
+                  <span className="text-xs font-semibold tracking-tight text-white">evict</span>
+                </Link>
 
-                <button
-                  type="button"
-                  className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all sm:hidden ${
-                    menuOpen
-                      ? 'border-white/[0.12] bg-white/[0.08] text-white'
-                      : 'border-white/[0.06] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white'
-                  }`}
-                  onClick={() => setMenuOpen((open) => !open)}
-                  aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                  aria-expanded={menuOpen}
+                <nav
+                  className="hidden items-center gap-0.5 sm:flex sm:justify-self-center sm:px-2 sm:py-2"
+                  aria-label="Main"
                 >
-                  {menuOpen ? <TbX className="h-4 w-4" /> : <TbMenu2 className="h-4 w-4" />}
-                </button>
+                  {NAV_LINKS.map(({ href, label }) => (
+                    <NavLink key={href} href={href} label={label} />
+                  ))}
+                </nav>
+
+                <div className="flex items-center justify-end gap-2 sm:justify-self-end sm:px-4 sm:py-2">
+                  <a
+                    href={SUPPORT_SERVER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden rounded-full border border-white/[0.06] px-3.5 py-1.5 text-[10px] font-medium text-white/40 transition-all hover:border-white/[0.12] hover:text-white/65 md:inline-flex"
+                  >
+                    Support
+                  </a>
+                  <a
+                    href={DISCORD_INVITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold text-black transition-all hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(95,130,141,0.3)] sm:inline-flex"
+                  >
+                    Invite
+                  </a>
+
+                  <button
+                    type="button"
+                    className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all sm:hidden ${
+                      menuOpen
+                        ? 'border-white/[0.12] bg-white/[0.08] text-white'
+                        : 'border-white/[0.06] bg-white/[0.03] text-white/60 hover:bg-white/[0.06] hover:text-white'
+                    }`}
+                    onClick={() => setMenuOpen((open) => !open)}
+                    aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                    aria-expanded={menuOpen}
+                  >
+                    {menuOpen ? <TbX className="h-4 w-4" /> : <TbMenu2 className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
             </div>
 

@@ -1,55 +1,23 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import StatusCard from '@/components/status/StatusCard'
+import {
+  type Cluster,
+  formatNumber,
+  formatDuration,
+  latencyToMs,
+  uptimeToSeconds,
+} from '@/lib/status'
 import { useLightMotion } from '@/hooks/useLightMotion'
-
-interface Shard {
-  id: number
-  latency: number
-  users: number
-  guilds: number
-  uptime: number
-  seen: number
-}
-
-interface Cluster {
-  id: string
-  config: { shard: { start: number; end: number } }
-  last_heartbeat: number
-  uptime: number
-  alive: boolean
-  users: number
-  guilds: number
-  average_latency: number
-  shards: Shard[]
-}
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 
 interface ClusterModalProps {
   cluster: Cluster | null
   clusterIndex: number
   onClose: () => void
-}
-
-function formatNumber(n: number): string {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + 'M'
-  if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K'
-  return String(n)
-}
-
-function formatDuration(seconds: number): string {
-  const d = Math.floor(seconds / 86400)
-  const h = Math.floor((seconds % 86400) / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  if (d > 0) return `${d}d ${h}h ${m}m`
-  if (h > 0) return `${h}h ${m}m`
-  return `${m}m`
-}
-
-function uptimeToSeconds(value: number): number {
-  if (value > 1_000_000_000) return Date.now() / 1000 - value
-  return value
 }
 
 function StatusDot({ alive }: { alive: boolean }) {
@@ -62,17 +30,34 @@ function StatusDot({ alive }: { alive: boolean }) {
   )
 }
 
+function shardStatusTone(latencySeconds: number): string {
+  const ms = latencyToMs(latencySeconds)
+  if (ms < 50) return 'bg-green-400/70'
+  if (ms < 100) return 'bg-yellow-400/70'
+  return 'bg-red-400/70'
+}
+
 export default function ClusterModal({ cluster, clusterIndex, onClose }: ClusterModalProps) {
   const lightMotion = useLightMotion()
+  const [mounted, setMounted] = useState(false)
+  useBodyScrollLock(!!cluster)
 
   useEffect(() => {
-    document.documentElement.style.overflow = cluster ? 'hidden' : ''
-    document.body.style.overflow = cluster ? 'hidden' : ''
-  }, [cluster])
+    setMounted(true)
+  }, [])
 
-  if (!cluster) return null
+  useEffect(() => {
+    if (!cluster) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [cluster, onClose])
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
       {cluster && (
         <motion.div
@@ -94,8 +79,10 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
           >
             <div className="border-b border-white/[0.06] px-5 py-5">
               <button
+                type="button"
                 onClick={onClose}
                 className="absolute right-4 top-4 text-xl font-light leading-none text-white/25 transition-colors hover:text-white/70"
+                aria-label="Close"
               >
                 &times;
               </button>
@@ -125,7 +112,7 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
               <StatusCard
                 variant="stat"
                 label="Latency"
-                value={`${Math.ceil(cluster.average_latency * 1000)}ms`}
+                value={`${latencyToMs(cluster.average_latency)}ms`}
               />
             </div>
 
@@ -146,20 +133,12 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
                     className="grid grid-cols-6 gap-2 border-b border-white/[0.03] px-4 py-2.5 text-[11px] text-white/50 last:border-b-0"
                   >
                     <span className="text-white/40">#{shard.id}</span>
-                    <span className="text-right">{Math.ceil(shard.latency * 1000)}ms</span>
+                    <span className="text-right">{latencyToMs(shard.latency)}ms</span>
                     <span className="text-right">{formatDuration(uptimeToSeconds(shard.uptime))}</span>
                     <span className="text-right">{formatNumber(shard.users)}</span>
                     <span className="text-right">{formatNumber(shard.guilds)}</span>
                     <span className="flex items-center justify-end">
-                      <span
-                        className={`inline-block h-1.5 w-1.5 rounded-full ${
-                          shard.latency < 0.05
-                            ? 'bg-green-400/70'
-                            : shard.latency < 0.1
-                              ? 'bg-yellow-400/70'
-                              : 'bg-red-400/70'
-                        }`}
-                      />
+                      <span className={`inline-block h-1.5 w-1.5 rounded-full ${shardStatusTone(shard.latency)}`} />
                     </span>
                   </div>
                 ))}
@@ -168,6 +147,7 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
