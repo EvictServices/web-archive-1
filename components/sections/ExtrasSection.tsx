@@ -2,9 +2,260 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import type { IconType } from 'react-icons'
+import {
+  TbAlertTriangle,
+  TbBolt,
+  TbBroadcast,
+  TbCheck,
+  TbCircleCheck,
+  TbClick,
+  TbCircleX,
+  TbDeviceGamepad2,
+  TbFileText,
+  TbHandClick,
+  TbInfoCircle,
+  TbLoader2,
+  TbLock,
+  TbMusic,
+  TbNews,
+  TbPalette,
+  TbPhoto,
+  TbSelector,
+  TbUser,
+  TbUsers,
+} from 'react-icons/tb'
 import SectionHeader from '@/components/ui/SectionHeader'
 import GlassCard from '@/components/ui/GlassCard'
 import { useUsers } from '@/hooks/useUsers'
+
+const INTEREST_ROLES: { Icon: IconType; role: string; members: string }[] = [
+  { Icon: TbDeviceGamepad2, role: 'Gamer', members: '4.2K' },
+  { Icon: TbPalette, role: 'Artist', members: '1.8K' },
+  { Icon: TbMusic, role: 'Music', members: '3.1K' },
+  { Icon: TbNews, role: 'News', members: '892' },
+  { Icon: TbBroadcast, role: 'Streaming', members: '2.4K' },
+]
+
+const ROLE_USER_IDS = ['604463848526708757', '368896789438529538', '357975942276055041'] as const
+
+const COLOR_ROLES = [
+  { color: '#5f828d', name: 'Teal', members: '3.2K', active: true },
+  { color: '#8b5cf6', name: 'Purple', members: '1.8K', active: false },
+  { color: '#f59e0b', name: 'Amber', members: '942', active: false },
+  { color: '#ef4444', name: 'Rose', members: '610', active: false },
+] as const
+
+const ASSIGNMENT_TYPES = [
+  { label: 'Reaction', Icon: TbClick },
+  { label: 'Button', Icon: TbHandClick },
+  { label: 'Dropdown', Icon: TbSelector },
+] as const
+
+function RolesMock() {
+  const users = useUsers([...ROLE_USER_IDS])
+  const previewUser = users[ROLE_USER_IDS[0]]
+  const previewName = previewUser?.display_name || 'vael'
+
+  return (
+    <div className="space-y-2">
+      <div className="grid grid-cols-3 gap-1.5">
+        {ASSIGNMENT_TYPES.map(({ label, Icon }) => (
+          <div key={label} className="rounded-lg border border-white/[0.04] bg-black/20 px-2 py-1.5 text-center">
+            <Icon className="mx-auto h-3 w-3 text-accent/50" />
+            <p className="mt-1 text-[6px] text-white/30">{label}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+        <div className="flex items-center justify-between">
+          <p className="text-[7px] font-medium tracking-wider text-white/30 uppercase">Color roles</p>
+          <span className="text-[6px] text-white/15">pick one · exclusive</span>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {COLOR_ROLES.map((role) => (
+            <span
+              key={role.name}
+              className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[7px] ${
+                role.active
+                  ? 'border-white/[0.12] bg-white/[0.04] text-white/55'
+                  : 'border-white/[0.04] text-white/25'
+              }`}
+            >
+              <span className="h-2 w-2 rounded-full" style={{ backgroundColor: role.color }} />
+              <span>{role.name}</span>
+              {role.active && <TbCheck className="h-2 w-2 text-accent/60" />}
+              <span className="text-white/15">· {role.members}</span>
+            </span>
+          ))}
+        </div>
+        <div className="mt-2.5 flex items-center gap-2 rounded-lg border border-white/[0.03] bg-black/20 px-2 py-1.5">
+          {previewUser?.avatar ? (
+            <img src={previewUser.avatar} alt="" className="h-5 w-5 rounded-full object-cover" />
+          ) : (
+            <div className="h-5 w-5 rounded-full bg-accent/15" />
+          )}
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[7px] font-medium text-white/45">{previewName}</p>
+            <p className="text-[6px] text-white/20">assigned Teal</p>
+          </div>
+          <span className="h-2 w-2 rounded-full bg-[#5f828d]" />
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+        <div className="flex items-center justify-between">
+          <p className="text-[7px] font-medium tracking-wider text-white/30 uppercase">Interests</p>
+          <span className="text-[6px] text-white/15">multi-select</span>
+        </div>
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {INTEREST_ROLES.map(({ Icon, role, members }, i) => {
+            const user = users[ROLE_USER_IDS[i % ROLE_USER_IDS.length]]
+            return (
+              <span
+                key={role}
+                className="inline-flex items-center gap-1 rounded-full border border-white/[0.04] bg-white/[0.02] px-2 py-1 text-[7px] text-white/30"
+              >
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="" className="h-3 w-3 rounded-full object-cover" />
+                ) : (
+                  <Icon className="h-2.5 w-2.5 text-white/35" />
+                )}
+                <span>{role}</span>
+                <span className="text-white/12">· {members}</span>
+              </span>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between rounded-lg border border-white/[0.04] bg-white/[0.02] px-2.5 py-1.5 text-[6px] text-white/20">
+        <span className="flex items-center gap-1">
+          <TbUsers className="h-2.5 w-2.5 text-accent/40" />
+          12 roles configured
+        </span>
+        <span>9.8K assignments today</span>
+      </div>
+    </div>
+  )
+}
+
+const EMBED_COLORS = [
+  { hex: '#5f828d', name: 'Teal' },
+  { hex: '#8b5cf6', name: 'Purple' },
+  { hex: '#f59e0b', name: 'Amber' },
+  { hex: '#ef4444', name: 'Rose' },
+  { hex: '#10b981', name: 'Green' },
+  { hex: '#3b82f6', name: 'Blue' },
+] as const
+
+const CONTEXT_EMOJIS: { label: string; Icon: IconType; color: string }[] = [
+  { label: 'Success', Icon: TbCircleCheck, color: 'bg-green-400/10 text-green-400/60' },
+  { label: 'Warning', Icon: TbAlertTriangle, color: 'bg-yellow-400/10 text-yellow-400/60' },
+  { label: 'Error', Icon: TbCircleX, color: 'bg-red-400/10 text-red-400/60' },
+  { label: 'Info', Icon: TbInfoCircle, color: 'bg-blue-400/10 text-blue-400/60' },
+  { label: 'Loading', Icon: TbLoader2, color: 'bg-white/[0.04] text-white/35' },
+  { label: 'Lock', Icon: TbLock, color: 'bg-accent/10 text-accent/55' },
+]
+
+function CustomizeMock() {
+  const activeColor = EMBED_COLORS[0].hex
+
+  return (
+    <div className="flex gap-3">
+      <div className="w-[7.5rem] shrink-0 space-y-2">
+        <div className="overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02]">
+          <div className="h-10 w-full bg-gradient-to-br from-accent/25 via-accent/10 to-transparent" />
+          <div className="px-2.5 pb-2.5">
+            <img src="/evict.png" alt="evict" className="mx-auto -mt-4 h-9 w-9 rounded-full border-2 border-black object-cover" />
+            <div className="mt-1.5 flex items-center justify-center gap-1">
+              <p className="text-[8px] font-medium text-white/55">evict</p>
+              <span className="h-1.5 w-1.5 rounded-full bg-green-400/70" />
+            </div>
+            <p className="text-center text-[6px] leading-relaxed text-white/20">your server&apos;s backbone</p>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-2">
+          <p className="text-[7px] font-medium tracking-wider text-white/25 uppercase">Status</p>
+          <p className="mt-1 flex items-center gap-1 text-[7px] text-accent/50">
+            <TbBolt className="h-2.5 w-2.5 shrink-0" />
+            Protecting 27K servers
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-2">
+          <p className="text-[7px] font-medium tracking-wider text-white/25 uppercase">Bio</p>
+          <p className="mt-1 text-[6px] leading-relaxed text-white/25">all-in-one server management.</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-1">
+          {[
+            { label: 'Banner', Icon: TbPhoto },
+            { label: 'Avatar', Icon: TbUser },
+            { label: 'Bio', Icon: TbFileText },
+          ].map(({ label, Icon }) => (
+            <div key={label} className="rounded-md border border-white/[0.04] bg-black/20 px-1 py-1.5 text-center">
+              <Icon className="mx-auto h-2.5 w-2.5 text-white/30" />
+              <p className="mt-0.5 text-[5px] text-white/20">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="min-w-0 flex-1 space-y-2">
+        <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[7px] font-medium tracking-wider text-white/25 uppercase">Embed theme</p>
+            <span className="text-[6px] text-white/15">Teal selected</span>
+          </div>
+          <div className="mt-2 flex flex-wrap items-center gap-1.5">
+            {EMBED_COLORS.map((c) => (
+              <div
+                key={c.hex}
+                title={c.name}
+                className={`h-4 w-4 rounded-full border-2 ${c.hex === activeColor ? 'border-white/35 scale-110' : 'border-transparent opacity-70'}`}
+                style={{ backgroundColor: c.hex }}
+              />
+            ))}
+          </div>
+          <div className="mt-3 rounded-lg border border-white/[0.04] border-l-2 bg-black/20 p-2.5" style={{ borderLeftColor: activeColor }}>
+            <div className="mb-1 flex items-center gap-1.5">
+              <img src="/evict.png" alt="" className="h-4 w-4 rounded-full object-cover" />
+              <span className="text-[7px] font-medium text-white/40">evict</span>
+            </div>
+            <p className="text-[8px] font-semibold text-white/55">Member Banned</p>
+            <p className="mt-0.5 text-[7px] text-white/30">@toxicuser was banned for raiding</p>
+            <p className="mt-1 text-[6px] text-white/20">Reason: mass kick wave detected</p>
+            <div className="mt-1.5 flex items-center gap-1.5 text-[6px] text-white/15">
+              <span>Today at 12:04 PM</span>
+              <span>·</span>
+              <span>evict</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[7px] font-medium tracking-wider text-white/25 uppercase">Context emojis</p>
+            <span className="text-[6px] text-white/15">6 configured</span>
+          </div>
+          <div className="mt-2 grid grid-cols-3 gap-1.5">
+            {CONTEXT_EMOJIS.map(({ label, Icon, color }) => (
+              <div key={label} className="flex items-center gap-1.5 rounded-lg border border-white/[0.03] bg-black/20 px-2 py-1">
+                <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded ${color}`}>
+                  <Icon className="h-2.5 w-2.5" />
+                </span>
+                <span className="text-[7px] text-white/30">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const extras = [
   {
@@ -147,53 +398,7 @@ const extras = [
     title: 'Pick your identity',
     desc: 'Reaction roles, button roles, and dropdown menus. Let members self-assign without ever typing a command.',
     span: '',
-    mock: (
-      <div className="space-y-2.5">
-        <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-          <div className="flex items-center justify-between">
-            <p className="text-[8px] font-medium text-white/30">COLOR ROLES</p>
-            <span className="text-[7px] text-white/15">pick one</span>
-          </div>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {[
-              { color: '#5f828d', name: 'Teal', active: true },
-              { color: '#8b5cf6', name: 'Purple', active: false },
-              { color: '#f59e0b', name: 'Amber', active: false },
-              { color: '#ef4444', name: 'Rose', active: false },
-            ].map((r) => (
-              <span
-                key={r.name}
-                className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[7px] ${r.active ? 'border-white/[0.12] bg-white/[0.04] text-white/50' : 'border-white/[0.04] text-white/25'}`}
-              >
-                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: r.color }} />
-                {r.name}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-          <p className="text-[8px] font-medium text-white/30">INTERESTS</p>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {[
-              { emoji: '⚔️', role: 'Gamer', members: '4.2K' },
-              { emoji: '🎨', role: 'Artist', members: '1.8K' },
-              { emoji: '🎵', role: 'Music', members: '3.1K' },
-              { emoji: '📰', role: 'News', members: '892' },
-              { emoji: '🎮', role: 'Streaming', members: '2.4K' },
-            ].map((r) => (
-              <span
-                key={r.role}
-                className="inline-flex items-center gap-1 rounded-full border border-white/[0.04] bg-white/[0.02] px-2 py-1 text-[7px] text-white/30"
-              >
-                <span>{r.emoji}</span>
-                <span>{r.role}</span>
-                <span className="text-white/12">· {r.members}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    ),
+    mock: <RolesMock />,
   },
   {
     num: '08',
@@ -240,58 +445,7 @@ const extras = [
     title: 'Make it unmistakably yours',
     desc: 'Custom banner, avatar, bio, embed colors, and context emojis. Your bot, your brand, your rules.',
     span: 'sm:col-span-2',
-    mock: (
-      <div className="flex gap-4">
-        <div className="w-28 shrink-0 space-y-2">
-          <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-2.5">
-            <div className="h-12 w-full rounded-lg bg-gradient-to-br from-accent/20 to-accent/5" />
-            <img src="/evict.png" alt="evict" className="mx-auto -mt-4 h-9 w-9 rounded-full border-2 border-black object-cover" />
-            <p className="mt-1.5 text-center text-[8px] font-medium text-white/40">evict</p>
-            <p className="text-center text-[7px] text-white/15">your server&apos;s backbone</p>
-          </div>
-          <div className="rounded-lg border border-white/[0.04] bg-white/[0.02] p-2">
-            <p className="text-[7px] font-medium text-white/25">STATUS</p>
-            <p className="mt-1 text-[7px] text-accent/40">⚡ Protecting 27K servers</p>
-          </div>
-        </div>
-        <div className="flex-1 space-y-2">
-          <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-            <p className="text-[7px] font-medium text-white/25 uppercase">Embed Theme</p>
-            <div className="mt-2 flex items-center gap-2">
-              {['#5f828d', '#8b5cf6', '#f59e0b', '#ef4444', '#10b981', '#3b82f6'].map((c) => (
-                <div key={c} className={`h-5 w-5 rounded-full border-2 ${c === '#5f828d' ? 'border-white/30 scale-110' : 'border-transparent'}`} style={{ backgroundColor: c }} />
-              ))}
-            </div>
-            <div className="mt-3 rounded-lg border-l-2 border-accent/50 bg-white/[0.02] p-2">
-              <p className="text-[8px] font-medium text-white/40">Member Banned</p>
-              <p className="mt-0.5 text-[7px] text-white/20">@toxicuser was banned for raiding</p>
-              <div className="mt-1.5 flex items-center gap-2">
-                <span className="text-[6px] text-white/15">Today at 12:04 PM</span>
-                <span className="text-[6px] text-white/10">• evict</span>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-            <p className="text-[7px] font-medium text-white/25 uppercase">Context Emojis</p>
-            <div className="mt-2 grid grid-cols-3 gap-1.5">
-              {[
-                { label: 'Success', emoji: '✓', color: 'bg-green-400/10 text-green-400/50' },
-                { label: 'Warning', emoji: '!', color: 'bg-yellow-400/10 text-yellow-400/50' },
-                { label: 'Error', emoji: '✕', color: 'bg-red-400/10 text-red-400/50' },
-                { label: 'Info', emoji: 'i', color: 'bg-blue-400/10 text-blue-400/50' },
-                { label: 'Loading', emoji: '◌', color: 'bg-white/[0.04] text-white/30' },
-                { label: 'Lock', emoji: '◆', color: 'bg-accent/10 text-accent/50' },
-              ].map((e) => (
-                <div key={e.label} className="flex items-center gap-1.5 rounded-lg bg-white/[0.02] px-2 py-1">
-                  <span className={`flex h-4 w-4 items-center justify-center rounded text-[8px] font-bold ${e.color}`}>{e.emoji}</span>
-                  <span className="text-[7px] text-white/20">{e.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
+    mock: <CustomizeMock />,
   },
 ]
 

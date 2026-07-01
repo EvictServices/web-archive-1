@@ -29,7 +29,7 @@ export default function HeroSection() {
       <ParticleField />
 
       <div className="relative mx-auto flex max-w-6xl min-h-screen items-center px-6">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-2">
+        <div className="grid w-full items-center gap-x-12 lg:grid-cols-2">
           <div>
             <h1 className="text-[80px] font-bold tracking-tighter leading-none text-accent sm:text-[120px] md:text-[160px]">
               evict
@@ -101,12 +101,11 @@ export default function HeroSection() {
                     <p className="text-[10px] text-white/25">servers protected</p>
                   </div>
                 </div>
-
               </motion.div>
             )}
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden translate-y-24 lg:flex lg:justify-end">
             <FloatingCards />
           </div>
         </div>

@@ -5,10 +5,11 @@ import ExtrasSection from '@/components/sections/ExtrasSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import Footer from '@/components/sections/Footer'
 import ImpersonatorWarning from '@/components/ImpersonatorWarning'
+import SmoothScroll from '@/components/SmoothScroll'
 
 export default function Home() {
   return (
-    <>
+    <SmoothScroll>
       <ImpersonatorWarning />
       <Navbar />
       <HeroSection />
@@ -18,6 +19,6 @@ export default function Home() {
         <TestimonialsSection />
         <Footer />
       </div>
-    </>
+    </SmoothScroll>
   )
 }
