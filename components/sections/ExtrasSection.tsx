@@ -21,7 +21,9 @@ import {
   TbNews,
   TbPalette,
   TbPhoto,
+  TbPlayerPlay,
   TbSelector,
+  TbShieldCheck,
   TbUser,
   TbUsers,
 } from 'react-icons/tb'
@@ -257,6 +259,200 @@ function CustomizeMock() {
   )
 }
 
+const SOCIAL_POSTS = [
+  {
+    platform: 'Instagram',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-accent/70" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+    handle: '@evictbot',
+    time: '2m ago',
+    likes: '2.4K',
+    comments: '142',
+    shares: '38',
+    caption: 'New update dropping tonight... stay tuned 👀',
+    media: 'instagram' as const,
+    progress: 85,
+  },
+  {
+    platform: 'TikTok',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-accent/70" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.88 2.89 2.89 0 0 1-2.88-2.88 2.89 2.89 0 0 1 2.88-2.88c.28 0 .55.04.81.1v-3.5a6.37 6.37 0 0 0-.81-.05A6.34 6.34 0 0 0 3.15 15.7 6.34 6.34 0 0 0 9.49 22a6.34 6.34 0 0 0 6.34-6.34V9.4a8.16 8.16 0 0 0 3.76.92V6.69z" />
+      </svg>
+    ),
+    handle: '@evict',
+    time: '15m ago',
+    likes: '892',
+    comments: '67',
+    shares: '214',
+    caption: 'POV: your server is finally safe from raiders',
+    media: 'tiktok' as const,
+    progress: 62,
+  },
+  {
+    platform: 'X',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-3 w-3 text-accent/70" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+    handle: '@evictbot',
+    time: '1h ago',
+    likes: '5.1K',
+    comments: '234',
+    shares: '1.2K',
+    caption: 'evict v4.2 is live. anti-nuke just got 10x faster. your server has never been safer.',
+    media: null,
+    progress: 94,
+  },
+] as const
+
+function SocialPostMedia({ type }: { type: 'instagram' | 'tiktok' }) {
+  if (type === 'instagram') {
+    return (
+      <div className="mt-2.5 flex gap-2">
+        <div className="relative h-14 flex-1 overflow-hidden rounded-lg border border-white/[0.06] bg-[#0d1a1d]">
+          <div className="absolute inset-0 dot-grid opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/25 via-transparent to-accent/5" />
+          <div className="relative flex h-full items-center gap-2 px-2.5">
+            <img src="/evict.png" alt="" className="h-8 w-8 shrink-0 rounded-full object-cover ring-1 ring-white/10" />
+            <div className="min-w-0 flex-1">
+              <p className="text-[7px] font-semibold text-white/55">v4.2 preview</p>
+              <p className="text-[6px] text-white/25">anti-nuke · faster scans</p>
+            </div>
+            <span className="shrink-0 rounded bg-accent/20 px-1.5 py-0.5 text-[5px] font-bold tracking-wide text-accent/80">
+              NEW
+            </span>
+          </div>
+        </div>
+        <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-white/[0.06] bg-[#111]">
+          <div className="flex h-full flex-col items-center justify-center gap-0.5 bg-gradient-to-b from-accent/20 to-transparent">
+            <TbShieldCheck className="h-4 w-4 text-accent/75" />
+            <span className="text-[5px] font-medium text-white/35">protected</span>
+          </div>
+          <span className="absolute right-1 bottom-1 rounded bg-black/60 px-1 text-[5px] text-white/45">2/3</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-2.5 flex gap-2">
+      <div className="relative h-14 flex-1 overflow-hidden rounded-lg border border-white/[0.06] bg-black">
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(95,130,141,0.35)_0%,transparent_45%,rgba(139,92,246,0.2)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/50" />
+        <div className="absolute top-1.5 left-2 rounded bg-black/50 px-1 py-0.5 text-[5px] font-semibold text-white/55">
+          POV
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
+            <TbPlayerPlay className="h-3 w-3 text-white/85" />
+          </span>
+        </div>
+        <div className="absolute right-2 bottom-1.5 left-2">
+          <p className="truncate text-[6px] font-medium text-white/65">raiders getting evicted</p>
+          <p className="mt-0.5 flex items-center gap-1 text-[5px] text-white/30">
+            <TbMusic className="h-2 w-2 shrink-0" />
+            <span className="truncate">original sound · evict</span>
+          </p>
+        </div>
+      </div>
+      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.03]">
+        <div className="absolute inset-1 rounded-full bg-gradient-to-br from-accent/35 via-purple-500/25 to-black ring-1 ring-white/[0.08]" />
+        <div className="absolute inset-2.5 rounded-full bg-black/80" />
+        <TbMusic className="relative h-3 w-3 text-white/50" />
+      </div>
+    </div>
+  )
+}
+
+function SocialMock() {
+  return (
+    <div className="space-y-2.5">
+      {SOCIAL_POSTS.map((post, i) => (
+        <div key={i} className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3.5">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent/10">{post.icon}</div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-semibold text-white/50">{post.platform}</span>
+                <span className="text-[9px] text-white/25">{post.handle}</span>
+              </div>
+            </div>
+            <span className="text-[8px] text-white/20">{post.time}</span>
+          </div>
+
+          <p className="mt-2.5 text-[9px] leading-relaxed text-white/35">{post.caption}</p>
+
+          {post.media && <SocialPostMedia type={post.media} />}
+
+          <div className="mt-2.5 flex items-center gap-4">
+            <span className="flex items-center gap-1 text-[8px] text-white/25">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              {post.likes}
+            </span>
+            <span className="flex items-center gap-1 text-[8px] text-white/25">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              {post.comments}
+            </span>
+            <span className="flex items-center gap-1 text-[8px] text-white/25">
+              <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                <polyline points="16 6 12 2 8 6" />
+                <line x1="12" y1="2" x2="12" y2="15" />
+              </svg>
+              {post.shares}
+            </span>
+            <span className="ml-auto rounded-full bg-accent/10 px-2 py-0.5 text-[7px] font-semibold text-accent/60">
+              REPOSTED
+            </span>
+          </div>
+
+          <div className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-white/[0.03]">
+            <div className="h-full rounded-full bg-accent/25" style={{ width: `${post.progress}%` }} />
+          </div>
+        </div>
+      ))}
+
+      <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-green-400/60" />
+            <span className="text-[9px] font-medium text-white/30">Monitoring 12 feeds</span>
+          </div>
+          <span className="text-[8px] text-white/20">47 posts today</span>
+        </div>
+        <div className="mt-2 grid grid-cols-4 gap-1.5">
+          {[
+            { name: 'Instagram', count: 18 },
+            { name: 'TikTok', count: 12 },
+            { name: 'X', count: 9 },
+            { name: 'YouTube', count: 8 },
+          ].map((feed) => (
+            <div key={feed.name} className="rounded-md bg-white/[0.02] px-2 py-1 text-center">
+              <p className="text-[7px] text-white/15">{feed.name}</p>
+              <p className="text-[9px] font-semibold text-white/35">{feed.count}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[8px] text-white/15">
+          <span>next check in 4m</span>
+          <span>avg. 3.2 posts/hr</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const extras = [
   {
     num: '06',
@@ -264,133 +460,7 @@ const extras = [
     title: 'Your content, everywhere',
     desc: 'Auto-repost from Instagram, TikTok, X, and more. Keep your server fed with fresh content without lifting a finger.',
     span: 'sm:col-span-2',
-    mock: (
-      <div className="space-y-2.5">
-        {[
-          {
-            platform: 'Instagram',
-            icon: (
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-accent/70" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="2" width="20" height="20" rx="5" />
-                <circle cx="12" cy="12" r="5" />
-                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
-              </svg>
-            ),
-            handle: '@evictbot',
-            time: '2m ago',
-            likes: '2.4K',
-            comments: '142',
-            shares: '38',
-            caption: 'New update dropping tonight... stay tuned 👀',
-            hasMedia: true,
-            progress: 85,
-          },
-          {
-            platform: 'TikTok',
-            icon: (
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-accent/70" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.88 2.89 2.89 0 0 1-2.88-2.88 2.89 2.89 0 0 1 2.88-2.88c.28 0 .55.04.81.1v-3.5a6.37 6.37 0 0 0-.81-.05A6.34 6.34 0 0 0 3.15 15.7 6.34 6.34 0 0 0 9.49 22a6.34 6.34 0 0 0 6.34-6.34V9.4a8.16 8.16 0 0 0 3.76.92V6.69z" />
-              </svg>
-            ),
-            handle: '@evict',
-            time: '15m ago',
-            likes: '892',
-            comments: '67',
-            shares: '214',
-            caption: 'POV: your server is finally safe from raiders',
-            hasMedia: true,
-            progress: 62,
-          },
-          {
-            platform: 'X',
-            icon: (
-              <svg viewBox="0 0 24 24" className="h-3 w-3 text-accent/70" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            ),
-            handle: '@evictbot',
-            time: '1h ago',
-            likes: '5.1K',
-            comments: '234',
-            shares: '1.2K',
-            caption: 'evict v4.2 is live. anti-nuke just got 10x faster. your server has never been safer.',
-            hasMedia: false,
-            progress: 94,
-          },
-        ].map((post, i) => (
-          <div key={i} className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3.5">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent/10">{post.icon}</div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-semibold text-white/50">{post.platform}</span>
-                  <span className="text-[9px] text-white/25">{post.handle}</span>
-                </div>
-              </div>
-              <span className="text-[8px] text-white/20">{post.time}</span>
-            </div>
-
-            <p className="mt-2.5 text-[9px] leading-relaxed text-white/35">{post.caption}</p>
-
-            {post.hasMedia && (
-              <div className="mt-2.5 flex gap-2">
-                <div className="h-14 flex-1 rounded-lg bg-gradient-to-br from-accent/10 to-accent/3 border border-white/[0.04]" />
-                <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/[0.04]" />
-              </div>
-            )}
-
-            <div className="mt-2.5 flex items-center gap-4">
-              <span className="flex items-center gap-1 text-[8px] text-white/25">
-                <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-                {post.likes}
-              </span>
-              <span className="flex items-center gap-1 text-[8px] text-white/25">
-                <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
-                {post.comments}
-              </span>
-              <span className="flex items-center gap-1 text-[8px] text-white/25">
-                <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" /></svg>
-                {post.shares}
-              </span>
-              <span className="ml-auto rounded-full bg-accent/10 px-2 py-0.5 text-[7px] font-semibold text-accent/60">REPOSTED</span>
-            </div>
-
-            {/* Engagement bar */}
-            <div className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-white/[0.03]">
-              <div className="h-full rounded-full bg-accent/25" style={{ width: `${post.progress}%` }} />
-            </div>
-          </div>
-        ))}
-
-        {/* Feed status bar */}
-        <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-green-400/60 animate-pulse" />
-              <span className="text-[9px] font-medium text-white/30">Monitoring 12 feeds</span>
-            </div>
-            <span className="text-[8px] text-white/20">47 posts today</span>
-          </div>
-          <div className="mt-2 grid grid-cols-4 gap-1.5">
-            {[
-              { name: 'Instagram', count: 18 },
-              { name: 'TikTok', count: 12 },
-              { name: 'X', count: 9 },
-              { name: 'YouTube', count: 8 },
-            ].map((feed) => (
-              <div key={feed.name} className="rounded-md bg-white/[0.02] px-2 py-1 text-center">
-                <p className="text-[7px] text-white/15">{feed.name}</p>
-                <p className="text-[9px] font-semibold text-white/35">{feed.count}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-2 flex items-center justify-between text-[8px] text-white/15">
-            <span>next check in 4m</span>
-            <span>avg. 3.2 posts/hr</span>
-          </div>
-        </div>
-      </div>
-    ),
+    mock: <SocialMock />,
   },
   {
     num: '07',
