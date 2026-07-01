@@ -31,8 +31,10 @@ export default function UpdatesView({ updates }: Props) {
                 'Release notes and patch history for Evict.'
               ) : (
                 <>
-                  <span className="font-semibold text-white/70">{updates.length}</span>{' '}
-                  {updates.length === 1 ? 'release' : 'releases'} of what&apos;s new, improved, and fixed.
+                  <span className="font-semibold text-white/70">{updates.length}</span>
+                  {' '}
+                  {updates.length === 1 ? 'release' : 'releases'}
+                  {' of what\'s new, improved, and fixed.'}
                 </>
               )}
             </p>

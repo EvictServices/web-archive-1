@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { TbAlertTriangle, TbX } from 'react-icons/tb'
 import {
   CLIENT_ID,
   FAKE_BOT_ID,
@@ -13,6 +14,12 @@ const STORAGE_KEY = 'evict-impersonator-warning-dismissed'
 
 export default function ImpersonatorWarning() {
   const [visible, setVisible] = useState(false)
+  const startYRef = useRef(0)
+
+  const dismiss = useCallback(() => {
+    sessionStorage.setItem(STORAGE_KEY, '1')
+    setVisible(false)
+  }, [])
 
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_KEY)) return
@@ -20,59 +27,77 @@ export default function ImpersonatorWarning() {
     return () => window.clearTimeout(timer)
   }, [])
 
-  function dismiss() {
-    sessionStorage.setItem(STORAGE_KEY, '1')
-    setVisible(false)
-  }
+  useEffect(() => {
+    if (!visible) return
+
+    startYRef.current = window.scrollY
+
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - startYRef.current) > 24) {
+        dismiss()
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [visible, dismiss])
 
   if (!visible) return null
 
   return (
     <div
       role="status"
-      className="impersonator-warning fixed inset-x-4 bottom-4 z-40 mx-auto max-w-lg sm:inset-x-6 sm:bottom-6"
+      className="impersonator-warning fixed inset-x-4 bottom-4 z-40 mx-auto max-w-md sm:inset-x-6 sm:bottom-6"
     >
-      <div className="rounded-2xl border border-amber-500/20 bg-[#0c0b09]/95 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-5">
-        <div className="flex gap-3">
-          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/10 text-amber-300/90">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+      <div className="rounded-2xl border border-white/[0.06] bg-[#0a0f11]/95 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.5)] backdrop-blur-md">
+        <div className="flex items-start gap-3">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-amber-500/15 bg-amber-500/[0.06] text-amber-300/80">
+            <TbAlertTriangle className="h-4 w-4" aria-hidden />
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 sm:text-[13px]">
-              <span className="font-medium text-white/70">{FAKE_BOT_TAG}</span>
-              <span className="font-mono text-[11px] text-white/35"> ({FAKE_BOT_ID})</span>
-              {' '}is impersonating the real{' '}
-              <span className="font-medium text-white/70">{REAL_BOT_TAG}</span>
-              <span className="font-mono text-[11px] text-white/35"> ({CLIENT_ID})</span>.
-              {' '}If this fake bot is in your server, we recommend kicking it.
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-sm font-semibold text-white/85">Impersonator warning</p>
+              <button
+                type="button"
+                onClick={dismiss}
+                className="-mt-0.5 shrink-0 rounded-lg p-1 text-white/25 transition-colors hover:bg-white/[0.06] hover:text-white/55"
+                aria-label="Dismiss warning"
+              >
+                <TbX className="h-4 w-4" aria-hidden />
+              </button>
+            </div>
+
+            <p className="mt-1 text-xs leading-relaxed text-white/45">
+              A fake bot is copying our name. Kick it if it&apos;s in your server.
             </p>
-            <p className="mt-2 text-[12px] leading-relaxed text-white/45 sm:text-[13px]">
-              Check our{' '}
+
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="rounded-xl border border-amber-500/15 bg-amber-500/[0.04] px-3 py-2">
+                <p className="text-[9px] font-medium tracking-[0.12em] text-amber-300/50 uppercase">Fake</p>
+                <p className="mt-1 text-xs font-semibold text-amber-200/85">{FAKE_BOT_TAG}</p>
+                <p className="mt-0.5 truncate font-mono text-[10px] text-white/25">{FAKE_BOT_ID}</p>
+              </div>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                <p className="text-[9px] font-medium tracking-[0.12em] text-white/30 uppercase">Real</p>
+                <p className="mt-1 text-xs font-semibold text-white/75">{REAL_BOT_TAG}</p>
+                <p className="mt-0.5 truncate font-mono text-[10px] text-white/25">{CLIENT_ID}</p>
+              </div>
+            </div>
+
+            <p className="mt-3 text-[11px] text-white/35">
+              Verify on our{' '}
               <a
                 href={SUPPORT_SERVER_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-200/80 underline decoration-amber-200/30 underline-offset-2 transition-colors hover:text-amber-100"
+                className="font-medium text-white/55 underline decoration-white/15 underline-offset-2 transition-colors hover:text-white/75"
               >
                 support server
               </a>
-              {' '}to make sure you have the real bot.
+              .
             </p>
           </div>
-
-          <button
-            type="button"
-            onClick={dismiss}
-            className="shrink-0 rounded-lg p-1.5 text-white/30 transition-colors hover:bg-white/[0.06] hover:text-white/60"
-            aria-label="Dismiss warning"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-            </svg>
-          </button>
         </div>
       </div>
     </div>
