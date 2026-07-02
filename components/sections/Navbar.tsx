@@ -11,7 +11,7 @@ import { useBodyScrollLock } from '@/hooks/useBodyScrollLock'
 const NAV_LINKS = [
   { href: '/commands', label: 'Commands' },
   { href: '/status', label: 'Status' },
-  { href: '/embeds', label: 'Embeds' },
+  { href: '/embed', label: 'Embeds' },
   { href: '/updates', label: 'Updates' },
 ] as const
 

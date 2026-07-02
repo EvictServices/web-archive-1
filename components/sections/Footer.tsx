@@ -4,7 +4,7 @@ import { SUPPORT_SERVER_URL } from '@/lib/constants'
 const productLinks = [
   { label: 'Commands', href: '/commands' },
   { label: 'Status', href: '/status' },
-  { label: 'Embeds', href: '/embeds' },
+  { label: 'Embeds', href: '/embed' },
   { label: 'Updates', href: '/updates' },
   { label: 'Documentation', href: '/docs' },
 ]

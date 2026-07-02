@@ -12,7 +12,7 @@ Built with [Next.js 16](https://nextjs.org), React 19, Tailwind CSS 4, and Frame
 | `/commands` | Command reference |
 | `/status` | Real-time cluster & shard health dashboard |
 | `/updates` | Changelog / update notes |
-| `/embeds` | Embed builder |
+| `/embed` | Embed builder |
 | `/avatars/[id]` | Avatar viewer |
 | `/terms` | Terms of Service |
 | `/privacy` | Privacy Policy |
