@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { TicketTranscriptResponse as TicketData, TicketUser } from '@/lib/tickets'
 import { formatTimestamp, getFallbackAvatar, getAvatarUrl, getInvolvedLabel } from '@/components/tickets/helpers'
 import TranscriptMessages from '@/components/tickets/TranscriptMessages'
+import { PageLabel, PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 
 interface Props {
   ticketData: TicketData
@@ -75,13 +76,9 @@ export default function TicketView({ ticketData, ticketId }: Props) {
 
   return (
     <main className="relative flex-1">
-      <div className="mx-auto max-w-6xl px-4 pt-24 pb-16 sm:px-6 sm:pb-24">
+      <div className={`mx-auto max-w-6xl pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
         <header className="mb-6 text-center sm:mb-8">
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Transcript</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
+          <PageLabel label="Transcript" />
         </header>
 
         <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)]">

@@ -8,6 +8,7 @@ import CommandList from '@/components/commands/CommandList'
 import CommandSidebar from '@/components/commands/CommandSidebar'
 import CommandPagination from '@/components/commands/CommandPagination'
 import CommandModal from '@/components/commands/CommandModal'
+import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 import { useCommands } from '@/hooks/useCommands'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { type Command } from '@/types/command'
@@ -129,21 +130,12 @@ export default function CommandsPage() {
       <div className="line-grid pointer-events-none absolute inset-0 opacity-15" />
       <Navbar />
 
-      <div className="relative mx-auto max-w-6xl px-6 pt-24 pb-24">
-        <motion.header
-          className="text-center"
-          initial={{ opacity: 0, y: lightMotion ? 0 : 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: lightMotion ? 0.2 : 0.4, ease }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Reference</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
-          <h1 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">Command Index</h1>
-          <p className="mx-auto mt-3 max-w-md text-[11px] leading-relaxed text-white/60">
-            {loading ? (
+      <div className={`relative mx-auto max-w-6xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+        <PageHeader
+          label="Reference"
+          title="Command Index"
+          description={
+            loading ? (
               'Loading commands…'
             ) : (
               <>
@@ -152,9 +144,9 @@ export default function CommandsPage() {
                 commands across{' '}
                 <span className="font-semibold text-white/70">{categories.length}</span> categories
               </>
-            )}
-          </p>
-        </motion.header>
+            )
+          }
+        />
 
         <div className="mt-12 flex min-w-0 flex-col gap-6 lg:flex-row lg:gap-10">
           <motion.div

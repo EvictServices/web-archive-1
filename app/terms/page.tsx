@@ -1,10 +1,6 @@
-import type { Metadata } from 'next'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-
-export const metadata: Metadata = {
-  title: 'Terms of Service',
-}
+import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 
 const sections = [
   { id: 'agreement', title: 'Agreement' },
@@ -23,22 +19,14 @@ export default function TermsPage() {
       <Navbar />
 
       <div className="relative flex-1">
-        <div className="mx-auto max-w-5xl px-6 pt-24 pb-12">
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Legal</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
-          <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Terms of Service
-          </h1>
-          <p className="mt-3 text-center text-[11px] text-white/60">
-            Last updated March 30, 2026
-          </p>
-        </div>
+        <div className={`mx-auto max-w-5xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+          <PageHeader
+            label="Legal"
+            title="Terms of Service"
+            description="Last updated March 30, 2026"
+          />
 
-        <div className="mx-auto max-w-5xl px-6 pb-24">
-          <div className="flex flex-col gap-12 lg:flex-row">
+          <div className="mt-12 flex flex-col gap-12 lg:flex-row">
             <aside className="hidden lg:block lg:w-48 lg:flex-shrink-0">
               <div className="sticky top-24">
                 <p className="mb-3 text-[9px] font-medium tracking-[0.15em] text-white/60 uppercase">Contents</p>

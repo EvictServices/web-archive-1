@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import Navbar from '@/components/sections/Navbar'
+import Footer from '@/components/sections/Footer'
+import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 import { createDefaultEmbed, generateScript, type EmbedData, type EmbedAuthor, type EmbedFooter, type EmbedField, type EmbedButton } from '@/components/embeds/lib/types'
 import EmbedEditor from '@/components/embeds/EmbedEditor'
 import EmbedPreview from '@/components/embeds/EmbedPreview'
 import VariablesPaginator from '@/components/embeds/VariablesPaginator'
-import Navbar from '@/components/sections/Navbar'
-import Footer from '@/components/sections/Footer'
 
 export default function EmbedBuilderPage() {
   const [data, setData] = useState<EmbedData>(createDefaultEmbed)
@@ -98,23 +98,12 @@ export default function EmbedBuilderPage() {
       <Navbar />
 
       <div className="relative flex-1 overflow-x-hidden">
-        <div className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-24">
-          <motion.header
-            className="text-center"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-              <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Tools</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-            </div>
-            <h1 className="mt-6 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">Embed Builder</h1>
-            <p className="mx-auto mt-3 max-w-md text-[11px] leading-relaxed text-white/60">
-              Design embeds visually and copy the generated script for your server.
-            </p>
-          </motion.header>
+        <div className={`mx-auto max-w-7xl pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+          <PageHeader
+            label="Tools"
+            title="Embed Builder"
+            description="Design embeds visually and copy the generated script for your server."
+          />
 
           <div className="mb-4 mt-8 flex justify-end sm:mb-6 sm:mt-12">
             <button

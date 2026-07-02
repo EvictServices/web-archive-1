@@ -1,18 +1,17 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { motion } from 'framer-motion'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import ClusterModal from '@/components/status/ClusterModal'
 import ClustersSection from '@/components/status/ClustersSection'
 import SystemPanel from '@/components/status/SystemPanel'
 import StatusHero, { StatusHeroSkeleton } from '@/components/status/StatusHero'
+import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { type Cluster, type HealthData, latencyToMs, getShardCount } from '@/lib/status'
 
 const REFRESH_INTERVAL = 30
-const ease = [0.23, 1, 0.32, 1] as const
 
 export default function StatusPage() {
   const lightMotion = useLightMotion()
@@ -79,23 +78,12 @@ export default function StatusPage() {
       <div className="line-grid pointer-events-none absolute inset-0 opacity-10" />
       <Navbar />
 
-      <div className="relative mx-auto w-full max-w-6xl flex-1 px-4 pt-20 pb-16 sm:px-6 sm:pt-24 sm:pb-24">
-        <motion.header
-          className="text-center"
-          initial={{ opacity: 0, y: lightMotion ? 0 : 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: lightMotion ? 0.2 : 0.4, ease }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Infrastructure</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
-          <h1 className="mt-6 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">Status</h1>
-          <p className="mx-auto mt-3 max-w-md text-[11px] leading-relaxed text-white/60">
-            Real-time cluster health, shard latency, and host metrics. Refreshes every {REFRESH_INTERVAL}s.
-          </p>
-        </motion.header>
+      <div className={`relative mx-auto w-full max-w-6xl flex-1 pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+        <PageHeader
+          label="Infrastructure"
+          title="Status"
+          description={`Real-time cluster health, shard latency, and host metrics. Refreshes every ${REFRESH_INTERVAL}s.`}
+        />
 
         <div className="mt-8 sm:mt-12">
         {loading ? (

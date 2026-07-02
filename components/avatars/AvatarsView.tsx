@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { type AvatarRecord, formatFullDate, formatRelativeTime, userAvatarUrl } from '@/lib/avatars'
 import AvatarCardImage from './AvatarCardImage'
+import { PageLabel, PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
+import { useLightMotion } from '@/hooks/useLightMotion'
 
 const PAGE_SIZE = 24
 
@@ -107,6 +109,7 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
 
   const visibleAvatars = avatars.slice(0, visibleCount)
   const hasMore = visibleCount < avatars.length
+  const lightMotion = useLightMotion()
   const latestAvatar = avatars[0]
   const profileUrl = userAvatarUrl(userId, avatarHash ?? null, 128)
   const title = username ? `${username}'s Avatars` : 'Avatar History'
@@ -116,26 +119,29 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
       <div className="line-grid absolute inset-0 opacity-10" />
 
       <div className="relative flex-1">
-        <div className="mx-auto max-w-5xl px-6 pt-24 pb-10">
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">History</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
+        <div className={`mx-auto max-w-5xl pb-10 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+          <motion.header
+            className="text-center"
+            initial={{ opacity: 0, y: lightMotion ? 0 : 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: lightMotion ? 0.2 : 0.4, ease: [0.23, 1, 0.32, 1] }}
+          >
+            <PageLabel label="History" />
 
-          <div className="mt-8 flex flex-col items-center text-center">
-            <img
-              src={profileUrl}
-              alt=""
-              className="h-16 w-16 rounded-full object-cover ring-2 ring-white/[0.06]"
-              width={64}
-              height={64}
-            />
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-white">{title}</h1>
-            <p className="mt-2 max-w-sm text-[12px] leading-relaxed text-white/40">
-              Past profile pictures captured and archived by Evict.
-            </p>
-          </div>
+            <div className="mt-8 flex flex-col items-center text-center">
+              <img
+                src={profileUrl}
+                alt=""
+                className="h-16 w-16 rounded-full object-cover ring-2 ring-white/[0.06]"
+                width={64}
+                height={64}
+              />
+              <h1 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">{title}</h1>
+              <p className="mt-2 max-w-sm text-[11px] leading-relaxed text-white/60">
+                Past profile pictures captured and archived by Evict.
+              </p>
+            </div>
+          </motion.header>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-2">

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
 import { type Update, timeAgo, getTagBadgeClass } from '@/lib/updates'
 
 interface Props {
@@ -13,21 +14,12 @@ export default function UpdatesView({ updates }: Props) {
       <div className="line-grid absolute inset-0 opacity-10" />
 
       <div className="relative flex-1">
-        <div className="mx-auto max-w-3xl px-6 pt-24 pb-24">
-          <motion.header
-            className="text-center"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
-              <span className="text-[9px] font-medium tracking-[0.2em] text-white/60 uppercase">Changelog</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.06]" />
-            </div>
-            <h1 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">Updates</h1>
-            <p className="mx-auto mt-3 max-w-md text-[11px] leading-relaxed text-white/60">
-              {updates.length === 0 ? (
+        <div className={`mx-auto max-w-3xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
+          <PageHeader
+            label="Changelog"
+            title="Updates"
+            description={
+              updates.length === 0 ? (
                 'Release notes and patch history for Evict.'
               ) : (
                 <>
@@ -36,9 +28,9 @@ export default function UpdatesView({ updates }: Props) {
                   {updates.length === 1 ? 'release' : 'releases'}
                   {' of what\'s new, improved, and fixed.'}
                 </>
-              )}
-            </p>
-          </motion.header>
+              )
+            }
+          />
 
           {updates.length === 0 ? (
             <div className="mt-16 text-center">

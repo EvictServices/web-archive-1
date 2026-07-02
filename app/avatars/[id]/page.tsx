@@ -42,7 +42,7 @@ export async function generateMetadata({
   const userInfo = await fetchUserInfo(id)
   const username = userInfo?.display_name || userInfo?.username || null
   return {
-    title: username ? `${username} - Avatar History` : 'Avatar History',
+    title: username ? `Evict • ${username} - Avatar History` : 'Evict • Avatar History',
   }
 }
 

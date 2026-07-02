@@ -1,12 +1,9 @@
-import type { Metadata } from 'next'
 import { readFile } from 'fs/promises'
 import path from 'path'
 import UpdatesView from '@/components/updates/UpdatesView'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import { parseYAML, type Update } from '@/lib/updates'
-
-export const metadata: Metadata = { title: 'Updates' }
 
 async function loadUpdates(): Promise<Update[]> {
   try {
