@@ -1,6 +1,7 @@
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
+import PageHeader from '@/components/ui/PageHeader'
+import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 
 const sections = [
   { id: 'agreement', title: 'Agreement' },

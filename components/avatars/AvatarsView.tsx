@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { type AvatarRecord, formatFullDate, formatRelativeTime, userAvatarUrl } from '@/lib/avatars'
 import AvatarCardImage from './AvatarCardImage'
-import { PageLabel, PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
+import { PageLabel } from '@/components/ui/PageHeader'
+import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 import { useLightMotion } from '@/hooks/useLightMotion'
 
 const PAGE_SIZE = 24

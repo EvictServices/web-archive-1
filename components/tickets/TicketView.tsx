@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from 'react'
 import type { TicketTranscriptResponse as TicketData, TicketUser } from '@/lib/tickets'
 import { formatTimestamp, getFallbackAvatar, getAvatarUrl, getInvolvedLabel } from '@/components/tickets/helpers'
 import TranscriptMessages from '@/components/tickets/TranscriptMessages'
-import { PageLabel, PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
+import { PageLabel } from '@/components/ui/PageHeader'
+import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 
 interface Props {
   ticketData: TicketData

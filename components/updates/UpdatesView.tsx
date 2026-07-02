@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import PageHeader, { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/components/ui/PageHeader'
+import PageHeader from '@/components/ui/PageHeader'
+import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 import { type Update, timeAgo, getTagBadgeClass } from '@/lib/updates'
 
 interface Props {

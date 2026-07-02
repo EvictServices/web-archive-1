@@ -2,11 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useLightMotion } from '@/hooks/useLightMotion'
+import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 
 const ease = [0.23, 1, 0.32, 1] as const
-
-export const PAGE_X_PADDING = 'px-4 sm:px-6'
-export const PAGE_TOP_PADDING = 'pt-28 sm:pt-32'
 
 interface PageHeaderProps {
   label: string

@@ -112,23 +112,18 @@ function RolesMock() {
           <span className="text-[6px] text-white/15">multi-select</span>
         </div>
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {INTEREST_ROLES.map(({ Icon, role, members }, i) => {
-            const user = users[ROLE_USER_IDS[i % ROLE_USER_IDS.length]]
-            return (
-              <span
-                key={role}
-                className="inline-flex items-center gap-1 rounded-full border border-white/[0.04] bg-white/[0.02] px-2 py-1 text-[7px] text-white/30"
-              >
-                {user?.avatar ? (
-                  <img src={user.avatar} alt="" className="h-3 w-3 rounded-full object-cover" />
-                ) : (
-                  <Icon className="h-2.5 w-2.5 text-white/35" />
-                )}
-                <span>{role}</span>
-                <span className="text-white/12">· {members}</span>
+          {INTEREST_ROLES.map(({ Icon, role, members }) => (
+            <span
+              key={role}
+              className="inline-flex items-center gap-1 rounded-full border border-white/[0.04] bg-white/[0.02] px-2 py-1 text-[7px] text-white/30"
+            >
+              <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-white/[0.04]">
+                <Icon className="h-2 w-2 text-white/35" />
               </span>
-            )
-          })}
+              <span>{role}</span>
+              <span className="text-white/12">· {members}</span>
+            </span>
+          ))}
         </div>
       </div>
 
@@ -165,8 +160,8 @@ function CustomizeMock() {
   const activeColor = EMBED_COLORS[0].hex
 
   return (
-    <div className="flex gap-3">
-      <div className="w-[7.5rem] shrink-0 space-y-2">
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="w-full shrink-0 space-y-2 sm:w-[7.5rem]">
         <div className="overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02]">
           <div className="h-10 w-full bg-gradient-to-br from-accent/25 via-accent/10 to-transparent" />
           <div className="px-2.5 pb-2.5">
@@ -243,13 +238,13 @@ function CustomizeMock() {
             <p className="text-[7px] font-medium tracking-wider text-white/25 uppercase">Context emojis</p>
             <span className="text-[6px] text-white/15">6 configured</span>
           </div>
-          <div className="mt-2 grid grid-cols-3 gap-1.5">
+          <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
             {CONTEXT_EMOJIS.map(({ label, Icon, color }) => (
-              <div key={label} className="flex items-center gap-1.5 rounded-lg border border-white/[0.03] bg-black/20 px-2 py-1">
+              <div key={label} className="flex min-w-0 items-center gap-1.5 rounded-lg border border-white/[0.03] bg-black/20 px-2 py-1.5">
                 <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded ${color}`}>
                   <Icon className="h-2.5 w-2.5" />
                 </span>
-                <span className="text-[7px] text-white/30">{label}</span>
+                <span className="truncate text-[7px] text-white/30">{label}</span>
               </div>
             ))}
           </div>
