@@ -127,7 +127,6 @@ export default function EmbedBuilderPage() {
           </div>
 
           <div className="grid min-w-0 gap-4 sm:gap-6 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px]">
-            {/* Editor column */}
             <div className="min-w-0 flex flex-col gap-4">
               <div
                 className="rounded-2xl border border-white/[0.06] bg-white/[0.02]"
@@ -153,7 +152,6 @@ export default function EmbedBuilderPage() {
               </div>
             </div>
 
-            {/* Preview column */}
             <div className="min-w-0 flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
               <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1e1f22]">
                 <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] bg-[#111214] px-3 py-2.5 sm:px-4 sm:py-3">

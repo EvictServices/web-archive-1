@@ -71,7 +71,6 @@ function CommandSidebar({
           </motion.p>
         )}
 
-        {/* Mobile: horizontal category bar */}
         <div className="relative mt-4 -mx-6 border-b border-white/[0.06] lg:hidden">
           <LayoutGroup id="mobile-categories">
             <nav
@@ -91,7 +90,6 @@ function CommandSidebar({
           </LayoutGroup>
         </div>
 
-        {/* Desktop: vertical category list */}
         <div className="mt-4 hidden lg:block">
           <LayoutGroup id="desktop-categories">
             <nav className="flex flex-col gap-1.5" aria-label="Categories">

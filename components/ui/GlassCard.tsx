@@ -26,7 +26,6 @@ export default function GlassCard({ children, className = '', span = '', delay =
       className={`group relative overflow-hidden rounded-2xl border border-white/[0.04] bg-white/[0.02] p-5 transition-colors duration-300 hover:border-accent/15 hover:bg-white/[0.03] ${span} ${className}`}
       onClick={onClick}
     >
-      {/* Glow sweep on reveal */}
       <motion.div
         initial={{ opacity: 0, x: '-100%' }}
         animate={inView ? { opacity: [0, 0.6, 0], x: '200%' } : undefined}

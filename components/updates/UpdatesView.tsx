@@ -40,7 +40,6 @@ export default function UpdatesView({ updates }: Props) {
             </p>
           </motion.header>
 
-          {/* Timeline */}
           {updates.length === 0 ? (
             <div className="mt-16 text-center">
               <p className="text-sm text-white/20">No updates yet.</p>
@@ -55,17 +54,14 @@ export default function UpdatesView({ updates }: Props) {
                   transition={{ delay: i * 0.08, duration: 0.4 }}
                   className="relative pl-8 pb-12 last:pb-0"
                 >
-                  {/* Timeline line */}
                   {i < updates.length - 1 && (
                     <div className="absolute left-[7px] top-3 bottom-0 w-px bg-white/[0.06]" />
                   )}
 
-                  {/* Timeline dot */}
                   <div className="absolute left-0 top-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full border border-white/[0.08] bg-[#0a0a0a]">
                     <div className={`h-2 w-2 rounded-full ${i === 0 ? 'bg-accent' : 'bg-white/20'}`} />
                   </div>
 
-                  {/* Date & version */}
                   <div className="flex items-center gap-3">
                     <time className="text-[11px] font-medium text-white/40">{u.date}</time>
                     {timeAgo(u.date) && (
@@ -73,15 +69,12 @@ export default function UpdatesView({ updates }: Props) {
                     )}
                   </div>
 
-                  {/* Title */}
                   <h2 className="mt-2 text-lg font-semibold tracking-tight text-white">{u.title}</h2>
 
-                  {/* Description */}
                   {u.description && (
                     <p className="mt-2 text-[12px] leading-relaxed text-white/35">{u.description}</p>
                   )}
 
-                  {/* Sections */}
                   <div className="mt-5 space-y-5">
                     {u.sections.map((section, si) => (
                       <div key={si}>

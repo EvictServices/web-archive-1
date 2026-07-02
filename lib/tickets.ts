@@ -67,7 +67,6 @@ export function isValidTicketId(id: string): boolean {
   return TICKET_ID_RE.test(id)
 }
 
-/** Prevent JS precision loss on Discord snowflakes in CDN JSON. */
 export function parseTicketJson(raw: string): TicketTranscriptResponse {
   const safe = raw.replace(
     /"(id|author_id|opened_by_id|closed_by_id|channel_id|guild_id|message_id)"\s*:\s*(\d{16,})/g,

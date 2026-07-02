@@ -23,7 +23,6 @@ export default function PrivacyPage() {
       <Navbar />
 
       <div className="relative flex-1">
-        {/* Hero */}
         <div className="mx-auto max-w-5xl px-6 pt-24 pb-12">
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
@@ -38,10 +37,8 @@ export default function PrivacyPage() {
           </p>
         </div>
 
-        {/* Content */}
         <div className="mx-auto max-w-5xl px-6 pb-24">
           <div className="flex flex-col gap-12 lg:flex-row">
-            {/* Sidebar */}
             <aside className="hidden lg:block lg:w-48 lg:flex-shrink-0">
               <div className="sticky top-24">
                 <p className="mb-3 text-[9px] font-medium tracking-[0.15em] text-white/60 uppercase">Contents</p>
@@ -59,7 +56,6 @@ export default function PrivacyPage() {
               </div>
             </aside>
 
-            {/* Body */}
             <main className="flex-1">
               <div className="max-w-2xl space-y-10">
                 <section id="overview">

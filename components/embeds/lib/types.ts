@@ -53,7 +53,6 @@ export const defaultEmbed: EmbedData = {
   timestamp: false,
 }
 
-/** @deprecated use defaultEmbed constant */
 export function createDefaultEmbed(): EmbedData {
   return { ...defaultEmbed, author: { ...defaultEmbed.author }, footer: { ...defaultEmbed.footer }, fields: [], buttons: [] }
 }

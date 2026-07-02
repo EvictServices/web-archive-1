@@ -25,7 +25,6 @@ function getServerSnapshot() {
   return false
 }
 
-/** Faster, opacity-only motion on mobile and when reduced motion is preferred. */
 export function useLightMotion() {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

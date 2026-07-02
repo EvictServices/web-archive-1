@@ -122,7 +122,6 @@ function FloatingCards() {
 
   return (
     <div className="relative h-[500px]" style={{ perspective: 1200 }}>
-      {/* Main dashboard card */}
       <TiltCard className="absolute right-0 top-4" delay={0.2}>
         <div className="w-80 rounded-2xl border border-white/[0.08] bg-[#0c1214] p-5 shadow-[0_0_80px_rgba(95,130,141,0.12)]">
           <div className="flex items-center justify-between">
@@ -174,7 +173,6 @@ function FloatingCards() {
         </div>
       </TiltCard>
 
-      {/* Alert notification */}
       <TiltCard className="absolute left-0 top-48" delay={0.5}>
         <div className="w-72 rounded-xl border border-red-400/15 bg-[#0c1214] p-4 shadow-[0_0_40px_rgba(239,68,68,0.08)]">
           <div className="flex items-start gap-3">
@@ -198,7 +196,6 @@ function FloatingCards() {
         </div>
       </TiltCard>
 
-      {/* Discord chat mockup */}
       <TiltCard className="absolute right-8 bottom-0" delay={0.7}>
         <div className="w-[300px] rounded-xl border border-white/[0.08] bg-[#0c1214] p-4 shadow-[0_0_60px_rgba(95,130,141,0.08)]">
           <div className="space-y-3">

@@ -51,7 +51,6 @@ export function uptimeToSeconds(value: number): number {
   return value
 }
 
-/** Health API latency fields are seconds (e.g. 0.02 → 20ms). */
 export function latencyToMs(seconds: number): number {
   return Math.max(0, Math.round(seconds * 1000))
 }
@@ -85,7 +84,6 @@ export function getShardCount(clusters: Cluster[]): number {
   return clusters.reduce((sum, cluster) => sum + cluster.shards.length, 0)
 }
 
-/** Discord assigns guilds with `(guild_id >> 22) % shard_count`. */
 export function guildIdToShardId(guildId: string, shardCount: number): number | null {
   const trimmed = guildId.trim()
   if (!/^\d{5,}$/.test(trimmed) || shardCount <= 0) return null

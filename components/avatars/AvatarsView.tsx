@@ -51,7 +51,6 @@ function AvatarModal({
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a0a0a] shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
       >
-        {/* Header */}
         <div className="flex items-center justify-between border-b border-white/[0.04] px-5 py-3.5">
           <span className="text-[11px] font-semibold tracking-wide text-white/30">Avatar #{avatarId}</span>
           <div className="flex items-center gap-1">
@@ -83,12 +82,10 @@ function AvatarModal({
           </div>
         </div>
 
-        {/* Image */}
         <div className="p-5">
           <img src={avatar.url} alt={`Avatar #${avatarId}`} className="w-full rounded-xl" />
         </div>
 
-        {/* Info */}
         <div className="border-t border-white/[0.03] px-5 py-3.5">
           <div className="flex items-center justify-between py-1.5">
             <span className="text-[10px] font-medium tracking-wider text-white/60 uppercase">Captured</span>
@@ -119,7 +116,6 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
       <div className="line-grid absolute inset-0 opacity-10" />
 
       <div className="relative flex-1">
-        {/* Hero */}
         <div className="mx-auto max-w-5xl px-6 pt-24 pb-10">
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.06]" />
@@ -141,7 +137,6 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
             </p>
           </div>
 
-          {/* Stats Banner */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-medium tracking-wider text-white/60 uppercase">Total</span>
@@ -164,7 +159,6 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
           </div>
         </div>
 
-        {/* Grid */}
         <div className="mx-auto max-w-5xl px-6 pb-24">
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
             {visibleAvatars.map((avatar, idx) => (

@@ -112,7 +112,6 @@ export default function ClustersSection({
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return
-      // Cluster highlight still applies
     } finally {
       if (!controller.signal.aborted) {
         setLoading(false)

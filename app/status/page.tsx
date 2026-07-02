@@ -9,7 +9,7 @@ import ClustersSection from '@/components/status/ClustersSection'
 import SystemPanel from '@/components/status/SystemPanel'
 import StatusHero, { StatusHeroSkeleton } from '@/components/status/StatusHero'
 import { useLightMotion } from '@/hooks/useLightMotion'
-import { type Cluster, type HealthData, latencyToMs } from '@/lib/status'
+import { type Cluster, type HealthData, latencyToMs, getShardCount } from '@/lib/status'
 
 const REFRESH_INTERVAL = 30
 const ease = [0.23, 1, 0.32, 1] as const
@@ -59,7 +59,10 @@ export default function StatusPage() {
   }, [data])
 
   const operational = useMemo(
-    () => clusters.length > 0 && clusters.every((c) => c.alive),
+    () =>
+      clusters.length > 0 &&
+      getShardCount(clusters) > 0 &&
+      clusters.every((c) => c.alive),
     [clusters],
   )
 
