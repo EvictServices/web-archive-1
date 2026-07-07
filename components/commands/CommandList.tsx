@@ -19,7 +19,7 @@ function CommandList({ commands, lightMotion = false }: CommandListProps) {
       variants={{
         show: {
           transition: {
-            staggerChildren: lightMotion ? 0 : 0.025,
+            staggerChildren: lightMotion ? 0 : 0.02,
             delayChildren: lightMotion ? 0 : 0.03,
           },
         },
@@ -30,6 +30,7 @@ function CommandList({ commands, lightMotion = false }: CommandListProps) {
       {commands.map((cmd) => (
         <motion.div
           key={cmd.name}
+          className="min-w-0"
           variants={{
             hidden: { opacity: 0, y: lightMotion ? 0 : 6 },
             show: {

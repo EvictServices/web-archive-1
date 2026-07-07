@@ -17,18 +17,36 @@ interface StatusHeroProps {
 }
 
 const METRICS = [
-  { key: 'latency', label: 'Gateway', icon: TbBolt },
-  { key: 'guilds', label: 'Servers', icon: TbServer },
-  { key: 'users', label: 'Users', icon: TbUsers },
+  {
+    key: 'latency',
+    label: 'Gateway',
+    icon: TbBolt,
+    chip: 'bg-accent/12 text-accent',
+    glow: 'bg-accent/[0.09]',
+  },
+  {
+    key: 'guilds',
+    label: 'Servers',
+    icon: TbServer,
+    chip: 'bg-violet-400/12 text-violet-300',
+    glow: 'bg-violet-400/[0.09]',
+  },
+  {
+    key: 'users',
+    label: 'Users',
+    icon: TbUsers,
+    chip: 'bg-emerald-400/12 text-emerald-300',
+    glow: 'bg-emerald-400/[0.09]',
+  },
 ] as const
 
 export function StatusHeroSkeleton() {
   return (
     <div className="space-y-4">
-      <div className="h-28 animate-pulse rounded-2xl border border-white/[0.05] bg-white/[0.02]" />
-      <div className="grid grid-cols-3 gap-3 sm:grid-cols-3">
+      <div className="h-28 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03]" />
+      <div className="grid grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-24 animate-pulse rounded-2xl border border-white/[0.05] bg-white/[0.02]" />
+          <div key={i} className="h-28 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03]" />
         ))}
       </div>
     </div>
@@ -58,46 +76,44 @@ export default function StatusHero({
       transition={{ duration: lightMotion ? 0.2 : 0.35, ease }}
       className="space-y-4"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01]">
         <div
           className={`pointer-events-none absolute -top-20 left-1/2 h-40 w-2/3 -translate-x-1/2 rounded-full blur-3xl ${
             operational ? 'bg-emerald-500/[0.08]' : 'bg-amber-500/[0.08]'
           }`}
         />
 
-        <div className="relative flex flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2.5">
-              <span className="relative flex h-2.5 w-2.5 shrink-0">
-                {operational && (
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/30" />
-                )}
-                <span
-                  className={`relative inline-flex h-full w-full rounded-full ${
-                    operational
-                      ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
-                      : 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
-                  }`}
-                />
-              </span>
-              <p className="text-lg font-semibold tracking-tight text-white sm:text-xl">
-                {operational ? 'All systems operational' : 'Partial outage'}
-              </p>
-            </div>
+        <div className="relative flex flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              {operational && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/30" />
+              )}
+              <span
+                className={`relative inline-flex h-full w-full rounded-full ${
+                  operational
+                    ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
+                    : 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
+                }`}
+              />
+            </span>
+            <p className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
+              {operational ? 'All systems operational' : 'Partial outage'}
+            </p>
           </div>
 
-          <div className="flex items-center gap-4 sm:shrink-0 sm:text-right">
+          <div className="flex items-center gap-5 sm:shrink-0 sm:text-right">
             <div>
-              <p className="text-[9px] font-medium tracking-[0.14em] text-white/30 uppercase">Refresh</p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-sm font-medium tabular-nums text-white/55 sm:justify-end">
-                <TbRefresh className="h-3.5 w-3.5" />
+              <p className="text-[11px] font-medium tracking-[0.14em] text-white/35 uppercase">Refresh</p>
+              <p className="mt-1 flex items-center gap-1.5 text-sm font-medium tabular-nums text-white/60 sm:justify-end">
+                <TbRefresh className="h-4 w-4" />
                 {refreshIn}s
               </p>
             </div>
             {lastUpdate && (
-              <div className="hidden border-l border-white/[0.06] pl-4 sm:block">
-                <p className="text-[9px] font-medium tracking-[0.14em] text-white/30 uppercase">Updated</p>
-                <p className="mt-0.5 text-sm font-medium tabular-nums text-white/55">
+              <div className="hidden border-l border-white/[0.07] pl-5 sm:block">
+                <p className="text-[11px] font-medium tracking-[0.14em] text-white/35 uppercase">Updated</p>
+                <p className="mt-1 text-sm font-medium tabular-nums text-white/60">
                   {lastUpdate.toLocaleTimeString()}
                 </p>
               </div>
@@ -106,19 +122,22 @@ export default function StatusHero({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        {METRICS.map(({ key, label, icon: Icon }) => (
+      <div className="grid grid-cols-3 gap-4">
+        {METRICS.map(({ key, label, icon: Icon, chip, glow }) => (
           <div
             key={key}
-            className="rounded-2xl border border-white/[0.05] bg-white/[0.02] px-4 py-4 transition-colors hover:border-white/[0.08] hover:bg-white/[0.03]"
+            className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-5 transition-colors hover:border-white/[0.15] sm:p-6"
           >
-            <div className="flex items-center gap-2 text-white/35">
-              <Icon className="h-3.5 w-3.5" />
-              <p className="text-[9px] font-medium tracking-[0.12em] uppercase">{label}</p>
+            <div className={`pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full blur-3xl ${glow}`} />
+            <div className="relative">
+              <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${chip}`}>
+                <Icon className="h-4.5 w-4.5" />
+              </span>
+              <p className="mt-3 text-xs font-medium text-white/40">{label}</p>
+              <p className="font-display mt-1 text-xl font-semibold tabular-nums tracking-tight text-white sm:text-2xl">
+                {values[key]}
+              </p>
             </div>
-            <p className="mt-2 text-xl font-bold tabular-nums tracking-tight text-white sm:text-2xl">
-              {values[key]}
-            </p>
           </div>
         ))}
       </div>

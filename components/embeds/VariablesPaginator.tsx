@@ -15,10 +15,10 @@ export default function VariablesPaginator({ onInsert }: { onInsert?: (v: string
             key={cat.category}
             type="button"
             onClick={() => setTab(i)}
-            className={`rounded-full px-2.5 py-1 text-[10px] font-medium transition-colors sm:px-3 ${
+            className={`rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors ${
               i === tab
-                ? 'bg-white/[0.06] text-white/65'
-                : 'text-white/30 hover:text-white/50'
+                ? 'bg-accent/15 text-accent'
+                : 'text-white/40 hover:text-white/65'
             }`}
           >
             {cat.category}
@@ -33,7 +33,7 @@ export default function VariablesPaginator({ onInsert }: { onInsert?: (v: string
             type="button"
             onClick={() => onInsert?.(v.name)}
             title={v.desc}
-            className="rounded-full bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white/60"
+            className="rounded-full border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-white/50 transition-colors hover:border-accent/30 hover:text-accent"
           >
             {v.name}
           </button>

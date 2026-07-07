@@ -2,6 +2,7 @@
 
 import type { IconType } from 'react-icons'
 import {
+  TbAlertTriangle,
   TbCheck,
   TbCrown,
   TbHeadphones,
@@ -10,6 +11,7 @@ import {
   TbRocket,
   TbShieldBolt,
   TbTags,
+  TbVolume,
 } from 'react-icons/tb'
 import SectionHeader from '@/components/ui/SectionHeader'
 import GlassCard from '@/components/ui/GlassCard'
@@ -66,20 +68,14 @@ function AntiNukeMock() {
 
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-white/40">Threat log</span>
-        <span className="flex items-center gap-1.5 text-xs text-white/40">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400/70" />
-          live
-        </span>
-      </div>
+      <span className="text-xs font-medium text-white/40">Threat log</span>
       <div className="mt-3 space-y-2">
         {rows.map((row) => (
           <div
             key={row.threat}
             className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
           >
-            <span className="h-2 w-2 shrink-0 rounded-full bg-red-400/70" />
+            <TbAlertTriangle className="h-4 w-4 shrink-0 text-red-400/80" />
             <span className="truncate text-[13px] text-white/70">{row.threat}</span>
             <span className="ml-auto shrink-0 rounded-md bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
               {row.action}
@@ -123,7 +119,7 @@ function RewardsMock() {
         </div>
       </div>
       <div className="mt-4 flex flex-wrap gap-1.5">
-        {['vanity.gg/vael', 'custom role', 'chat highlight'].map((perk) => (
+        {['discord.gg/evict', 'custom role', 'chat highlight'].map((perk) => (
           <span
             key={perk}
             className="rounded-lg border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 text-xs text-white/50"
@@ -157,21 +153,22 @@ function VoiceMock() {
             key={channel.name}
             className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
           >
-            <span className={`h-2 w-2 shrink-0 rounded-full ${channel.locked ? 'bg-amber-400/70' : 'bg-green-400/70'}`} />
+            {channel.locked ? (
+              <TbLock className="h-4 w-4 shrink-0 text-amber-400/80" />
+            ) : (
+              <TbVolume className="h-4 w-4 shrink-0 text-green-400/80" />
+            )}
             <div className="min-w-0 flex-1">
-              <p className="flex items-center gap-1.5 text-[13px] font-medium text-white/70">
-                {channel.name}
-                {channel.locked && <TbLock className="h-3 w-3 text-white/30" />}
-              </p>
+              <p className="text-[13px] font-medium text-white/70">{channel.name}</p>
               <p className="text-xs text-white/35">{channel.detail}</p>
             </div>
             <div className="flex -space-x-1.5">
               {channel.userIds.map((id) => {
                 const user = users[id]
                 return user?.avatar ? (
-                  <img key={id} src={user.avatar} alt="" className="h-5 w-5 rounded-full border-2 border-[#0b1114] object-cover" />
+                  <img key={id} src={user.avatar} alt="" className="h-5 w-5 rounded-full border-2 border-card object-cover" />
                 ) : (
-                  <div key={id} className="h-5 w-5 rounded-full border-2 border-[#0b1114] bg-white/[0.1]" />
+                  <div key={id} className="h-5 w-5 rounded-full border-2 border-card bg-white/[0.1]" />
                 )
               })}
             </div>

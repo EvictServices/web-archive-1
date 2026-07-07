@@ -24,31 +24,31 @@ function InputField({ label, value, onChange, placeholder, multiline, hint }: {
   hint?: string
 }) {
   const className =
-    'w-full rounded-xl border border-white/[0.06] bg-black/20 px-3.5 py-2.5 text-base text-white/70 outline-none transition-colors placeholder:text-white/20 focus:border-accent/30 focus:bg-black/30 sm:text-[13px]'
+    'w-full rounded-xl border border-white/[0.07] bg-black/25 px-3.5 py-2.5 text-base text-white/80 outline-none transition-colors placeholder:text-white/25 focus:border-accent/40 sm:text-[13px]'
 
   return (
     <div className="space-y-1.5">
-      <label className="block text-[11px] font-medium text-white/40">{label}</label>
+      <label className="block text-xs font-medium text-white/50">{label}</label>
       {multiline ? (
         <VariableInput value={value} onChange={onChange} placeholder={placeholder} multiline className={className} />
       ) : (
         <VariableInput value={value} onChange={onChange} placeholder={placeholder} className={className} />
       )}
-      {hint && <p className="text-[10px] text-white/20">{hint}</p>}
+      {hint && <p className="text-[11px] text-white/30">{hint}</p>}
     </div>
   )
 }
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <label className="flex cursor-pointer items-center justify-between rounded-xl border border-white/[0.04] bg-black/10 px-3.5 py-2.5">
-      <span className="text-[12px] text-white/45">{label}</span>
+    <label className="flex cursor-pointer items-center justify-between rounded-xl border border-white/[0.06] bg-black/20 px-3.5 py-2.5">
+      <span className="text-[13px] text-white/55">{label}</span>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative h-5 w-9 rounded-full transition-colors ${checked ? 'bg-accent/60' : 'bg-white/10'}`}
+        className={`relative h-5 w-9 rounded-full transition-colors ${checked ? 'bg-accent' : 'bg-white/10'}`}
       >
         <span className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-4' : ''}`} />
       </button>
@@ -63,13 +63,13 @@ function ItemCard({ index, label, onRemove, children }: {
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.05] bg-black/15 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-[11px] font-medium text-white/35">{label} {index + 1}</span>
+        <span className="text-xs font-medium text-white/45">{label} {index + 1}</span>
         <button
           type="button"
           onClick={onRemove}
-          className="rounded-md px-2 py-1 text-[10px] font-medium text-white/25 transition-colors hover:bg-white/[0.04] hover:text-white/50"
+          className="rounded-md px-2 py-1 text-xs font-medium text-white/35 transition-colors hover:bg-white/[0.05] hover:text-red-300"
         >
           Remove
         </button>
@@ -84,9 +84,9 @@ function AddButton({ onClick, label }: { onClick: () => void; label: string }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full rounded-lg py-2.5 text-[11px] font-medium text-white/30 transition-colors hover:bg-white/[0.03] hover:text-white/55"
+      className="w-full rounded-xl border border-dashed border-white/[0.1] py-2.5 text-xs font-medium text-white/40 transition-colors hover:border-accent/40 hover:text-accent"
     >
-      {label}
+      + {label}
     </button>
   )
 }
@@ -113,25 +113,25 @@ export default function EmbedEditor({
 
   return (
     <>
-      <div className="flex gap-0 overflow-x-auto border-b border-white/[0.04] px-1 scrollbar-hide [-webkit-overflow-scrolling:touch]">
+      <div className="flex gap-0 overflow-x-auto border-b border-white/[0.06] px-2 scrollbar-hide [-webkit-overflow-scrolling:touch]">
         {TABS.map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setTab(t)}
-            className={`relative shrink-0 px-3 py-2.5 text-[11px] font-medium transition-colors sm:px-4 sm:py-3 ${
-              tab === t ? 'text-white/75' : 'text-white/30 hover:text-white/50'
+            className={`relative shrink-0 px-3.5 py-3 text-xs font-medium transition-colors sm:px-4 ${
+              tab === t ? 'text-white' : 'text-white/40 hover:text-white/65'
             }`}
           >
             {t}
             {(t === 'Fields' && data.fields.length > 0) && (
-              <span className="ml-1 text-[10px] text-white/25">{data.fields.length}</span>
+              <span className="ml-1 text-[11px] text-white/35">{data.fields.length}</span>
             )}
             {(t === 'Buttons' && data.buttons.length > 0) && (
-              <span className="ml-1 text-[10px] text-white/25">{data.buttons.length}</span>
+              <span className="ml-1 text-[11px] text-white/35">{data.buttons.length}</span>
             )}
             {tab === t && (
-              <span className="absolute inset-x-3 bottom-0 h-px bg-accent/70" />
+              <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-accent" />
             )}
           </button>
         ))}
@@ -144,12 +144,12 @@ export default function EmbedEditor({
             <div className="grid gap-4 sm:grid-cols-[1fr_72px]">
               <InputField label="Title" value={data.title} onChange={v => update('title', v)} placeholder="Embed title" />
               <div className="space-y-1.5">
-                <label className="block text-[11px] font-medium text-white/40">Color</label>
+                <label className="block text-xs font-medium text-white/50">Color</label>
                 <input
                   type="color"
                   value={data.color}
                   onChange={e => update('color', e.target.value)}
-                  className="h-[42px] w-full cursor-pointer rounded-xl border border-white/[0.06] bg-black/20 p-1"
+                  className="h-[42px] w-full cursor-pointer rounded-xl border border-white/[0.07] bg-black/25 p-1"
                 />
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function EmbedEditor({
         {tab === 'Fields' && (
           <div className="space-y-3">
             {data.fields.length === 0 ? (
-              <p className="py-6 text-center text-[12px] text-white/25">No fields yet. Add up to 25 inline or full-width fields.</p>
+              <p className="py-6 text-center text-[13px] text-white/35">No fields yet. Add up to 25 inline or full-width fields.</p>
             ) : (
               data.fields.map((field, i) => (
                 <ItemCard key={i} index={i} label="Field" onRemove={() => removeField(i)}>
@@ -201,7 +201,7 @@ export default function EmbedEditor({
         {tab === 'Buttons' && (
           <div className="space-y-3">
             {data.buttons.length === 0 ? (
-              <p className="py-6 text-center text-[12px] text-white/25">No buttons yet. Add link or styled buttons below the embed.</p>
+              <p className="py-6 text-center text-[13px] text-white/35">No buttons yet. Add link or styled buttons below the embed.</p>
             ) : (
               data.buttons.map((btn, i) => (
                 <ItemCard key={i} index={i} label="Button" onRemove={() => removeButton(i)}>

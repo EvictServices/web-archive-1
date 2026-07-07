@@ -41,14 +41,14 @@ export default function Select({ value, onChange, options, label }: SelectProps)
 
   return (
     <div ref={ref} className="relative space-y-1.5">
-      {label && <label className="block text-[11px] font-medium text-white/40">{label}</label>}
+      {label && <label className="block text-xs font-medium text-white/50">{label}</label>}
 
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex w-full items-center justify-between rounded-xl border border-white/[0.06] bg-black/20 px-3.5 py-2.5 text-left text-[13px] text-white/70 transition-colors hover:bg-black/30 focus:border-accent/30 focus:outline-none"
+        className="flex w-full items-center justify-between rounded-xl border border-white/[0.07] bg-black/25 px-3.5 py-2.5 text-left text-[13px] text-white/80 transition-colors hover:border-white/[0.13] focus:border-accent/40 focus:outline-none"
       >
         <span className="flex items-center gap-2.5">
           {selected?.color && (
@@ -70,7 +70,7 @@ export default function Select({ value, onChange, options, label }: SelectProps)
       {open && (
         <div
           role="listbox"
-          className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#121212] py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
+          className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.1] bg-overlay py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
         >
           {options.map((opt) => {
             const active = opt.value === value
@@ -84,10 +84,10 @@ export default function Select({ value, onChange, options, label }: SelectProps)
                   onChange(opt.value)
                   setOpen(false)
                 }}
-                className={`flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[12px] transition-colors ${
+                className={`flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[13px] transition-colors ${
                   active
-                    ? 'bg-white/[0.05] text-white/80'
-                    : 'text-white/45 hover:bg-white/[0.03] hover:text-white/65'
+                    ? 'bg-white/[0.06] text-white/90'
+                    : 'text-white/50 hover:bg-white/[0.04] hover:text-white/75'
                 }`}
               >
                 {opt.color && (

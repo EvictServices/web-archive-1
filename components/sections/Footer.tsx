@@ -5,7 +5,6 @@ const productLinks = [
   { label: 'Commands', href: '/commands' },
   { label: 'Status', href: '/status' },
   { label: 'Embeds', href: '/embed' },
-  { label: 'Leaderboard', href: '/leaderboard' },
   { label: 'Updates', href: '/updates' },
   { label: 'Documentation', href: '/docs' },
 ]

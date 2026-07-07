@@ -95,7 +95,6 @@ export default function EmbedBuilderPage() {
 
   return (
     <div className="relative flex min-h-screen flex-col">
-      <div className="line-grid absolute inset-0 opacity-10" />
       <Navbar />
 
       <div className="relative flex-1 overflow-x-hidden">
@@ -110,7 +109,7 @@ export default function EmbedBuilderPage() {
             <button
               type="button"
               onClick={reset}
-              className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3.5 py-1.5 text-[11px] font-medium text-white/40 transition-colors hover:bg-white/[0.04] hover:text-white/60"
+              className="rounded-full border border-white/[0.08] px-4 py-2 text-xs font-medium text-white/50 transition-colors hover:border-white/[0.16] hover:text-white/80"
             >
               Reset
             </button>
@@ -119,7 +118,7 @@ export default function EmbedBuilderPage() {
           <div className="grid min-w-0 gap-4 sm:gap-6 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px]">
             <div className="min-w-0 flex flex-col gap-4">
               <div
-                className="rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+                className="rounded-3xl border border-white/[0.07] bg-card"
                 onFocusCapture={handleEditorFocus}
               >
                 <EmbedEditor
@@ -136,20 +135,20 @@ export default function EmbedBuilderPage() {
                 />
               </div>
 
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-3.5 sm:p-4">
-                <p className="mb-3 text-[10px] font-medium tracking-wider text-white/35 uppercase">Variables</p>
+              <div className="rounded-3xl border border-white/[0.07] bg-card p-4 sm:p-5">
+                <p className="mb-3 text-xs font-medium text-white/40">Variables</p>
                 <VariablesPaginator onInsert={insertVariable} />
               </div>
             </div>
 
             <div className="min-w-0 flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
-              <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1e1f22]">
-                <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] bg-[#111214] px-3 py-2.5 sm:px-4 sm:py-3">
+              <div className="overflow-hidden rounded-3xl border border-white/[0.08] bg-[#1e1f22]">
+                <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] bg-[#111214] px-4 py-3 sm:px-5">
                   <div className="flex min-w-0 items-center gap-2">
-                    <span className="text-[12px] text-white/30">#</span>
-                    <span className="truncate text-[12px] font-medium text-white/50">general</span>
+                    <span className="text-sm text-white/30">#</span>
+                    <span className="truncate text-[13px] font-semibold text-white/60">general</span>
                   </div>
-                  <span className="shrink-0 text-[10px] text-white/20">Live preview</span>
+                  <span className="shrink-0 text-[11px] text-white/30">Live preview</span>
                 </div>
                 <div className="p-3 sm:p-4">
                   <div className="flex gap-2.5 sm:gap-3">
@@ -166,22 +165,22 @@ export default function EmbedBuilderPage() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]">
-                <div className="flex items-center justify-between gap-2 border-b border-white/[0.04] px-3 py-2.5 sm:px-4 sm:py-3">
-                  <span className="text-[11px] font-medium text-white/40">Script</span>
+              <div className="overflow-hidden rounded-3xl border border-white/[0.07] bg-card">
+                <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-4 py-3 sm:px-5">
+                  <span className="text-xs font-medium text-white/40">Script</span>
                   <button
                     type="button"
                     onClick={copyScript}
-                    className={`shrink-0 rounded-lg border px-3 py-1.5 text-[11px] font-medium transition-colors ${
+                    className={`shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
                       copied
-                        ? 'border-green-400/20 bg-green-400/5 text-green-400/70'
-                        : 'border-white/[0.06] bg-white/[0.02] text-white/40 hover:bg-white/[0.04] hover:text-white/60'
+                        ? 'border-green-400/25 bg-green-400/10 text-green-300'
+                        : 'border-white/[0.08] text-white/50 hover:border-white/[0.16] hover:text-white/80'
                     }`}
                   >
                     {copied ? 'Copied' : 'Copy'}
                   </button>
                 </div>
-                <pre className="max-h-[180px] overflow-auto p-3 font-mono text-[10px] leading-relaxed break-all text-white/40 scrollbar-hide sm:max-h-[220px] sm:p-4 sm:text-[11px]">
+                <pre className="max-h-[180px] overflow-auto p-4 font-mono text-[11px] leading-relaxed break-all text-white/45 scrollbar-hide sm:max-h-[220px] sm:p-5 sm:text-xs">
                   {script || '// Start building your embed...'}
                 </pre>
               </div>

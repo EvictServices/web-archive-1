@@ -100,7 +100,7 @@ export default function VariableInput({ value, onChange, placeholder, multiline,
   }
 
   const menu = open && suggestions.length > 0 && (
-    <div className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#121212] py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
+    <div className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-white/[0.1] bg-overlay py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
       {suggestions.map((item, i) => (
         <button
           key={item.name}
@@ -111,12 +111,12 @@ export default function VariableInput({ value, onChange, placeholder, multiline,
           }}
           className={`flex w-full items-center justify-between gap-3 px-3.5 py-2 text-left transition-colors ${
             i === activeIndex
-              ? 'bg-white/[0.05] text-white/80'
-              : 'text-white/45 hover:bg-white/[0.03] hover:text-white/65'
+              ? 'bg-white/[0.06] text-white/90'
+              : 'text-white/50 hover:bg-white/[0.04] hover:text-white/75'
           }`}
         >
-          <span className="font-mono text-[11px]">{item.name}</span>
-          <span className="hidden truncate text-[10px] text-white/25 sm:inline">{item.desc}</span>
+          <span className="font-mono text-xs">{item.name}</span>
+          <span className="hidden truncate text-[11px] text-white/30 sm:inline">{item.desc}</span>
         </button>
       ))}
     </div>

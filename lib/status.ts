@@ -62,13 +62,13 @@ export function latencyTone(ms: number): 'good' | 'warn' | 'bad' {
 }
 
 export const LATENCY_TONE_CLASS = {
-  good: 'text-emerald-400/80',
-  warn: 'text-amber-400/80',
-  bad: 'text-red-400/80',
+  good: 'text-accent',
+  warn: 'text-amber-300/90',
+  bad: 'text-red-400/90',
 } as const
 
 export const LATENCY_DOT_CLASS = {
-  good: 'bg-emerald-400/80',
+  good: 'bg-accent/80',
   warn: 'bg-amber-400/80',
   bad: 'bg-red-400/80',
 } as const

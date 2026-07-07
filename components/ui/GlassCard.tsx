@@ -23,7 +23,7 @@ export default function GlassCard({ children, className = '', span = '', delay =
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : undefined}
       transition={{ delay: stagger, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative flex flex-col overflow-hidden rounded-3xl border border-white/[0.07] bg-[#0b1114] p-6 transition-colors duration-300 hover:border-white/[0.13] sm:p-7 ${span} ${className}`}
+      className={`relative flex flex-col overflow-hidden rounded-3xl border border-white/[0.07] bg-card p-6 transition-colors duration-300 hover:border-white/[0.13] sm:p-7 ${span} ${className}`}
       onClick={onClick}
     >
       {children}

@@ -20,7 +20,7 @@ interface ClusterCardProps {
 
 function ShardStrip({ shards, alive }: { shards: Cluster['shards']; alive: boolean }) {
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex flex-wrap items-end gap-1">
       {shards.map((shard) => {
         const ms = latencyToMs(shard.latency)
         const tone = alive ? latencyTone(ms) : 'bad'
@@ -28,7 +28,9 @@ function ShardStrip({ shards, alive }: { shards: Cluster['shards']; alive: boole
           <span
             key={shard.id}
             title={`Shard ${shard.id} · ${ms}ms`}
-            className={`h-1.5 w-1.5 rounded-full ${alive ? LATENCY_DOT_CLASS[tone] : 'bg-red-400/40'}`}
+            className={`w-1.5 rounded-sm ${alive ? LATENCY_DOT_CLASS[tone] : 'bg-red-400/40'} ${
+              tone === 'good' ? 'h-2.5' : tone === 'warn' ? 'h-3.5' : 'h-4'
+            }`}
           />
         )
       })}
@@ -45,48 +47,56 @@ function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCa
       type="button"
       id={highlighted ? `cluster-${cluster.id}` : undefined}
       onClick={onClick}
-      className={`group relative w-full overflow-hidden rounded-2xl border bg-white/[0.02] p-4 text-left transition-all ${
+      className={`group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-5 text-left transition-colors ${
         highlighted
-          ? 'border-white/50 ring-2 ring-white/25'
-          : 'border-white/[0.05] hover:border-accent/20 hover:bg-white/[0.03]'
+          ? 'border-accent/60 ring-2 ring-accent/25'
+          : 'border-white/[0.08] hover:border-white/[0.16]'
       }`}
     >
-      <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/[0.03] blur-2xl transition-opacity group-hover:bg-accent/[0.06]" />
+      <div
+        className={`pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full blur-3xl ${
+          cluster.alive ? 'bg-accent/[0.07]' : 'bg-red-400/[0.09]'
+        }`}
+      />
 
       <div className="relative">
         <div className="flex items-start justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-2">
-              <span
-                className={`h-2 w-2 rounded-full ${
-                  cluster.alive ? 'bg-emerald-400/80' : 'bg-red-400/80'
-                }`}
-              />
-              <p className="text-sm font-semibold text-white/80">Cluster {index + 1}</p>
-            </div>
-          </div>
-          <TbChevronRight className="h-4 w-4 shrink-0 text-white/15 transition-transform group-hover:translate-x-0.5 group-hover:text-white/35" />
+          <p className="font-display text-base font-semibold tracking-tight text-white/90">
+            Cluster {index + 1}
+          </p>
+          <span className="flex items-center gap-2">
+            <span
+              className={`rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase ${
+                cluster.alive
+                  ? 'bg-emerald-400/10 text-emerald-300'
+                  : 'bg-red-400/10 text-red-300'
+              }`}
+            >
+              {cluster.alive ? 'Online' : 'Offline'}
+            </span>
+            <TbChevronRight className="h-4 w-4 shrink-0 text-white/20 transition-transform group-hover:translate-x-0.5 group-hover:text-white/45" />
+          </span>
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-5 grid grid-cols-3 gap-3">
           <div>
-            <p className="text-[8px] font-medium tracking-wider text-white/25 uppercase">Servers</p>
-            <p className="mt-0.5 text-sm font-bold tabular-nums text-white/70">{formatNumber(cluster.guilds)}</p>
+            <p className="text-[11px] font-medium text-white/35">Servers</p>
+            <p className="mt-1 text-base font-semibold tabular-nums text-white/80">{formatNumber(cluster.guilds)}</p>
           </div>
           <div>
-            <p className="text-[8px] font-medium tracking-wider text-white/25 uppercase">Users</p>
-            <p className="mt-0.5 text-sm font-bold tabular-nums text-white/70">{formatNumber(cluster.users)}</p>
+            <p className="text-[11px] font-medium text-white/35">Users</p>
+            <p className="mt-1 text-base font-semibold tabular-nums text-white/80">{formatNumber(cluster.users)}</p>
           </div>
           <div>
-            <p className="text-[8px] font-medium tracking-wider text-white/25 uppercase">Latency</p>
-            <p className={`mt-0.5 text-sm font-bold tabular-nums ${LATENCY_TONE_CLASS[tone]}`}>
+            <p className="text-[11px] font-medium text-white/35">Latency</p>
+            <p className={`mt-1 text-base font-semibold tabular-nums ${LATENCY_TONE_CLASS[tone]}`}>
               {latencyMs}ms
             </p>
           </div>
         </div>
 
-        <div className="mt-4">
-          <p className="mb-1.5 text-[8px] font-medium tracking-wider text-white/20 uppercase">Shard health</p>
+        <div className="mt-5">
+          <p className="mb-2 text-[11px] font-medium text-white/35">Shard health</p>
           <ShardStrip shards={cluster.shards} alive={cluster.alive} />
         </div>
       </div>

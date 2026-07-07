@@ -28,13 +28,6 @@ export default function HeroSection() {
       <div className="relative mx-auto flex min-h-screen max-w-6xl items-center px-6 pt-28 pb-16 lg:pt-20">
         <div className="grid w-full items-center gap-x-16 gap-y-16 lg:grid-cols-[1.05fr_1fr]">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 py-1.5"
-            >
-            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 14 }}
@@ -121,7 +114,7 @@ function HeroChatCard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-3xl border border-white/[0.08] bg-[#0b1114] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+        className="rounded-3xl border border-white/[0.08] bg-card p-6 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
       >
         <div className="flex items-center gap-2 border-b border-white/[0.06] pb-4">
           <span className="text-lg text-white/25">#</span>
@@ -179,7 +172,7 @@ function HeroChatCard() {
         initial={{ opacity: 0, y: 16, x: 8 }}
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ delay: 0.7, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute -top-8 -right-4 flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-[#10171a] px-4 py-3 shadow-[0_16px_48px_rgba(0,0,0,0.5)]"
+        className="absolute -top-8 -right-4 flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-overlay px-4 py-3 shadow-[0_16px_48px_rgba(0,0,0,0.5)]"
       >
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-400/15">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-red-400">

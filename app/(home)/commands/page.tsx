@@ -128,7 +128,6 @@ export default function CommandsPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip">
-      <div className="line-grid pointer-events-none absolute inset-0 opacity-15" />
       <Navbar />
 
       <div className={`relative mx-auto max-w-6xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
@@ -175,20 +174,14 @@ export default function CommandsPage() {
             {loading ? (
               <motion.div
                 className="grid grid-cols-1 gap-3 sm:grid-cols-2"
-                initial="hidden"
-                animate="show"
-                variants={{
-                  show: { transition: { staggerChildren: lightMotion ? 0 : 0.06 } },
-                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
               >
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <motion.div
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
                     key={i}
-                    variants={{
-                      hidden: { opacity: 0, y: lightMotion ? 0 : 8 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-                    }}
-                    className="h-[7.25rem] animate-pulse rounded-2xl border border-white/[0.04] bg-white/[0.02]"
+                    className="h-[8.5rem] animate-pulse rounded-2xl border border-white/[0.07] bg-card"
                   />
                 ))}
               </motion.div>
@@ -201,10 +194,10 @@ export default function CommandsPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: lightMotion ? 0.12 : 0.2, ease }}
-                    className="rounded-2xl border border-dashed border-white/[0.06] bg-white/[0.01] px-6 py-20 text-center"
+                    className="rounded-3xl border border-dashed border-white/[0.1] px-6 py-20 text-center"
                   >
-                    <p className="text-sm text-white/25">command not found</p>
-                    <p className="mt-2 text-[11px] text-white/15">Try a different search or category</p>
+                    <p className="text-sm font-medium text-white/50">No commands found</p>
+                    <p className="mt-2 text-xs text-white/35">Try a different search or category</p>
                   </motion.div>
                 ) : (
                   <motion.div

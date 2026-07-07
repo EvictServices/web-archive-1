@@ -26,9 +26,9 @@ function CommandPagination({
 
   return (
     <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-      <p className="text-[10px] text-white/30">
-        Showing <span className="text-white/50">{start}–{end}</span> of{' '}
-        <span className="text-white/50">{totalItems}</span>
+      <p className="text-xs text-white/40">
+        Showing <span className="text-white/65">{start}–{end}</span> of{' '}
+        <span className="text-white/65">{totalItems}</span>
       </p>
 
       <nav className="flex items-center gap-1" aria-label="Pagination">
@@ -38,7 +38,7 @@ function CommandPagination({
 
         {pages.map((p, i) =>
           p === '…' ? (
-            <span key={`ellipsis-${i}`} className="px-1 text-[10px] text-white/20">
+            <span key={`ellipsis-${i}`} className="px-1 text-xs text-white/25">
               …
             </span>
           ) : (
@@ -81,10 +81,10 @@ function PageButton({
       aria-current={active ? 'page' : undefined}
       disabled={disabled}
       onClick={onClick}
-      className={`min-w-[2rem] rounded-lg border px-2.5 py-1.5 text-[10px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-30 ${
+      className={`min-w-[2.25rem] rounded-lg border px-2.5 py-2 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-30 ${
         active
-          ? 'border-white/[0.14] bg-white/[0.08] text-white'
-          : 'border-white/[0.05] bg-white/[0.02] text-white/40 hover:border-white/[0.1] hover:bg-white/[0.04] hover:text-white/65'
+          ? 'border-accent/40 bg-accent/12 text-accent'
+          : 'border-white/[0.06] bg-card text-white/45 hover:border-white/[0.12] hover:text-white/75'
       }`}
     >
       {children}

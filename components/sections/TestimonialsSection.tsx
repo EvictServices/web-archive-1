@@ -12,7 +12,7 @@ export default function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0b1114] px-6 py-16 text-center sm:px-12"
+          className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card px-6 py-16 text-center sm:px-12"
         >
           <div
             aria-hidden
@@ -25,7 +25,7 @@ export default function TestimonialsSection() {
               Ready when you are.
             </h2>
             <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-white/50">
-              Add evict to your server in under a minute. If you get stuck, real people in the
+              Add Evict to your server in under a minute. If you get stuck, real people in the
               support server will help you out.
             </p>
 

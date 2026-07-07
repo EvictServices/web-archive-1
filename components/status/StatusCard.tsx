@@ -6,13 +6,14 @@ interface StatusCardProps {
   icon?: ReactNode
   label: string
   value: string
+  valueClass?: string
   detail?: string
   onClick?: () => void
   compact?: boolean
   variant?: 'default' | 'stat'
 }
 
-function StatusCard({ icon, label, value, detail, onClick, compact, variant = 'default' }: StatusCardProps) {
+function StatusCard({ icon, label, value, valueClass, detail, onClick, compact, variant = 'default' }: StatusCardProps) {
   const Tag = onClick ? 'button' : 'div'
 
   if (variant === 'stat') {
@@ -20,12 +21,12 @@ function StatusCard({ icon, label, value, detail, onClick, compact, variant = 'd
       <Tag
         type={onClick ? 'button' : undefined}
         onClick={onClick}
-        className={`w-full rounded-xl border border-white/[0.04] bg-white/[0.02] px-2 py-3 text-center ${
-          onClick ? 'cursor-pointer transition-colors hover:border-accent/15 hover:bg-white/[0.03]' : ''
+        className={`w-full rounded-2xl border border-white/[0.06] bg-black/25 px-2 py-3.5 text-center ${
+          onClick ? 'cursor-pointer transition-colors hover:border-white/[0.13]' : ''
         }`}
       >
-        <p className="text-[8px] font-medium tracking-wide text-white/30 uppercase sm:text-[9px]">{label}</p>
-        <p className="mt-1 text-sm font-semibold tracking-tight text-white">{value}</p>
+        <p className="text-[10px] font-medium tracking-wide text-white/40 uppercase">{label}</p>
+        <p className={`font-display mt-1 text-base font-semibold tracking-tight ${valueClass ?? 'text-white'}`}>{value}</p>
       </Tag>
     )
   }

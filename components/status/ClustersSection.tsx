@@ -140,10 +140,10 @@ export default function ClustersSection({
   return (
     <section>
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.03]">
-          <TbStack2 className="h-4 w-4 text-white/35" />
-        </div>
-        <h2 className="shrink-0 text-sm font-semibold text-white">Clusters</h2>
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent/10">
+          <TbStack2 className="h-4.5 w-4.5 text-accent" />
+        </span>
+        <h2 className="font-display shrink-0 text-lg font-semibold tracking-tight text-white">Clusters</h2>
 
         <form onSubmit={onSubmit} className="min-w-[180px] flex-1 sm:max-w-[260px] sm:ml-auto">
           <div className="relative">
@@ -171,29 +171,29 @@ export default function ClustersSection({
                 searchAbortRef.current = null
                 setLoading(false)
               }}
-              className="w-full rounded-full border border-white/[0.06] bg-white/[0.02] py-2 pr-4 pl-9 font-mono text-xs text-white/80 placeholder:text-white/25 outline-none transition-colors focus:border-white/[0.12] focus:bg-white/[0.03] disabled:opacity-60"
+              className="w-full rounded-full border border-white/[0.08] bg-card py-2 pr-4 pl-9 font-mono text-[13px] text-white/80 placeholder:text-white/30 outline-none transition-colors focus:border-accent/40 disabled:opacity-60"
             />
           </div>
         </form>
       </div>
 
-      {error && <p className="mb-3 text-[11px] text-red-400/70">{error}</p>}
+      {error && <p className="mb-3 text-xs text-red-400/80">{error}</p>}
 
       {guild && guildId && (
-        <div className="mb-4 flex max-w-md items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+        <div className="mb-4 flex max-w-md items-center gap-3 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-4">
           <GuildAvatar guild={guild} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-white/85">{guild.name}</p>
-            <p className="mt-0.5 text-[11px] text-white/40">
+            <p className="truncate text-sm font-semibold text-white/90">{guild.name}</p>
+            <p className="mt-0.5 text-xs text-white/45">
               {guild.member_count.toLocaleString()} members
             </p>
-            <p className="mt-0.5 font-mono text-[10px] text-white/20">{guild.guild_id}</p>
+            <p className="mt-0.5 font-mono text-[11px] text-white/25">{guild.guild_id}</p>
           </div>
         </div>
       )}
 
       <motion.div
-        className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
+        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: lightMotion ? 0.2 : 0.35, delay: lightMotion ? 0 : 0.06, ease }}

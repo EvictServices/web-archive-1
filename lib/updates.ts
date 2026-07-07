@@ -37,13 +37,13 @@ function getTagColor(tag: string): string {
 
 export function getTagBadgeClass(tag: string): string {
   const map: Record<string, string> = {
-    new: 'bg-green-400/10 text-green-400/70 border-green-400/20',
-    improved: 'bg-amber-400/10 text-amber-400/70 border-amber-400/20',
-    changed: 'bg-blue-400/10 text-blue-400/70 border-blue-400/20',
-    fixed: 'bg-red-400/10 text-red-400/70 border-red-400/20',
-    removed: 'bg-white/5 text-white/40 border-white/10',
+    new: 'bg-emerald-400/10 text-emerald-300 border-emerald-400/25',
+    improved: 'bg-amber-400/10 text-amber-300 border-amber-400/25',
+    changed: 'bg-blue-400/10 text-blue-300 border-blue-400/25',
+    fixed: 'bg-red-400/10 text-red-300 border-red-400/25',
+    removed: 'bg-white/[0.05] text-white/50 border-white/[0.12]',
   }
-  return map[tag] || 'bg-white/5 text-white/40 border-white/10'
+  return map[tag] || 'bg-white/[0.05] text-white/50 border-white/[0.12]'
 }
 
 export function parseYAML(text: string): Update[] {
