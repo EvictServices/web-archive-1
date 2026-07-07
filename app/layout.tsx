@@ -1,5 +1,18 @@
 import type { Metadata, Viewport } from 'next'
+import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const grotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-grotesk',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://evict.bot'),
@@ -32,8 +45,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen">
+    <html lang="en" className={`${inter.variable} ${grotesk.variable}`}>
+      <body className="min-h-screen font-sans">
         {children}
       </body>
     </html>

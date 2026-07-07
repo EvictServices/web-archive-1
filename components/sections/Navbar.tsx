@@ -36,8 +36,8 @@ function NavLink({
       href={href}
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
-      className={`relative rounded-full px-3.5 py-1.5 text-[10px] font-medium tracking-wide transition-colors ${
-        active ? 'text-white/85' : 'text-white/35 hover:text-white/65'
+      className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors ${
+        active ? 'text-white/90' : 'text-white/45 hover:text-white/75'
       }`}
     >
       {active && (
@@ -164,7 +164,7 @@ export default function Navbar() {
                     />
                     <span className="absolute -right-0.5 -bottom-0.5 h-2 w-2 rounded-full bg-accent ring-2 ring-black/80" />
                   </span>
-                  <span className="text-xs font-semibold tracking-tight text-white">evict</span>
+                  <span className="font-display text-sm font-semibold tracking-tight text-white">evict</span>
                 </Link>
 
                 <nav
@@ -181,7 +181,7 @@ export default function Navbar() {
                     href={SUPPORT_SERVER_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hidden rounded-full border border-white/[0.06] px-3.5 py-1.5 text-[10px] font-medium text-white/40 transition-all hover:border-white/[0.12] hover:text-white/65 md:inline-flex"
+                    className="hidden rounded-full border border-white/[0.08] px-3.5 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-white/[0.16] hover:text-white/80 md:inline-flex"
                   >
                     Support
                   </a>
@@ -189,7 +189,7 @@ export default function Navbar() {
                     href={DISCORD_INVITE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hidden rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold text-black transition-all hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(95,130,141,0.3)] sm:inline-flex"
+                    className="hidden rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-black transition-all hover:brightness-110 hover:shadow-[0_0_24px_rgba(95,130,141,0.3)] sm:inline-flex"
                   >
                     Invite
                   </a>

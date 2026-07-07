@@ -12,20 +12,17 @@ interface SectionHeaderProps {
 export default function SectionHeader({ label, headline, subline, className = '' }: SectionHeaderProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className={`mb-14 text-center ${className}`}
+      transition={{ duration: 0.45 }}
+      className={`mb-12 max-w-2xl ${className}`}
     >
-      <p className="inline-block text-[10px] font-medium tracking-[0.2em] text-accent uppercase">
-        {label}
-        <span className="mx-auto mt-2 block h-px w-8 bg-accent/40" />
-      </p>
-      <h2 className="mt-3 text-3xl font-bold tracking-tighter text-white sm:text-5xl">
+      <p className="text-[11px] font-semibold tracking-[0.2em] text-accent uppercase">{label}</p>
+      <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
         {headline}
       </h2>
-      {subline && <p className="mt-2 text-sm text-white/20">{subline}</p>}
+      {subline && <p className="mt-4 text-[15px] leading-relaxed text-white/50">{subline}</p>}
     </motion.div>
   )
 }
