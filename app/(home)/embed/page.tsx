@@ -100,7 +100,7 @@ export default function EmbedBuilderPage() {
       <div className="relative flex-1 overflow-x-hidden">
         <div className={`mx-auto max-w-7xl pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
           <PageHeader
-            label="Tools"
+            label="Build it your way"
             title="Embed Builder"
             description="Design embeds visually and copy the generated script for your server."
           />

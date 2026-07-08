@@ -16,11 +16,7 @@ interface PageHeaderProps {
 
 export function PageLabel({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/[0.08]" />
-      <span className="text-[11px] font-semibold tracking-[0.2em] text-accent uppercase">{label}</span>
-      <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/[0.08]" />
-    </div>
+    <span className="text-[11px] font-semibold tracking-[0.2em] text-accent-bright uppercase">{label}</span>
   )
 }
 

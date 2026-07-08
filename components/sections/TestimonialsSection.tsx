@@ -66,7 +66,7 @@ export default function TestimonialsSection() {
 
           <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
             <div>
-              <span className="text-[11px] font-semibold tracking-[0.2em] text-accent uppercase">
+              <span className="text-[11px] font-semibold tracking-[0.2em] text-accent-bright uppercase">
                 Get started
               </span>
               <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">

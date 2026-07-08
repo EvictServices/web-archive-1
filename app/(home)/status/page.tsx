@@ -81,7 +81,7 @@ export default function StatusPage() {
 
       <div className={`relative mx-auto w-full max-w-6xl flex-1 pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
         <PageHeader
-          label="Infrastructure"
+          label="Is evict up?"
           title="Status"
           description={`Real-time cluster health, shard latency, and host metrics. Refreshes every ${REFRESH_INTERVAL}s.`}
         />

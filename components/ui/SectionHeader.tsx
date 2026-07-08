@@ -18,7 +18,7 @@ export default function SectionHeader({ label, headline, subline, className = ''
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className={`mb-12 max-w-2xl ${className}`}
     >
-      <p className="text-[11px] font-semibold tracking-[0.2em] text-accent uppercase">{label}</p>
+      <p className="text-[11px] font-semibold tracking-[0.2em] text-accent-bright uppercase">{label}</p>
       <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
         {headline}
       </h2>

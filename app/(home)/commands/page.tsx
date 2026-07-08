@@ -132,8 +132,8 @@ export default function CommandsPage() {
 
       <div className={`relative mx-auto max-w-6xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
         <PageHeader
-          label="Reference"
-          title="Command Index"
+          label="Every command, in one place"
+          title="Commands"
           description={
             loading ? (
               'Loading commands…'

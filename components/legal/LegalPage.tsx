@@ -11,7 +11,7 @@ export function LegalLayout({
     <div className="mt-12 flex flex-col gap-12 lg:flex-row">
       <aside className="hidden lg:block lg:w-52 lg:flex-shrink-0">
         <div className="sticky top-24">
-          <p className="mb-4 text-[11px] font-semibold tracking-[0.2em] text-accent uppercase">
+          <p className="mb-4 text-[11px] font-semibold tracking-[0.2em] text-accent-bright uppercase">
             Contents
           </p>
           <nav className="space-y-0.5">

@@ -31,7 +31,7 @@ export default function TermsPage() {
       <div className="relative flex-1">
         <div className={`mx-auto max-w-5xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
           <PageHeader
-            label="Legal"
+            label="The fine print"
             title="Terms of Service"
             description="Last updated March 30, 2026"
           />

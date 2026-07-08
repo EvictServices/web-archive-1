@@ -13,11 +13,7 @@ export default function Home() {
       <ImpersonatorWarning />
       <Navbar />
       <HeroSection />
-      <div className="relative bg-bg">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_600px_at_50%_0%,rgba(95,130,141,0.06),transparent_70%),radial-gradient(45%_700px_at_80%_45%,rgba(95,130,141,0.04),transparent_70%),radial-gradient(50%_600px_at_15%_85%,rgba(95,130,141,0.04),transparent_70%)]"
-        />
+      <div className="relative">
         <FeaturesSection />
         <ExtrasSection />
         <TestimonialsSection />

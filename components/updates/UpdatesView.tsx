@@ -25,7 +25,7 @@ export default function UpdatesView({ updates }: Props) {
       <div className="relative flex-1">
         <div className={`mx-auto max-w-3xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
           <PageHeader
-            label="Changelog"
+            label="What we've been shipping"
             title="Updates"
             description={
               updates.length === 0 ? (

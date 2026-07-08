@@ -79,7 +79,7 @@ export default function TicketView({ ticketData, ticketId }: Props) {
     <main className="relative flex-1">
       <div className={`mx-auto max-w-6xl pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
         <header className="mb-6 text-center sm:mb-8">
-          <PageLabel label="Transcript" />
+          <PageLabel label="The full conversation" />
         </header>
 
         <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)]">

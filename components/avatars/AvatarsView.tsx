@@ -127,7 +127,7 @@ export default function AvatarsView({ avatars, userId, username, avatarHash }: A
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: lightMotion ? 0.2 : 0.4, ease: [0.23, 1, 0.32, 1] }}
           >
-            <PageLabel label="History" />
+            <PageLabel label="Every look, remembered" />
 
             <div className="mt-8 flex flex-col items-center text-center">
               <img

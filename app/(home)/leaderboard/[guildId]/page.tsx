@@ -166,7 +166,7 @@ export default async function GuildLeaderboardPage({ params }: PageProps) {
 
         <div className={`relative mx-auto w-full max-w-7xl flex-1 pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
           <PageHeader
-            label="Community"
+            label="Who's been talking"
             title="Level Leaderboard"
             description={`Guild ${guildId}`}
           />
@@ -194,7 +194,7 @@ export default async function GuildLeaderboardPage({ params }: PageProps) {
 
       <div className={`relative mx-auto w-full max-w-7xl flex-1 pb-16 sm:pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
         <PageHeader
-          label="Community"
+          label="Who's been talking"
           title="Level Leaderboard"
           description={
             <span className="inline-flex items-center gap-2">

@@ -31,7 +31,7 @@ export default function PrivacyPage() {
       <div className="relative flex-1">
         <div className={`mx-auto max-w-5xl pb-24 ${PAGE_X_PADDING} ${PAGE_TOP_PADDING}`}>
           <PageHeader
-            label="Legal"
+            label="What we do with your data"
             title="Privacy Policy"
             description="Last updated March 30, 2026"
           />
