@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #030303;
+  --color-bg: #0a0b0d;
   --color-bg-card: #0a0a0a;
   --color-accent: #5f828d;
   --color-text: #ffffff;
@@ -21,7 +21,7 @@ html {
 
 body {
   background-color: var(--color-bg);
-  background-image: radial-gradient(ellipse at top, #0d1a1d 0%, #030303 100%);
+  background-image: radial-gradient(ellipse at top, #0d1a1d 0%, #0a0b0d 100%);
   background-attachment: fixed;
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;

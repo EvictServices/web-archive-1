@@ -88,27 +88,51 @@ function StarboardMock() {
 }
 
 function AuditLogsMock() {
+  const users = useUsers([USER_IDS.vael, USER_IDS.isia, USER_IDS.fshua])
+
   const rows = [
-    { badge: 'EDIT', badgeClass: 'bg-blue-400/15 text-blue-300', text: '@toxicuser edited a message in #general' },
-    { badge: 'JOIN', badgeClass: 'bg-green-400/15 text-green-300', text: '@newbie joined via discord.gg/evict' },
-    { badge: 'BAN', badgeClass: 'bg-red-400/15 text-red-300', text: '@raidbot banned by anti-nuke' },
+    {
+      badge: 'EDIT',
+      badgeClass: 'bg-blue-400/15 text-blue-300',
+      id: USER_IDS.vael,
+      text: 'edited a message in #general',
+    },
+    {
+      badge: 'JOIN',
+      badgeClass: 'bg-green-400/15 text-green-300',
+      id: USER_IDS.isia,
+      text: 'joined via discord.gg/evict',
+    },
+    {
+      badge: 'ROLE',
+      badgeClass: 'bg-purple-400/15 text-purple-300',
+      id: USER_IDS.fshua,
+      text: 'picked the Gamer role',
+    },
   ]
 
   return (
     <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
       <span className="text-xs font-medium text-white/40">#audit-logs</span>
       <div className="mt-3 space-y-2">
-        {rows.map((row) => (
-          <div
-            key={row.badge}
-            className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
-          >
-            <span className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-semibold ${row.badgeClass}`}>
-              {row.badge}
-            </span>
-            <span className="truncate text-[13px] text-white/55">{row.text}</span>
-          </div>
-        ))}
+        {rows.map((row) => {
+          const user = users[row.id]
+          return (
+            <div
+              key={row.badge}
+              className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+            >
+              <span className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-semibold ${row.badgeClass}`}>
+                {row.badge}
+              </span>
+              <Avatar user={user} size="h-5 w-5" />
+              <span className="truncate text-[13px] text-white/55">
+                <span className="font-medium text-white/75">{displayName(row.id, user)}</span>{' '}
+                {row.text}
+              </span>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -142,6 +166,10 @@ function SocialMock() {
 }
 
 function BrandingMock() {
+  const users = useUsers([USER_IDS.isia])
+  const user = users[USER_IDS.isia]
+  const name = displayName(USER_IDS.isia, user)
+
   const colors = ['#5f828d', '#8b5cf6', '#f59e0b', '#ef4444', '#10b981']
 
   return (
@@ -154,7 +182,7 @@ function BrandingMock() {
         {colors.map((color, i) => (
           <span
             key={color}
-            className={`h-6 w-6 rounded-full ${i === 0 ? 'ring-2 ring-white/40 ring-offset-2 ring-offset-black' : 'opacity-70'}`}
+            className={`h-6 w-6 rounded-full ${i === 0 ? 'ring-2 ring-white/40 ring-offset-2 ring-offset-card' : 'opacity-70'}`}
             style={{ backgroundColor: color }}
           />
         ))}
@@ -164,8 +192,11 @@ function BrandingMock() {
           <img src="/evict.png" alt="" className="h-5 w-5 rounded-full object-cover" />
           <span className="text-xs font-semibold text-white/70">evict</span>
         </div>
-        <p className="mt-2 text-[13px] font-semibold text-white/80">Member banned</p>
-        <p className="mt-1 text-xs leading-relaxed text-white/45">@toxicuser was banned for raiding</p>
+        <p className="mt-2 flex items-center gap-2 text-[13px] font-semibold text-white/80">
+          <Avatar user={user} size="h-4.5 w-4.5" />
+          Member joined
+        </p>
+        <p className="mt-1 text-xs leading-relaxed text-white/45">{name} just joined — say hi in #general</p>
       </div>
     </div>
   )

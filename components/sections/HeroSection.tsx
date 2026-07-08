@@ -24,7 +24,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_#0d1a1d_0%,_#030303_100%)]">
+    <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_#0d1a1d_0%,_#0a0b0d_100%)]">
       <div className="relative mx-auto flex min-h-screen max-w-6xl items-center px-6 pt-28 pb-16 lg:pt-20">
         <div className="grid w-full items-center gap-x-16 gap-y-16 lg:grid-cols-[1.05fr_1fr]">
           <div>
