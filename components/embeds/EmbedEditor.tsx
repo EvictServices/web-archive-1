@@ -113,28 +113,35 @@ export default function EmbedEditor({
 
   return (
     <>
-      <div className="flex gap-0 overflow-x-auto border-b border-white/[0.06] px-2 scrollbar-hide [-webkit-overflow-scrolling:touch]">
-        {TABS.map((t) => (
-          <button
-            key={t}
-            type="button"
-            onClick={() => setTab(t)}
-            className={`relative shrink-0 px-3.5 py-3 text-xs font-medium transition-colors sm:px-4 ${
-              tab === t ? 'text-white' : 'text-white/40 hover:text-white/65'
-            }`}
-          >
-            {t}
-            {(t === 'Fields' && data.fields.length > 0) && (
-              <span className="ml-1 text-[11px] text-white/35">{data.fields.length}</span>
-            )}
-            {(t === 'Buttons' && data.buttons.length > 0) && (
-              <span className="ml-1 text-[11px] text-white/35">{data.buttons.length}</span>
-            )}
-            {tab === t && (
-              <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-accent" />
-            )}
-          </button>
-        ))}
+      <div className="flex gap-1.5 overflow-x-auto border-b border-white/[0.06] px-4 py-3 scrollbar-hide [-webkit-overflow-scrolling:touch] sm:px-5">
+        {TABS.map((t) => {
+          const count =
+            t === 'Fields' ? data.fields.length : t === 'Buttons' ? data.buttons.length : 0
+          const active = tab === t
+          return (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setTab(t)}
+              className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                active
+                  ? 'bg-accent/15 text-accent'
+                  : 'text-white/45 hover:bg-white/[0.04] hover:text-white/75'
+              }`}
+            >
+              {t}
+              {count > 0 && (
+                <span
+                  className={`ml-1.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                    active ? 'bg-accent/15 text-accent' : 'bg-white/[0.06] text-white/40'
+                  }`}
+                >
+                  {count}
+                </span>
+              )}
+            </button>
+          )
+        })}
       </div>
 
       <div className="p-4 sm:p-5 lg:max-h-[calc(100vh-16rem)] lg:overflow-y-auto lg:scrollbar-hide">

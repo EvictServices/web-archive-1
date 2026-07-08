@@ -8,10 +8,10 @@ export default function TestimonialsSection() {
     <section className="relative px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-40px 0px' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card px-6 py-16 text-center sm:px-12"
         >
           <div

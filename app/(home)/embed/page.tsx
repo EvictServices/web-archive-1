@@ -105,22 +105,22 @@ export default function EmbedBuilderPage() {
             description="Design embeds visually and copy the generated script for your server."
           />
 
-          <div className="mb-4 mt-8 flex justify-end sm:mb-6 sm:mt-12">
-            <button
-              type="button"
-              onClick={reset}
-              className="rounded-full border border-white/[0.08] px-4 py-2 text-xs font-medium text-white/50 transition-colors hover:border-white/[0.16] hover:text-white/80"
-            >
-              Reset
-            </button>
-          </div>
-
-          <div className="grid min-w-0 gap-4 sm:gap-6 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px]">
+          <div className="mt-8 grid min-w-0 gap-4 sm:mt-12 sm:gap-6 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px]">
             <div className="min-w-0 flex flex-col gap-4">
               <div
                 className="rounded-3xl border border-white/[0.07] bg-card"
                 onFocusCapture={handleEditorFocus}
               >
+                <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] px-4 py-3 sm:px-5">
+                  <p className="text-xs font-medium text-white/40">Editor</p>
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="rounded-full border border-white/[0.08] px-3.5 py-1.5 text-xs font-medium text-white/50 transition-colors hover:border-red-400/30 hover:text-red-300"
+                  >
+                    Reset
+                  </button>
+                </div>
                 <EmbedEditor
                   data={data}
                   update={update}
@@ -136,7 +136,12 @@ export default function EmbedBuilderPage() {
               </div>
 
               <div className="rounded-3xl border border-white/[0.07] bg-card p-4 sm:p-5">
-                <p className="mb-3 text-xs font-medium text-white/40">Variables</p>
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-xs font-medium text-white/40">Variables</p>
+                  <p className="text-[11px] text-white/30">
+                    Click to insert, or type <code className="rounded bg-white/[0.06] px-1 font-mono text-white/45">{'{'}</code> in any field
+                  </p>
+                </div>
                 <VariablesPaginator onInsert={insertVariable} />
               </div>
             </div>
@@ -148,7 +153,10 @@ export default function EmbedBuilderPage() {
                     <span className="text-sm text-white/30">#</span>
                     <span className="truncate text-[13px] font-semibold text-white/60">general</span>
                   </div>
-                  <span className="shrink-0 text-[11px] text-white/30">Live preview</span>
+                  <span className="flex shrink-0 items-center gap-1.5 text-[11px] text-white/30">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-400/70" />
+                    Live preview
+                  </span>
                 </div>
                 <div className="p-3 sm:p-4">
                   <div className="flex gap-2.5 sm:gap-3">
@@ -167,17 +175,17 @@ export default function EmbedBuilderPage() {
 
               <div className="overflow-hidden rounded-3xl border border-white/[0.07] bg-card">
                 <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-4 py-3 sm:px-5">
-                  <span className="text-xs font-medium text-white/40">Script</span>
+                  <span className="text-xs font-medium text-white/40">Generated script</span>
                   <button
                     type="button"
                     onClick={copyScript}
-                    className={`shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                    className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                       copied
-                        ? 'border-green-400/25 bg-green-400/10 text-green-300'
-                        : 'border-white/[0.08] text-white/50 hover:border-white/[0.16] hover:text-white/80'
+                        ? 'bg-green-400/10 text-green-300'
+                        : 'bg-accent/12 text-accent hover:bg-accent/20'
                     }`}
                   >
-                    {copied ? 'Copied' : 'Copy'}
+                    {copied ? 'Copied' : 'Copy script'}
                   </button>
                 </div>
                 <pre className="max-h-[180px] overflow-auto p-4 font-mono text-[11px] leading-relaxed break-all text-white/45 scrollbar-hide sm:max-h-[220px] sm:p-5 sm:text-xs">

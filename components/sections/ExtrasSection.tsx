@@ -291,7 +291,7 @@ export default function ExtrasSection() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           {extras.map((item, i) => (
-            <GlassCard key={item.title} delay={i}>
+            <GlassCard key={item.title}>
               <CardText Icon={item.Icon} title={item.title} desc={item.desc} />
               <div className="mt-6 flex flex-1 flex-col justify-end">{item.mock}</div>
             </GlassCard>

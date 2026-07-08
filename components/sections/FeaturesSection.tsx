@@ -309,7 +309,7 @@ export default function FeaturesSection() {
         />
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <GlassCard span="sm:col-span-2" delay={0}>
+          <GlassCard span="sm:col-span-2">
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr]">
               <CardText
                 Icon={TbShieldBolt}
@@ -320,7 +320,7 @@ export default function FeaturesSection() {
             </div>
           </GlassCard>
 
-          <GlassCard delay={1}>
+          <GlassCard>
             <CardText
               Icon={TbCrown}
               title="Reward the regulars"
@@ -331,7 +331,7 @@ export default function FeaturesSection() {
             </div>
           </GlassCard>
 
-          <GlassCard delay={2}>
+          <GlassCard>
             <CardText
               Icon={TbHeadphones}
               title="Voice channels on demand"
@@ -342,7 +342,7 @@ export default function FeaturesSection() {
             </div>
           </GlassCard>
 
-          <GlassCard span="sm:col-span-2" delay={3}>
+          <GlassCard span="sm:col-span-2">
             <CardText
               Icon={TbMessage}
               title="Every arrival gets a hello"
@@ -353,7 +353,7 @@ export default function FeaturesSection() {
             </div>
           </GlassCard>
 
-          <GlassCard delay={4}>
+          <GlassCard>
             <CardText
               Icon={TbTags}
               title="Self-serve roles"
@@ -364,7 +364,7 @@ export default function FeaturesSection() {
             </div>
           </GlassCard>
 
-          <GlassCard delay={5}>
+          <GlassCard>
             <CardText
               Icon={TbRocket}
               title="Boosters get the best seats"
