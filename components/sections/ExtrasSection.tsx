@@ -42,11 +42,11 @@ function Avatar({ user, size = 'h-6 w-6' }: { user?: { avatar: string | null }; 
 function CardText({ Icon, title, desc }: { Icon: IconType; title: string; desc: string }) {
   return (
     <div>
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
-        <Icon className="h-5 w-5 text-accent" />
+      <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent/10 sm:h-10 sm:w-10">
+        <Icon className="h-4 w-4 text-accent sm:h-5 sm:w-5" />
       </span>
-      <h3 className="font-display mt-4 text-lg font-semibold tracking-tight text-white">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-white/50">{desc}</p>
+      <h3 className="font-display mt-2.5 text-[15px] font-semibold tracking-tight text-white sm:mt-4 sm:text-lg">{title}</h3>
+      <p className="mt-1.5 text-xs leading-relaxed text-white/50 sm:mt-2 sm:text-sm">{desc}</p>
     </div>
   )
 }
@@ -57,7 +57,7 @@ function StarboardMock() {
   const name = displayName(USER_IDS.vael, user)
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">#starboard</span>
         <span className="flex items-center gap-1 text-xs font-medium text-yellow-400/80">
@@ -69,10 +69,10 @@ function StarboardMock() {
         <Avatar user={user} size="h-8 w-8" />
         <div className="min-w-0">
           <div className="flex items-baseline gap-2">
-            <span className="text-[13px] font-semibold text-white/80">{name}</span>
+            <span className="text-xs sm:text-[13px] font-semibold text-white/80">{name}</span>
             <span className="text-xs text-white/30">#general</span>
           </div>
-          <p className="mt-1 text-[13px] leading-relaxed text-white/55">
+          <p className="mt-1 text-xs sm:text-[13px] leading-relaxed text-white/55">
             this announcement is huge fr
           </p>
         </div>
@@ -112,21 +112,21 @@ function AuditLogsMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <span className="text-xs font-medium text-white/40">#audit-logs</span>
-      <div className="mt-3 space-y-2">
+      <div className="mt-2.5 space-y-1.5 sm:mt-3 sm:space-y-2">
         {rows.map((row) => {
           const user = users[row.id]
           return (
             <div
               key={row.badge}
-              className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+              className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] px-2.5 py-1.5 sm:px-3.5 sm:py-2.5"
             >
               <span className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-semibold ${row.badgeClass}`}>
                 {row.badge}
               </span>
               <Avatar user={user} size="h-5 w-5" />
-              <span className="truncate text-[13px] text-white/55">
+              <span className="truncate text-xs sm:text-[13px] text-white/55">
                 <span className="font-medium text-white/75">{displayName(row.id, user)}</span>{' '}
                 {row.text}
               </span>
@@ -140,20 +140,20 @@ function AuditLogsMock() {
 
 function SocialMock() {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center gap-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/10">
           <TbBrandInstagram className="h-4.5 w-4.5 text-accent" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-semibold text-white/80">Instagram</p>
+          <p className="text-xs sm:text-[13px] font-semibold text-white/80">Instagram</p>
           <p className="text-xs text-white/35">@evictbot · 2m ago</p>
         </div>
         <span className="shrink-0 rounded-full bg-accent/15 px-2.5 py-1 text-[10px] font-semibold text-accent">
           REPOSTED
         </span>
       </div>
-      <p className="mt-3 text-[13px] leading-relaxed text-white/55">
+      <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-white/55">
         New update dropping tonight… stay tuned
       </p>
       <div className="mt-3 flex items-center gap-4 text-xs text-white/35">
@@ -173,7 +173,7 @@ function BrandingMock() {
   const colors = ['#5f828d', '#8b5cf6', '#f59e0b', '#ef4444', '#10b981']
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">Embed theme</span>
         <span className="text-xs text-white/30">Teal selected</span>
@@ -192,7 +192,7 @@ function BrandingMock() {
           <img src="/evict.png" alt="" className="h-5 w-5 rounded-full object-cover" />
           <span className="text-xs font-semibold text-white/70">evict</span>
         </div>
-        <p className="mt-2 flex items-center gap-2 text-[13px] font-semibold text-white/80">
+        <p className="mt-2 flex items-center gap-2 text-xs sm:text-[13px] font-semibold text-white/80">
           <Avatar user={user} size="h-4.5 w-4.5" />
           Member joined
         </p>
@@ -204,7 +204,7 @@ function BrandingMock() {
 
 function EmbedBuilderMock() {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">Preview</span>
         <span className="rounded-md bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium text-white/40">
@@ -212,7 +212,7 @@ function EmbedBuilderMock() {
         </span>
       </div>
       <div className="mt-3 rounded-xl border-l-[3px] border-accent bg-white/[0.03] p-3.5">
-        <p className="text-[13px] font-semibold text-white/80">Server rules</p>
+        <p className="text-xs sm:text-[13px] font-semibold text-white/80">Server rules</p>
         <p className="mt-1.5 text-xs leading-relaxed text-white/45">
           Be kind, keep it on topic, and no self-promo outside #showcase.
         </p>
@@ -242,24 +242,24 @@ function LeaderboardMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">Top members</span>
         <span className="text-xs text-white/30">this month</span>
       </div>
-      <div className="mt-3 space-y-2">
+      <div className="mt-2.5 space-y-1.5 sm:mt-3 sm:space-y-2">
         {rows.map((row) => {
           const user = users[row.id]
           return (
             <div
               key={row.id}
-              className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+              className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-2.5 py-1.5 sm:px-3.5 sm:py-2.5"
             >
-              <span className={`w-5 text-center text-[13px] font-semibold ${row.rank === 1 ? 'text-yellow-400/90' : 'text-white/35'}`}>
+              <span className={`w-5 text-center text-xs sm:text-[13px] font-semibold ${row.rank === 1 ? 'text-yellow-400/90' : 'text-white/35'}`}>
                 {row.rank}
               </span>
               <Avatar user={user} />
-              <span className="truncate text-[13px] font-medium text-white/70">
+              <span className="truncate text-xs sm:text-[13px] font-medium text-white/70">
                 {displayName(row.id, user)}
               </span>
               <span className="ml-auto shrink-0 text-xs text-white/35">{row.messages} msgs</span>
@@ -312,7 +312,7 @@ const extras: { Icon: IconType; title: string; desc: string; mock: React.ReactNo
 
 export default function ExtrasSection() {
   return (
-    <section className="relative px-6 py-24">
+    <section className="relative px-5 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeader
           label="Beyond the basics"
@@ -320,11 +320,11 @@ export default function ExtrasSection() {
           subline="The details that make a server feel looked after — included, not sold separately."
         />
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           {extras.map((item, i) => (
             <GlassCard key={item.title}>
               <CardText Icon={item.Icon} title={item.title} desc={item.desc} />
-              <div className="mt-6 flex flex-1 flex-col justify-end">{item.mock}</div>
+              <div className="mt-4 flex flex-1 flex-col justify-end sm:mt-6">{item.mock}</div>
             </GlassCard>
           ))}
         </div>

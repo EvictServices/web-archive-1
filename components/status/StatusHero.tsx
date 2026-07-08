@@ -44,9 +44,9 @@ export function StatusHeroSkeleton() {
   return (
     <div className="space-y-4">
       <div className="h-28 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03]" />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-28 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03]" />
+          <div key={i} className="h-20 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03] sm:h-28" />
         ))}
       </div>
     </div>
@@ -122,21 +122,23 @@ export default function StatusHero({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         {METRICS.map(({ key, label, icon: Icon, chip, glow }) => (
           <div
             key={key}
             className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-5 transition-colors hover:border-white/[0.15] sm:p-6"
           >
             <div className={`pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full blur-3xl ${glow}`} />
-            <div className="relative">
-              <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${chip}`}>
+            <div className="relative flex items-center gap-4 sm:block">
+              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${chip}`}>
                 <Icon className="h-4.5 w-4.5" />
               </span>
-              <p className="mt-3 text-xs font-medium text-white/40">{label}</p>
-              <p className="font-display mt-1 text-xl font-semibold tabular-nums tracking-tight text-white sm:text-2xl">
-                {values[key]}
-              </p>
+              <div className="sm:mt-3">
+                <p className="text-xs font-medium text-white/40">{label}</p>
+                <p className="font-display mt-0.5 text-xl font-semibold tabular-nums tracking-tight text-white sm:mt-1 sm:text-2xl">
+                  {values[key]}
+                </p>
+              </div>
             </div>
           </div>
         ))}

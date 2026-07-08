@@ -12,7 +12,7 @@ const SETUP_STEPS = [
 
 function JoinMock() {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center gap-3">
         <img src="/evict.png" alt="" className="h-9 w-9 shrink-0 rounded-full object-cover" />
         <div className="min-w-0">
@@ -30,16 +30,16 @@ function JoinMock() {
         </span>
       </div>
 
-      <div className="mt-4 space-y-2">
+      <div className="mt-3 space-y-1.5 sm:mt-4 sm:space-y-2">
         {SETUP_STEPS.map((step) => (
           <div
             key={step.label}
-            className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+            className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] px-2.5 py-1.5 sm:px-3.5 sm:py-2.5"
           >
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15">
               <TbCheck className="h-3 w-3 text-accent" />
             </span>
-            <span className="text-[13px] text-white/70">{step.label}</span>
+            <span className="text-xs sm:text-[13px] text-white/70">{step.label}</span>
             <span className="ml-auto shrink-0 text-xs text-white/30">{step.time}</span>
           </div>
         ))}
@@ -50,14 +50,14 @@ function JoinMock() {
 
 export default function TestimonialsSection() {
   return (
-    <section className="relative px-6 py-24">
+    <section className="relative px-5 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px 0px' }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card p-8 sm:p-12"
+          className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card p-5 sm:p-12"
         >
           <div
             aria-hidden
@@ -69,21 +69,21 @@ export default function TestimonialsSection() {
               <span className="text-[11px] font-semibold tracking-[0.2em] text-accent-bright uppercase">
                 Get started
               </span>
-              <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
+              <h2 className="font-display mt-3 text-2xl font-semibold tracking-tight text-balance text-white sm:mt-4 sm:text-4xl">
                 Ready when you are.
               </h2>
-              <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/50">
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-white/50 sm:mt-4 sm:text-[15px]">
                 Evict is protecting your server the moment it joins — no config files, no
                 dashboards to wrestle with. And if you get stuck, real people in the support
                 server will help you out.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:mt-8 sm:gap-3">
                 <a
                   href={DISCORD_INVITE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition-all hover:brightness-110 hover:shadow-[0_0_32px_rgba(95,130,141,0.35)]"
+                  className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-black transition-all hover:brightness-110 hover:shadow-[0_0_32px_rgba(95,130,141,0.35)] sm:px-6 sm:py-3"
                 >
                   Add to Discord
                   <TbArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -92,16 +92,18 @@ export default function TestimonialsSection() {
                   href={SUPPORT_SERVER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full border border-white/[0.1] px-6 py-3 text-sm font-medium text-white/60 transition-colors hover:border-white/[0.2] hover:text-white/90"
+                  className="inline-flex items-center rounded-full border border-white/[0.1] px-5 py-2.5 text-sm font-medium text-white/60 transition-colors hover:border-white/[0.2] hover:text-white/90 sm:px-6 sm:py-3"
                 >
                   Join the support server
                 </a>
               </div>
 
-              <p className="mt-6 text-xs text-white/35">Free to add · set up in under a minute</p>
+              <p className="mt-5 text-xs text-white/35 sm:mt-6">Free to add · set up in under a minute</p>
             </div>
 
-            <JoinMock />
+            <div className="hidden lg:block">
+              <JoinMock />
+            </div>
           </div>
         </motion.div>
       </div>

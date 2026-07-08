@@ -44,7 +44,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-12">
+          <div className="flex flex-wrap gap-x-12 gap-y-8">
             {groups.map((group) => (
               <div key={group.title}>
                 <p className="mb-4 text-[11px] font-semibold tracking-[0.15em] text-white/70 uppercase">

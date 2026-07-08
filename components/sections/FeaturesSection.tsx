@@ -35,8 +35,8 @@ function displayName(id: string, user?: { display_name?: string; username?: stri
 
 function FeatureIcon({ Icon }: { Icon: IconType }) {
   return (
-    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
-      <Icon className="h-5 w-5 text-accent" />
+    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent/10 sm:h-10 sm:w-10">
+      <Icon className="h-4 w-4 text-accent sm:h-5 sm:w-5" />
     </span>
   )
 }
@@ -53,8 +53,8 @@ function CardText({
   return (
     <div>
       <FeatureIcon Icon={Icon} />
-      <h3 className="font-display mt-4 text-lg font-semibold tracking-tight text-white">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-white/50">{desc}</p>
+      <h3 className="font-display mt-2.5 text-[15px] font-semibold tracking-tight text-white sm:mt-4 sm:text-lg">{title}</h3>
+      <p className="mt-1.5 text-xs leading-relaxed text-white/50 sm:mt-2 sm:text-sm">{desc}</p>
     </div>
   )
 }
@@ -67,16 +67,16 @@ function AntiNukeMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <span className="text-xs font-medium text-white/40">Threat log</span>
-      <div className="mt-3 space-y-2">
+      <div className="mt-2.5 space-y-1.5 sm:mt-3 sm:space-y-2">
         {rows.map((row) => (
           <div
             key={row.threat}
-            className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+            className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-2.5 py-1.5 sm:px-3.5 sm:py-2.5"
           >
             <TbAlertTriangle className="h-4 w-4 shrink-0 text-red-400/80" />
-            <span className="truncate text-[13px] text-white/70">{row.threat}</span>
+            <span className="truncate text-xs sm:text-[13px] text-white/70">{row.threat}</span>
             <span className="ml-auto shrink-0 rounded-md bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
               {row.action}
             </span>
@@ -94,12 +94,12 @@ function RewardsMock() {
   const name = displayName(MOCK_USER_IDS.member, user)
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center gap-3">
         {user?.avatar ? (
-          <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-accent/25" />
+          <img src={user.avatar} alt="" className="h-8 w-8 rounded-full object-cover ring-2 ring-accent/25 sm:h-10 sm:w-10" />
         ) : (
-          <div className="h-10 w-10 rounded-full bg-accent/15 ring-2 ring-accent/25" />
+          <div className="h-8 w-8 rounded-full bg-accent/15 ring-2 ring-accent/25 sm:h-10 sm:w-10" />
         )}
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold text-white/85">{name}</p>
@@ -142,16 +142,16 @@ function VoiceMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">Temporary channels</span>
         <span className="text-xs text-white/30">8 active</span>
       </div>
-      <div className="mt-3 space-y-2">
+      <div className="mt-2.5 space-y-1.5 sm:mt-3 sm:space-y-2">
         {channels.map((channel) => (
           <div
             key={channel.name}
-            className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5"
+            className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] px-2.5 py-1.5 sm:px-3.5 sm:py-2.5"
           >
             {channel.locked ? (
               <TbLock className="h-4 w-4 shrink-0 text-amber-400/80" />
@@ -159,7 +159,7 @@ function VoiceMock() {
               <TbVolume className="h-4 w-4 shrink-0 text-green-400/80" />
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-[13px] font-medium text-white/70">{channel.name}</p>
+              <p className="text-xs sm:text-[13px] font-medium text-white/70">{channel.name}</p>
               <p className="text-xs text-white/35">{channel.detail}</p>
             </div>
             <div className="flex -space-x-1.5">
@@ -211,13 +211,13 @@ function MessagesMock() {
   return (
     <div className="grid gap-3 sm:grid-cols-3">
       {events.map((event) => (
-        <div key={event.type} className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+        <div key={event.type} className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium tracking-wide text-white/40 uppercase">{event.type}</span>
             <span className="font-mono text-xs text-accent/70">{event.channel}</span>
           </div>
           <div className={`mt-3 rounded-xl border-l-[3px] bg-white/[0.03] p-3.5 ${event.accent}`}>
-            <p className="text-[13px] font-semibold text-white/80">{event.title}</p>
+            <p className="text-xs sm:text-[13px] font-semibold text-white/80">{event.title}</p>
             <p className="mt-1.5 text-xs leading-relaxed text-white/45">{event.body}</p>
           </div>
         </div>
@@ -235,7 +235,7 @@ function RolesMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-white/40">Pick a color</span>
         <span className="text-xs text-white/30">one per member</span>
@@ -278,7 +278,7 @@ function BoostsMock() {
   ]
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-3 sm:p-4">
       <div className="flex items-center justify-between text-xs text-white/40">
         <span>Progress to level 3</span>
         <span className="text-accent/80">3 / 5 boosts</span>
@@ -286,11 +286,11 @@ function BoostsMock() {
       <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[0.05]">
         <div className="h-full w-[60%] rounded-full bg-gradient-to-r from-pink-400/60 to-accent" />
       </div>
-      <div className="mt-4 space-y-2">
+      <div className="mt-3 space-y-1.5 sm:mt-4 sm:space-y-2">
         {perks.map((perk) => (
           <div key={perk.label} className="flex items-center gap-2.5 rounded-xl bg-white/[0.02] px-3 py-2">
             <TbCheck className="h-3.5 w-3.5 shrink-0 text-accent" />
-            <span className="text-[13px] text-white/60">{perk.label}</span>
+            <span className="text-xs sm:text-[13px] text-white/60">{perk.label}</span>
           </div>
         ))}
       </div>
@@ -300,7 +300,7 @@ function BoostsMock() {
 
 export default function FeaturesSection() {
   return (
-    <section className="relative px-6 py-24">
+    <section className="relative px-5 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeader
           label="What evict does"
@@ -308,7 +308,7 @@ export default function FeaturesSection() {
           subline="Protection, moderation, and community features that work out of the box. Set it up once and it quietly does its job."
         />
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           <GlassCard span="sm:col-span-2">
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr]">
               <CardText
@@ -326,7 +326,7 @@ export default function FeaturesSection() {
               title="Reward the regulars"
               desc="Levels, streaks, vanity tags, and custom roles for the people who keep your server alive."
             />
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <RewardsMock />
             </div>
           </GlassCard>
@@ -337,7 +337,7 @@ export default function FeaturesSection() {
               title="Voice channels on demand"
               desc="Members spawn their own temporary channels with their own limits and locks. You set the rules once."
             />
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <VoiceMock />
             </div>
           </GlassCard>
@@ -348,7 +348,7 @@ export default function FeaturesSection() {
               title="Every arrival gets a hello"
               desc="Welcomes, boost announcements, and goodbyes with custom embeds and variables for every event."
             />
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <MessagesMock />
             </div>
           </GlassCard>
@@ -359,7 +359,7 @@ export default function FeaturesSection() {
               title="Self-serve roles"
               desc="Buttons, dropdowns, and reactions let members pick their own roles — no commands, no mod pings."
             />
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <RolesMock />
             </div>
           </GlassCard>
@@ -370,7 +370,7 @@ export default function FeaturesSection() {
               title="Boosters get the best seats"
               desc="Auto-assigned roles, colors, and exclusive channels make supporting your server feel worth it."
             />
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <BoostsMock />
             </div>
           </GlassCard>

@@ -111,12 +111,12 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
             <div className="border-t border-white/[0.06] px-5 pb-5">
               <p className="py-3 text-[11px] font-medium tracking-wider text-white/35 uppercase">Shards</p>
               <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-black/25">
-                <div className="grid grid-cols-6 gap-2 border-b border-white/[0.06] px-4 py-2.5 text-[10px] font-medium tracking-wider text-white/35 uppercase">
+                <div className="grid grid-cols-4 gap-2 border-b border-white/[0.06] px-4 py-2.5 text-[10px] font-medium tracking-wider text-white/35 uppercase sm:grid-cols-6">
                   <span>Shard</span>
                   <span className="text-right">Latency</span>
                   <span className="text-right">Uptime</span>
-                  <span className="text-right">Users</span>
-                  <span className="text-right">Guilds</span>
+                  <span className="hidden text-right sm:block">Users</span>
+                  <span className="hidden text-right sm:block">Guilds</span>
                   <span className="text-right">Status</span>
                 </div>
                 {cluster.shards.map((shard) => {
@@ -125,13 +125,13 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
                   return (
                     <div
                       key={shard.id}
-                      className="grid grid-cols-6 gap-2 border-b border-white/[0.04] px-4 py-2.5 text-xs text-white/55 last:border-b-0"
+                      className="grid grid-cols-4 gap-2 border-b border-white/[0.04] px-4 py-2.5 text-xs text-white/55 last:border-b-0 sm:grid-cols-6"
                     >
                       <span className="text-white/40">#{shard.id}</span>
                       <span className={`text-right ${LATENCY_TONE_CLASS[tone]}`}>{ms}ms</span>
                       <span className="text-right">{formatDuration(uptimeToSeconds(shard.uptime))}</span>
-                      <span className="text-right">{formatNumber(shard.users)}</span>
-                      <span className="text-right">{formatNumber(shard.guilds)}</span>
+                      <span className="hidden text-right sm:block">{formatNumber(shard.users)}</span>
+                      <span className="hidden text-right sm:block">{formatNumber(shard.guilds)}</span>
                       <span className="flex items-center justify-end">
                         <span
                           className={`w-1.5 rounded-sm ${cluster.alive ? LATENCY_DOT_CLASS[tone] : 'bg-red-400/40'} ${
