@@ -82,7 +82,7 @@ export default function Footer() {
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
           <p className="text-xs text-white/40">
-            &copy; 2026 evict. All rights reserved.
+            &copy; 2026 evict.bot All rights reserved.
           </p>
           <a
             href="https://azron.net"

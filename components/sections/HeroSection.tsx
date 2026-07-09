@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TbShieldCheck } from 'react-icons/tb'
 import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL } from '@/lib/constants'
+import { formatNumber } from '@/lib/status'
 import { useUsers } from '@/hooks/useUsers'
 
 export default function HeroSection() {
@@ -84,13 +85,9 @@ export default function HeroSection() {
                 className="mt-10 text-sm text-white/40"
               >
                 Trusted by{' '}
-                <span className="font-semibold text-white/80">
-                  {(stats.users / 1_000_000).toFixed(1)}M+ members
-                </span>{' '}
+                <span className="font-semibold text-white/80">{formatNumber(stats.users)} members</span>{' '}
                 across{' '}
-                <span className="font-semibold text-white/80">
-                  {(stats.guilds / 1_000).toFixed(0)}K+ servers
-                </span>
+                <span className="font-semibold text-white/80">{formatNumber(stats.guilds)} servers</span>
               </motion.p>
             )}
           </div>

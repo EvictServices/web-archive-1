@@ -96,7 +96,7 @@ function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCa
         </div>
 
         <div className="mt-5">
-          <p className="mb-2 text-[11px] font-medium text-white/35">Shard health</p>
+          <p className="mb-2 text-[11px] font-medium text-white/35">Shard Health</p>
           <ShardStrip shards={cluster.shards} alive={cluster.alive} />
         </div>
       </div>

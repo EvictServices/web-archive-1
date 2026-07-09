@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { TbBolt, TbRefresh, TbServer, TbUsers } from 'react-icons/tb'
+import { TbRefresh } from 'react-icons/tb'
 import { formatNumber } from '@/lib/status'
 import { useLightMotion } from '@/hooks/useLightMotion'
 
@@ -17,38 +17,16 @@ interface StatusHeroProps {
 }
 
 const METRICS = [
-  {
-    key: 'latency',
-    label: 'Gateway',
-    icon: TbBolt,
-    chip: 'bg-accent/12 text-accent',
-    glow: 'bg-accent/[0.09]',
-  },
-  {
-    key: 'guilds',
-    label: 'Servers',
-    icon: TbServer,
-    chip: 'bg-violet-400/12 text-violet-300',
-    glow: 'bg-violet-400/[0.09]',
-  },
-  {
-    key: 'users',
-    label: 'Users',
-    icon: TbUsers,
-    chip: 'bg-emerald-400/12 text-emerald-300',
-    glow: 'bg-emerald-400/[0.09]',
-  },
+  { key: 'latency', label: 'Gateway Latency' },
+  { key: 'guilds', label: 'Servers' },
+  { key: 'users', label: 'Users'},
 ] as const
 
 export function StatusHeroSkeleton() {
   return (
     <div className="space-y-4">
       <div className="h-28 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03]" />
-      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="h-20 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03] sm:h-28" />
-        ))}
-      </div>
+      <div className="h-40 animate-pulse rounded-3xl border border-white/[0.08] bg-white/[0.03] sm:h-28" />
     </div>
   )
 }
@@ -122,24 +100,15 @@ export default function StatusHero({
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-        {METRICS.map(({ key, label, icon: Icon, chip, glow }) => (
-          <div
-            key={key}
-            className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-5 transition-colors hover:border-white/[0.15] sm:p-6"
-          >
-            <div className={`pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full blur-3xl ${glow}`} />
-            <div className="relative flex items-center gap-4 sm:block">
-              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${chip}`}>
-                <Icon className="h-4.5 w-4.5" />
-              </span>
-              <div className="sm:mt-3">
-                <p className="text-xs font-medium text-white/40">{label}</p>
-                <p className="font-display mt-0.5 text-xl font-semibold tabular-nums tracking-tight text-white sm:mt-1 sm:text-2xl">
-                  {values[key]}
-                </p>
-              </div>
+      <div className="grid divide-y divide-white/[0.06] rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        {METRICS.map(({ key, label }) => (
+          <div key={key} className="flex items-baseline justify-between gap-3 px-6 py-4 sm:block sm:px-7 sm:py-5">
+            <div>
+              <p className="text-[13px] font-medium text-white/60">{label}</p>
             </div>
+            <p className="font-display text-xl font-semibold tabular-nums tracking-tight text-white sm:mt-3 sm:text-2xl">
+              {values[key]}
+            </p>
           </div>
         ))}
       </div>

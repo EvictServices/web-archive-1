@@ -314,7 +314,7 @@ export default function FeaturesSection() {
               <CardText
                 Icon={TbShieldBolt}
                 title="Raids stop before they start"
-                desc="evict watches for mass kicks, channel deletions, and role nukes, and shuts them down in milliseconds. Damage gets blocked, not cleaned up after."
+                desc="Evict watches for mass kicks, channel deletions, and role nukes, and shuts them down in milliseconds. Damage gets blocked, not cleaned up after."
               />
               <AntiNukeMock />
             </div>
