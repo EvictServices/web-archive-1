@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useCallback, useRef, type ClipboardEvent, type FormEvent } from 'react'
-import { motion } from 'framer-motion'
-import { TbSearch, TbStack2 } from 'react-icons/tb'
+import { motion, AnimatePresence } from 'framer-motion'
+import { TbChevronDown, TbSearch, TbStack2 } from 'react-icons/tb'
 import ClusterCard from '@/components/status/ClusterCard'
+import { findGuild } from '@/lib/actions/lookups'
 import {
   type Cluster,
   type GuildLookup,
+  CLUSTER_STATUS_CLASS,
+  CLUSTER_STATUS_INFO,
   guildIdToShardId,
   getShardCount,
   locateShard,
@@ -52,6 +55,7 @@ export default function ClustersSection({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [guild, setGuild] = useState<GuildLookup | null>(null)
+  const [statusHelpOpen, setStatusHelpOpen] = useState(false)
   const searchAbortRef = useRef<AbortController | null>(null)
   const guildIdRef = useRef(guildId)
   guildIdRef.current = guildId
@@ -102,16 +106,13 @@ export default function ClustersSection({
     setLoading(true)
 
     try {
-      const res = await fetch(`/api/guild/find?idx=${encodeURIComponent(trimmed)}`, {
-        cache: 'no-store',
-        signal: controller.signal,
-      })
+      const result = await findGuild(trimmed)
       if (controller.signal.aborted || guildIdRef.current.trim() !== trimmed) return
-      if (res.ok) {
-        setGuild((await res.json()) as GuildLookup)
+      if (result) {
+        setGuild(result)
       }
-    } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') return
+    } catch {
+      // findGuild handles backend failures internally
     } finally {
       if (!controller.signal.aborted) {
         setLoading(false)
@@ -191,6 +192,46 @@ export default function ClustersSection({
           </div>
         </div>
       )}
+
+      <div className="mb-4">
+        <button
+          type="button"
+          aria-expanded={statusHelpOpen}
+          onClick={() => setStatusHelpOpen((open) => !open)}
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:border-white/[0.14] hover:text-white/70"
+        >
+          What do statuses mean?
+          <TbChevronDown
+            className={`h-3.5 w-3.5 transition-transform ${statusHelpOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
+
+        <AnimatePresence initial={false}>
+          {statusHelpOpen && (
+            <motion.div
+              key="status-help"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: lightMotion ? 0.15 : 0.25, ease }}
+              className="overflow-hidden"
+            >
+              <div className="mt-3 grid gap-3 rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-4 sm:grid-cols-2 lg:grid-cols-4 sm:p-5">
+                {CLUSTER_STATUS_INFO.map(({ status, label, description }) => (
+                  <div key={status} className="min-w-0">
+                    <span
+                      className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase ${CLUSTER_STATUS_CLASS[status]}`}
+                    >
+                      {label}
+                    </span>
+                    <p className="mt-2 text-xs leading-relaxed text-white/45">{description}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <motion.div
         className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"

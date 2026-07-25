@@ -13,6 +13,7 @@ interface StatusHeroProps {
   latencyMs: number
   lastUpdate: Date | null
   operational: boolean
+  starting?: boolean
   refreshIn: number
 }
 
@@ -37,6 +38,7 @@ export default function StatusHero({
   latencyMs,
   lastUpdate,
   operational,
+  starting = false,
   refreshIn,
 }: StatusHeroProps) {
   const lightMotion = useLightMotion()
@@ -46,6 +48,13 @@ export default function StatusHero({
     guilds: formatNumber(guilds),
     users: formatNumber(users),
   }
+
+  const headline = operational
+    ? 'All systems operational'
+    : starting
+      ? 'Clusters starting up'
+      : 'Partial outage'
+  const tone = operational ? 'ok' : starting ? 'boot' : 'warn'
 
   return (
     <motion.div
@@ -57,26 +66,36 @@ export default function StatusHero({
       <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.01]">
         <div
           className={`pointer-events-none absolute -top-20 left-1/2 h-40 w-2/3 -translate-x-1/2 rounded-full blur-3xl ${
-            operational ? 'bg-emerald-500/[0.08]' : 'bg-amber-500/[0.08]'
+            tone === 'ok'
+              ? 'bg-emerald-500/[0.08]'
+              : tone === 'boot'
+                ? 'bg-sky-500/[0.08]'
+                : 'bg-amber-500/[0.08]'
           }`}
         />
 
         <div className="relative flex flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-7">
           <div className="flex min-w-0 items-center gap-3">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
-              {operational && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/30" />
+              {(operational || starting) && (
+                <span
+                  className={`absolute inline-flex h-full w-full animate-ping rounded-full ${
+                    operational ? 'bg-emerald-400/30' : 'bg-sky-400/30'
+                  }`}
+                />
               )}
               <span
                 className={`relative inline-flex h-full w-full rounded-full ${
-                  operational
+                  tone === 'ok'
                     ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
-                    : 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
+                    : tone === 'boot'
+                      ? 'bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.5)]'
+                      : 'bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
                 }`}
               />
             </span>
             <p className="font-display text-xl font-semibold tracking-tight text-white sm:text-2xl">
-              {operational ? 'All systems operational' : 'Partial outage'}
+              {headline}
             </p>
           </div>
 

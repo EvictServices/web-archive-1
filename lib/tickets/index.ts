@@ -1,4 +1,4 @@
-import { getCdnApiKey, getCdnUrl } from '@/lib/cdn'
+import { getCdnApiKey, getCdnUrl } from '@/lib/tickets/cdn'
 
 export interface TicketMessage {
   id: string

@@ -7,9 +7,12 @@ export interface Shard {
   seen: number
 }
 
+export type ClusterStatus = 'connecting' | 'online' | 'ready' | 'offline'
+
 export interface Cluster {
   id: string
   config: { shard: { start: number; end: number } }
+  status?: ClusterStatus
   last_heartbeat: number
   uptime: number
   alive: boolean
@@ -72,6 +75,45 @@ export const LATENCY_DOT_CLASS = {
   warn: 'bg-amber-400/80',
   bad: 'bg-red-400/80',
 } as const
+
+export const CLUSTER_STATUS_CLASS: Record<ClusterStatus, string> = {
+  ready: 'bg-emerald-400/10 text-emerald-300',
+  online: 'bg-accent/10 text-accent',
+  connecting: 'bg-amber-400/10 text-amber-300',
+  offline: 'bg-red-400/10 text-red-300',
+}
+
+export const CLUSTER_STATUS_INFO: {
+  status: ClusterStatus
+  label: string
+  description: string
+}[] = [
+  {
+    status: 'connecting',
+    label: 'Connecting',
+    description: 'Booting or waiting for all assigned shards to come online.',
+  },
+  {
+    status: 'online',
+    label: 'Online',
+    description: 'Every assigned shard is connected; finishing startup.',
+  },
+  {
+    status: 'ready',
+    label: 'Ready',
+    description: 'Fully started and serving traffic normally.',
+  },
+  {
+    status: 'offline',
+    label: 'Offline',
+    description: 'No recent heartbeat — the instance is down or unreachable.',
+  },
+]
+
+export function formatClusterStatus(status: ClusterStatus | undefined, alive: boolean): ClusterStatus {
+  if (status) return status
+  return alive ? 'online' : 'offline'
+}
 
 export function systemPercent(
   value: number | { percent?: number },

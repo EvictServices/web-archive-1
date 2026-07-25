@@ -3,7 +3,7 @@
 import { memo } from 'react'
 import { motion, LayoutGroup } from 'framer-motion'
 import type { IconType } from 'react-icons'
-import { categoryIcon, formatCategory } from '@/lib/categoryStyles'
+import { categoryIcon, formatCategory } from '@/lib/commands/categoryStyles'
 
 interface CommandSidebarProps {
   search: string

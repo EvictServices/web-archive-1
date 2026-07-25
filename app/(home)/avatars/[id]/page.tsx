@@ -4,10 +4,11 @@ import AvatarsView from '@/components/avatars/AvatarsView'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import { sortAvatarsNewestFirst, type AvatarRecord, type AvatarUserInfo } from '@/lib/avatars'
+import { BACKEND_URL, CDN_URL } from '@/lib/constants'
 
 async function fetchAvatars(userId: string): Promise<AvatarRecord[]> {
   try {
-    const res = await fetch(`https://cdn.azron.net/api/avatars/${userId}`, {
+    const res = await fetch(`${CDN_URL}/api/avatars/${userId}`, {
       next: { revalidate: 60 },
     })
     if (!res.ok) return []
@@ -20,7 +21,7 @@ async function fetchAvatars(userId: string): Promise<AvatarRecord[]> {
 
 async function fetchUserInfo(userId: string): Promise<AvatarUserInfo | null> {
   try {
-    const res = await fetch('http://127.0.0.1:8000/user/find', {
+    const res = await fetch(`${BACKEND_URL}/user/find`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: userId }),

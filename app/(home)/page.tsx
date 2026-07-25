@@ -4,7 +4,7 @@ import FeaturesSection from '@/components/sections/FeaturesSection'
 import ExtrasSection from '@/components/sections/ExtrasSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import Footer from '@/components/sections/Footer'
-import ImpersonatorWarning from '@/components/ImpersonatorWarning'
+import ImpersonatorWarning from '@/components/ui/ImpersonatorWarning'
 
 export default function Home() {
   return (

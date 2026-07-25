@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { findUsers } from '@/lib/actions/lookups'
 
 interface UserData {
   user_id: string
@@ -33,15 +34,10 @@ function scheduleBatch(): Promise<void> {
             return
           }
 
-          fetch('/api/users/find', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_ids: ids }),
-          })
-            .then((r) => r.json())
-            .then((data: UserData[]) => {
+          findUsers(ids)
+            .then((data) => {
               for (const u of data) {
-                if (u.user_id) cache[u.user_id] = u
+                if (u.user_id) cache[u.user_id] = u as UserData
               }
             })
             .catch(() => {})

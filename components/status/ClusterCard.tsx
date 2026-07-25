@@ -4,9 +4,11 @@ import { memo } from 'react'
 import { TbChevronRight } from 'react-icons/tb'
 import {
   type Cluster,
+  formatClusterStatus,
   formatNumber,
   latencyToMs,
   latencyTone,
+  CLUSTER_STATUS_CLASS,
   LATENCY_DOT_CLASS,
   LATENCY_TONE_CLASS,
 } from '@/lib/status'
@@ -40,7 +42,8 @@ function ShardStrip({ shards, alive }: { shards: Cluster['shards']; alive: boole
 
 function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCardProps) {
   const latencyMs = latencyToMs(cluster.average_latency)
-  const tone = cluster.alive ? latencyTone(latencyMs) : 'bad'
+  const status = formatClusterStatus(cluster.status, cluster.alive)
+  const tone = status === 'offline' ? 'bad' : latencyTone(latencyMs)
 
   return (
     <button
@@ -55,7 +58,7 @@ function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCa
     >
       <div
         className={`pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full blur-3xl ${
-          cluster.alive ? 'bg-accent/[0.07]' : 'bg-red-400/[0.09]'
+          status === 'offline' ? 'bg-red-400/[0.09]' : 'bg-accent/[0.07]'
         }`}
       />
 
@@ -66,13 +69,9 @@ function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCa
           </p>
           <span className="flex items-center gap-2">
             <span
-              className={`rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase ${
-                cluster.alive
-                  ? 'bg-emerald-400/10 text-emerald-300'
-                  : 'bg-red-400/10 text-red-300'
-              }`}
+              className={`rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase ${CLUSTER_STATUS_CLASS[status]}`}
             >
-              {cluster.alive ? 'Online' : 'Offline'}
+              {status}
             </span>
             <TbChevronRight className="h-4 w-4 shrink-0 text-white/20 transition-transform group-hover:translate-x-0.5 group-hover:text-white/45" />
           </span>
@@ -97,7 +96,7 @@ function ClusterCard({ cluster, index, highlighted = false, onClick }: ClusterCa
 
         <div className="mt-5">
           <p className="mb-2 text-[11px] font-medium text-white/35">Shard Health</p>
-          <ShardStrip shards={cluster.shards} alive={cluster.alive} />
+          <ShardStrip shards={cluster.shards} alive={status !== 'offline'} />
         </div>
       </div>
     </button>

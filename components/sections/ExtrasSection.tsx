@@ -14,22 +14,9 @@ import {
 import SectionHeader from '@/components/ui/SectionHeader'
 import GlassCard from '@/components/ui/GlassCard'
 import { useUsers } from '@/hooks/useUsers'
+import { SHOWCASE_USER_IDS, showcaseDisplayName as displayName } from '@/lib/showcaseUsers'
 
-const USER_IDS = {
-  vael: '604463848526708757',
-  isia: '368896789438529538',
-  fshua: '357975942276055041',
-} as const
-
-const USER_FALLBACKS: Record<string, string> = {
-  [USER_IDS.vael]: 'vael',
-  [USER_IDS.isia]: 'isia',
-  [USER_IDS.fshua]: 'fshua',
-}
-
-function displayName(id: string, user?: { display_name?: string; username?: string }): string {
-  return user?.display_name || user?.username?.split('#')[0] || USER_FALLBACKS[id] || 'member'
-}
+const USER_IDS = SHOWCASE_USER_IDS
 
 function Avatar({ user, size = 'h-6 w-6' }: { user?: { avatar: string | null }; size?: string }) {
   return user?.avatar ? (

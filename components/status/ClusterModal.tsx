@@ -6,11 +6,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import StatusCard from '@/components/status/StatusCard'
 import {
   type Cluster,
+  formatClusterStatus,
   formatNumber,
   formatDuration,
   latencyToMs,
   latencyTone,
   uptimeToSeconds,
+  CLUSTER_STATUS_CLASS,
   LATENCY_DOT_CLASS,
   LATENCY_TONE_CLASS,
 } from '@/lib/status'
@@ -85,12 +87,10 @@ export default function ClusterModal({ cluster, clusterIndex, onClose }: Cluster
                 </div>
                 <span
                   className={`mt-0.5 shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase ${
-                    cluster.alive
-                      ? 'bg-emerald-400/10 text-emerald-300'
-                      : 'bg-red-400/10 text-red-300'
+                    CLUSTER_STATUS_CLASS[formatClusterStatus(cluster.status, cluster.alive)]
                   }`}
                 >
-                  {cluster.alive ? 'Online' : 'Offline'}
+                  {formatClusterStatus(cluster.status, cluster.alive)}
                 </span>
               </div>
             </div>

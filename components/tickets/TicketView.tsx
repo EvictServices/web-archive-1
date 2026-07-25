@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import type { TicketTranscriptResponse as TicketData, TicketUser } from '@/lib/tickets'
+import { findUsers } from '@/lib/actions/lookups'
 import { formatTimestamp, getFallbackAvatar, getAvatarUrl, getInvolvedLabel } from '@/components/tickets/helpers'
 import TranscriptMessages from '@/components/tickets/TranscriptMessages'
 import { PageLabel } from '@/components/ui/PageHeader'
@@ -32,16 +33,10 @@ export default function TicketView({ ticketData, ticketId }: Props) {
   useEffect(() => {
     if (people.length === 0) return
 
-    const controller = new AbortController()
-    fetch('/api/users/find', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_ids: people }),
-      signal: controller.signal,
-    })
-      .then((res) => (res.ok ? res.json() : []))
+    let cancelled = false
+    findUsers(people)
       .then((rows: Array<{ user_id?: string; username?: string; display_name?: string; avatar?: string | null; bot?: boolean }>) => {
-        if (!Array.isArray(rows) || rows.length === 0) return
+        if (cancelled || !Array.isArray(rows) || rows.length === 0) return
         setUsers((prev) => {
           const map = new Map(prev.map((u) => [u.id, u]))
           for (const row of rows) {
@@ -72,7 +67,9 @@ export default function TicketView({ ticketData, ticketId }: Props) {
       })
       .catch(() => {})
 
-    return () => controller.abort()
+    return () => {
+      cancelled = true
+    }
   }, [people])
 
   return (

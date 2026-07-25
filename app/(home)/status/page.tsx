@@ -10,7 +10,7 @@ import StatusHero, { StatusHeroSkeleton } from '@/components/status/StatusHero'
 import PageHeader from '@/components/ui/PageHeader'
 import { PAGE_TOP_PADDING, PAGE_X_PADDING } from '@/lib/pageLayout'
 import { useLightMotion } from '@/hooks/useLightMotion'
-import { type Cluster, type HealthData, latencyToMs, getShardCount } from '@/lib/status'
+import { type Cluster, type HealthData, latencyToMs, getShardCount, formatClusterStatus } from '@/lib/status'
 
 const REFRESH_INTERVAL = 30
 
@@ -58,11 +58,16 @@ export default function StatusPage() {
     return Object.entries(data.clusters).map(([id, c]) => ({ ...c, id }))
   }, [data])
 
-  const operational = useMemo(
-    () =>
-      clusters.length > 0 &&
-      getShardCount(clusters) > 0 &&
-      clusters.every((c) => c.alive),
+  const operational = useMemo(() => {
+    if (clusters.length === 0 || getShardCount(clusters) === 0) return false
+    return clusters.every((c) => {
+      const status = formatClusterStatus(c.status, c.alive)
+      return status === 'ready' || status === 'online'
+    })
+  }, [clusters])
+
+  const starting = useMemo(
+    () => clusters.some((c) => formatClusterStatus(c.status, c.alive) === 'connecting'),
     [clusters],
   )
 
@@ -108,6 +113,7 @@ export default function StatusPage() {
               latencyMs={latencyToMs(data.system?.latency ?? 0)}
               lastUpdate={lastUpdate}
               operational={operational}
+              starting={starting}
               refreshIn={refreshIn}
             />
 

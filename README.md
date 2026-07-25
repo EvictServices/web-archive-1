@@ -22,9 +22,18 @@ Built with [Next.js 16](https://nextjs.org), React 19, Tailwind CSS 4, and Frame
 | Endpoint | Description |
 |----------|-------------|
 | `/api/health` | Proxies the bot health endpoint |
-| `/api/commands` | Fetches available commands |
-| `/api/avatars/[id]` | Avatar lookup |
-| `/api/user/find` | User search |
+
+Command, user, and guild lookups run as server actions (`lib/actions/`) and are not exposed as public endpoints.
+
+## Project Structure
+
+| Folder | Contents |
+|--------|----------|
+| `app/` | Routes, layouts, and the health API route |
+| `components/` | React components, grouped by page/feature (`sections`, `status`, `commands`, `embeds`, `updates`, `tickets`, `avatars`, `legal`, `ui`) |
+| `lib/` | Shared code grouped by domain: `actions/` (server actions), `commands/`, `status/`, `updates/`, `tickets/`, `avatars/`, plus `constants.ts`, `pageLayout.ts`, and `showcaseUsers.ts` |
+| `hooks/` | Client-side React hooks |
+| `types/` | Shared TypeScript types |
 
 ## Getting Started
 

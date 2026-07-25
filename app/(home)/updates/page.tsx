@@ -7,7 +7,7 @@ import { parseYAML, type Update } from '@/lib/updates'
 
 async function loadUpdates(): Promise<Update[]> {
   try {
-    const filePath = path.join(process.cwd(), 'lib', 'updates.yaml')
+    const filePath = path.join(process.cwd(), 'lib', 'updates', 'updates.yaml')
     const text = await readFile(filePath, 'utf-8')
     return parseYAML(text).sort(
       (a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime()

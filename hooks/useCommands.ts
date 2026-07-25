@@ -7,7 +7,7 @@ import {
   fetchCommandsCached,
   filterCommands,
   type CommandsIndex,
-} from '@/lib/commandsCache'
+} from '@/lib/commands/cache'
 
 export function useCommands() {
   const [allCommands, setAllCommands] = useState<Command[]>([])

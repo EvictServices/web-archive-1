@@ -1,5 +1,5 @@
 import { type Command } from '@/types/command'
-import { parseCommands } from '@/lib/commands'
+import { fetchCommands } from '@/lib/actions/commands'
 
 const STORAGE_KEY = 'evict:commands'
 
@@ -36,14 +36,13 @@ export function fetchCommandsCached(): Promise<Command[]> {
 
   if (inflight) return inflight
 
-  inflight = fetch('/api/commands')
-    .then((r) => (r.ok ? r.json() : { data: { commands: {} } }))
-    .then((parsed) => {
-      const cmds = parseCommands(parsed)
+  inflight = fetchCommands()
+    .then((cmds) => {
       memoryCache = cmds
       writeSessionCache(cmds)
       return cmds
     })
+    .catch(() => [] as Command[])
     .finally(() => {
       inflight = null
     })

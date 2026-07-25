@@ -16,10 +16,7 @@ const grotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://evict.bot'),
-  title: {
-    default: 'evict',
-    template: '%s | Evict',
-  },
+  title: 'Evict',
   description: 'The all-in-one solution for seamless server management — powerful, polished, and visually refined.',
   openGraph: {
     title: 'Evict',

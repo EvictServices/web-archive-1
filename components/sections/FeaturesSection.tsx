@@ -16,22 +16,13 @@ import {
 import SectionHeader from '@/components/ui/SectionHeader'
 import GlassCard from '@/components/ui/GlassCard'
 import { useUsers } from '@/hooks/useUsers'
+import { SHOWCASE_USER_IDS, showcaseDisplayName as displayName } from '@/lib/showcaseUsers'
 
 const MOCK_USER_IDS = {
-  welcome: '357975942276055041',
-  boost: '368896789438529538',
-  member: '604463848526708757',
+  welcome: SHOWCASE_USER_IDS.fshua,
+  boost: SHOWCASE_USER_IDS.isia,
+  member: SHOWCASE_USER_IDS.vael,
 } as const
-
-const MOCK_USER_FALLBACKS: Record<string, string> = {
-  [MOCK_USER_IDS.welcome]: 'fshua',
-  [MOCK_USER_IDS.boost]: 'isia',
-  [MOCK_USER_IDS.member]: 'vael',
-}
-
-function displayName(id: string, user?: { display_name?: string; username?: string }): string {
-  return user?.display_name || user?.username?.split('#')[0] || MOCK_USER_FALLBACKS[id] || 'member'
-}
 
 function FeatureIcon({ Icon }: { Icon: IconType }) {
   return (

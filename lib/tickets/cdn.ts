@@ -1,4 +1,4 @@
-const CDN_URL = 'https://cdn.azron.net'
+import { CDN_URL } from '@/lib/constants'
 
 export function getCdnApiKey(): string {
   return process.env.CDN_API_KEY ?? ''

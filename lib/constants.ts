@@ -1,3 +1,6 @@
+export const BACKEND_URL = 'http://127.0.0.1:8000'
+export const CDN_URL = 'https://cdn.azron.net'
+
 export const DISCORD_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1203514684326805524'
 export const SUPPORT_SERVER_URL = 'https://discord.gg/evict'
 export const CLIENT_ID = '1203514684326805524'
